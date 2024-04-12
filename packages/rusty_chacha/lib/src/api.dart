@@ -4,7 +4,96 @@
 // ignore_for_file: invalid_use_of_internal_member, unused_import, unnecessary_import
 
 import 'frb_generated.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
-Future<int> myFunction({dynamic hint}) =>
-    RustLib.instance.api.myFunction(hint: hint);
+// The type `Error` is not used by any `pub` functions, thus it is ignored.
+
+Future<U8Array32> generateRandomChaCha20Key({dynamic hint}) =>
+    RustLib.instance.api.generateRandomChaCha20Key(hint: hint);
+
+Future<U8Array12> generateRandomChaCha20Nonce({dynamic hint}) =>
+    RustLib.instance.api.generateRandomChaCha20Nonce(hint: hint);
+
+Future<Secrets> generateSecrets({dynamic hint}) =>
+    RustLib.instance.api.generateSecrets(hint: hint);
+
+Future<Uint8List> readClearText({required String filePath, dynamic hint}) =>
+    RustLib.instance.api.readClearText(filePath: filePath, hint: hint);
+
+Future<Uint8List> encrypt(
+        {required Secrets secrets, required List<int> clear, dynamic hint}) =>
+    RustLib.instance.api.encrypt(secrets: secrets, clear: clear, hint: hint);
+
+Future<void> write(
+        {required List<int> encrypted,
+        required String filePath,
+        dynamic hint}) =>
+    RustLib.instance.api
+        .write(encrypted: encrypted, filePath: filePath, hint: hint);
+
+Future<Uint8List> readEncrypted({required String filePath, dynamic hint}) =>
+    RustLib.instance.api.readEncrypted(filePath: filePath, hint: hint);
+
+Future<Uint8List> decrypt(
+        {required Secrets secrets,
+        required List<int> encrypted,
+        dynamic hint}) =>
+    RustLib.instance.api
+        .decrypt(secrets: secrets, encrypted: encrypted, hint: hint);
+
+Future<Secrets> encryptAndWrite(
+        {required List<int> clear, required String filePath, dynamic hint}) =>
+    RustLib.instance.api
+        .encryptAndWrite(clear: clear, filePath: filePath, hint: hint);
+
+Future<Uint8List> readAndDecrypt(
+        {required Secrets secrets, required String filePath, dynamic hint}) =>
+    RustLib.instance.api
+        .readAndDecrypt(secrets: secrets, filePath: filePath, hint: hint);
+
+// Rust type: RustOpaqueNom<flutter_rust_bridge::for_generated::rust_async::RwLock<Secrets>>
+@sealed
+class Secrets extends RustOpaque {
+  Secrets.dcoDecode(List<dynamic> wire) : super.dcoDecode(wire, _kStaticData);
+
+  Secrets.sseDecode(int ptr, int externalSizeOnNative)
+      : super.sseDecode(ptr, externalSizeOnNative, _kStaticData);
+
+  static final _kStaticData = RustArcStaticData(
+    rustArcIncrementStrongCount:
+        RustLib.instance.api.rust_arc_increment_strong_count_Secrets,
+    rustArcDecrementStrongCount:
+        RustLib.instance.api.rust_arc_decrement_strong_count_Secrets,
+    rustArcDecrementStrongCountPtr:
+        RustLib.instance.api.rust_arc_decrement_strong_count_SecretsPtr,
+  );
+}
+
+class U8Array12 extends NonGrowableListView<int> {
+  static const arraySize = 12;
+
+  @internal
+  Uint8List get inner => _inner;
+  final Uint8List _inner;
+
+  U8Array12(this._inner)
+      : assert(_inner.length == arraySize),
+        super(_inner);
+
+  U8Array12.init() : this(Uint8List(arraySize));
+}
+
+class U8Array32 extends NonGrowableListView<int> {
+  static const arraySize = 32;
+
+  @internal
+  Uint8List get inner => _inner;
+  final Uint8List _inner;
+
+  U8Array32(this._inner)
+      : assert(_inner.length == arraySize),
+        super(_inner);
+
+  U8Array32.init() : this(Uint8List(arraySize));
+}

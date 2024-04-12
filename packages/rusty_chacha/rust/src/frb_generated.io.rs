@@ -4,6 +4,7 @@
 // Section: imports
 
 use super::*;
+use crate::api::*;
 use flutter_rust_bridge::for_generated::byteorder::{NativeEndian, ReadBytesExt, WriteBytesExt};
 use flutter_rust_bridge::for_generated::transform_result_dco;
 use flutter_rust_bridge::{Handler, IntoIntoDart};
@@ -12,7 +13,197 @@ use flutter_rust_bridge::{Handler, IntoIntoDart};
 
 flutter_rust_bridge::frb_generated_boilerplate_io!();
 
+// Section: dart2rust
+
+impl CstDecode<flutter_rust_bridge::for_generated::anyhow::Error>
+    for *mut wire_cst_list_prim_u_8_strict
+{
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    fn cst_decode(self) -> flutter_rust_bridge::for_generated::anyhow::Error {
+        unimplemented!()
+    }
+}
+impl CstDecode<Secrets> for usize {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    fn cst_decode(self) -> Secrets {
+        CstDecode::<RustOpaqueNom<flutter_rust_bridge::for_generated::rust_async::RwLock<Secrets>>>::cst_decode(self).rust_auto_opaque_decode_owned()
+    }
+}
+impl CstDecode<RustOpaqueNom<flutter_rust_bridge::for_generated::rust_async::RwLock<Secrets>>>
+    for usize
+{
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    fn cst_decode(
+        self,
+    ) -> RustOpaqueNom<flutter_rust_bridge::for_generated::rust_async::RwLock<Secrets>> {
+        unsafe { decode_rust_opaque_nom(self as _) }
+    }
+}
+impl CstDecode<String> for *mut wire_cst_list_prim_u_8_strict {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    fn cst_decode(self) -> String {
+        let vec: Vec<u8> = self.cst_decode();
+        String::from_utf8(vec).unwrap()
+    }
+}
+impl CstDecode<Vec<u8>> for *mut wire_cst_list_prim_u_8_loose {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    fn cst_decode(self) -> Vec<u8> {
+        unsafe {
+            let wrap = flutter_rust_bridge::for_generated::box_from_leak_ptr(self);
+            flutter_rust_bridge::for_generated::vec_from_leak_ptr(wrap.ptr, wrap.len)
+        }
+    }
+}
+impl CstDecode<Vec<u8>> for *mut wire_cst_list_prim_u_8_strict {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    fn cst_decode(self) -> Vec<u8> {
+        unsafe {
+            let wrap = flutter_rust_bridge::for_generated::box_from_leak_ptr(self);
+            flutter_rust_bridge::for_generated::vec_from_leak_ptr(wrap.ptr, wrap.len)
+        }
+    }
+}
+impl CstDecode<[u8; 12]> for *mut wire_cst_list_prim_u_8_strict {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    fn cst_decode(self) -> [u8; 12] {
+        let vec: Vec<u8> = self.cst_decode();
+        flutter_rust_bridge::for_generated::from_vec_to_array(vec)
+    }
+}
+impl CstDecode<[u8; 32]> for *mut wire_cst_list_prim_u_8_strict {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    fn cst_decode(self) -> [u8; 32] {
+        let vec: Vec<u8> = self.cst_decode();
+        flutter_rust_bridge::for_generated::from_vec_to_array(vec)
+    }
+}
+
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire_my_function(port_: i64) {
-    wire_my_function_impl(port_)
+pub extern "C" fn frbgen_rusty_chacha_wire_decrypt(
+    port_: i64,
+    secrets: usize,
+    encrypted: *mut wire_cst_list_prim_u_8_loose,
+) {
+    wire_decrypt_impl(port_, secrets, encrypted)
+}
+
+#[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_wire_encrypt(
+    port_: i64,
+    secrets: usize,
+    clear: *mut wire_cst_list_prim_u_8_loose,
+) {
+    wire_encrypt_impl(port_, secrets, clear)
+}
+
+#[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_wire_encrypt_and_write(
+    port_: i64,
+    clear: *mut wire_cst_list_prim_u_8_loose,
+    file_path: *mut wire_cst_list_prim_u_8_strict,
+) {
+    wire_encrypt_and_write_impl(port_, clear, file_path)
+}
+
+#[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_wire_generate_random_cha_cha20_key(port_: i64) {
+    wire_generate_random_cha_cha20_key_impl(port_)
+}
+
+#[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_wire_generate_random_cha_cha20_nonce(port_: i64) {
+    wire_generate_random_cha_cha20_nonce_impl(port_)
+}
+
+#[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_wire_generate_secrets(port_: i64) {
+    wire_generate_secrets_impl(port_)
+}
+
+#[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_wire_read_and_decrypt(
+    port_: i64,
+    secrets: usize,
+    file_path: *mut wire_cst_list_prim_u_8_strict,
+) {
+    wire_read_and_decrypt_impl(port_, secrets, file_path)
+}
+
+#[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_wire_read_clear_text(
+    port_: i64,
+    file_path: *mut wire_cst_list_prim_u_8_strict,
+) {
+    wire_read_clear_text_impl(port_, file_path)
+}
+
+#[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_wire_read_encrypted(
+    port_: i64,
+    file_path: *mut wire_cst_list_prim_u_8_strict,
+) {
+    wire_read_encrypted_impl(port_, file_path)
+}
+
+#[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_wire_write(
+    port_: i64,
+    encrypted: *mut wire_cst_list_prim_u_8_loose,
+    file_path: *mut wire_cst_list_prim_u_8_strict,
+) {
+    wire_write_impl(port_, encrypted, file_path)
+}
+
+#[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
+    ptr: *const std::ffi::c_void,
+) {
+    unsafe {
+        StdArc::<flutter_rust_bridge::for_generated::rust_async::RwLock<Secrets>>::increment_strong_count(ptr as _);
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
+    ptr: *const std::ffi::c_void,
+) {
+    unsafe {
+        StdArc::<flutter_rust_bridge::for_generated::rust_async::RwLock<Secrets>>::decrement_strong_count(ptr as _);
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_cst_new_list_prim_u_8_loose(
+    len: i32,
+) -> *mut wire_cst_list_prim_u_8_loose {
+    let ans = wire_cst_list_prim_u_8_loose {
+        ptr: flutter_rust_bridge::for_generated::new_leak_vec_ptr(Default::default(), len),
+        len,
+    };
+    flutter_rust_bridge::for_generated::new_leak_box_ptr(ans)
+}
+
+#[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_cst_new_list_prim_u_8_strict(
+    len: i32,
+) -> *mut wire_cst_list_prim_u_8_strict {
+    let ans = wire_cst_list_prim_u_8_strict {
+        ptr: flutter_rust_bridge::for_generated::new_leak_vec_ptr(Default::default(), len),
+        len,
+    };
+    flutter_rust_bridge::for_generated::new_leak_box_ptr(ans)
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct wire_cst_list_prim_u_8_loose {
+    ptr: *mut u8,
+    len: i32,
+}
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct wire_cst_list_prim_u_8_strict {
+    ptr: *mut u8,
+    len: i32,
 }
