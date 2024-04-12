@@ -15,6 +15,28 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`rusty_chacha` - `v0.0.1+1`](#rusty_chacha---v0011)
+
+---
+
+#### `rusty_chacha` - `v0.0.1+1`
+
+ - **FIX**: re-add symlinks. ([8476f67c](https://github.com/brookman/rusty_chacha/commit/8476f67cf1e96ab6c460a029a69be4e12c4b1c48))
+ - **FIX**: remove symlinks. ([e4545e1c](https://github.com/brookman/rusty_chacha/commit/e4545e1cf6f43b4ba7399ffdf567af15bdacdc7e))
+
+
+## 2024-04-12
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`rusty_chacha` - `v0.0.1`](#rusty_chacha---v001)
 
 Packages graduated to a stable release (see pre-releases prior to the stable version for changelog entries):

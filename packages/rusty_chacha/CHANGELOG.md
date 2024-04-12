@@ -1,3 +1,8 @@
+## 0.0.1+1
+
+ - **FIX**: re-add symlinks. ([8476f67c](https://github.com/brookman/rusty_chacha/commit/8476f67cf1e96ab6c460a029a69be4e12c4b1c48))
+ - **FIX**: remove symlinks. ([e4545e1c](https://github.com/brookman/rusty_chacha/commit/e4545e1cf6f43b4ba7399ffdf567af15bdacdc7e))
+
 ## 0.0.1
 
  - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
