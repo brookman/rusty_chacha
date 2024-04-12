@@ -23,19 +23,19 @@ impl CstDecode<flutter_rust_bridge::for_generated::anyhow::Error>
         unimplemented!()
     }
 }
-impl CstDecode<Secrets> for usize {
+impl CstDecode<Key> for usize {
     // Codec=Cst (C-struct based), see doc to use other codecs
-    fn cst_decode(self) -> Secrets {
-        CstDecode::<RustOpaqueNom<flutter_rust_bridge::for_generated::rust_async::RwLock<Secrets>>>::cst_decode(self).rust_auto_opaque_decode_owned()
+    fn cst_decode(self) -> Key {
+        CstDecode::<RustOpaqueNom<flutter_rust_bridge::for_generated::rust_async::RwLock<Key>>>::cst_decode(self).rust_auto_opaque_decode_owned()
     }
 }
-impl CstDecode<RustOpaqueNom<flutter_rust_bridge::for_generated::rust_async::RwLock<Secrets>>>
+impl CstDecode<RustOpaqueNom<flutter_rust_bridge::for_generated::rust_async::RwLock<Key>>>
     for usize
 {
     // Codec=Cst (C-struct based), see doc to use other codecs
     fn cst_decode(
         self,
-    ) -> RustOpaqueNom<flutter_rust_bridge::for_generated::rust_async::RwLock<Secrets>> {
+    ) -> RustOpaqueNom<flutter_rust_bridge::for_generated::rust_async::RwLock<Key>> {
         unsafe { decode_rust_opaque_nom(self as _) }
     }
 }
@@ -82,28 +82,34 @@ impl CstDecode<[u8; 32]> for *mut wire_cst_list_prim_u_8_strict {
 #[no_mangle]
 pub extern "C" fn frbgen_rusty_chacha_wire_decrypt(
     port_: i64,
-    secrets: usize,
+    key: usize,
     encrypted: *mut wire_cst_list_prim_u_8_loose,
 ) {
-    wire_decrypt_impl(port_, secrets, encrypted)
+    wire_decrypt_impl(port_, key, encrypted)
 }
 
 #[no_mangle]
 pub extern "C" fn frbgen_rusty_chacha_wire_encrypt(
     port_: i64,
-    secrets: usize,
-    clear: *mut wire_cst_list_prim_u_8_loose,
+    key: usize,
+    cleartext: *mut wire_cst_list_prim_u_8_loose,
 ) {
-    wire_encrypt_impl(port_, secrets, clear)
+    wire_encrypt_impl(port_, key, cleartext)
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire_encrypt_and_write(
+pub extern "C" fn frbgen_rusty_chacha_wire_encrypt_and_write_to_file(
     port_: i64,
-    clear: *mut wire_cst_list_prim_u_8_loose,
+    key: usize,
+    cleartext: *mut wire_cst_list_prim_u_8_loose,
     file_path: *mut wire_cst_list_prim_u_8_strict,
 ) {
-    wire_encrypt_and_write_impl(port_, clear, file_path)
+    wire_encrypt_and_write_to_file_impl(port_, key, cleartext, file_path)
+}
+
+#[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_wire_generate_key(port_: i64) {
+    wire_generate_key_impl(port_)
 }
 
 #[no_mangle]
@@ -117,59 +123,46 @@ pub extern "C" fn frbgen_rusty_chacha_wire_generate_random_cha_cha20_nonce(port_
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire_generate_secrets(port_: i64) {
-    wire_generate_secrets_impl(port_)
-}
-
-#[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire_read_and_decrypt(
-    port_: i64,
-    secrets: usize,
-    file_path: *mut wire_cst_list_prim_u_8_strict,
-) {
-    wire_read_and_decrypt_impl(port_, secrets, file_path)
-}
-
-#[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire_read_clear_text(
+pub extern "C" fn frbgen_rusty_chacha_wire_read_file(
     port_: i64,
     file_path: *mut wire_cst_list_prim_u_8_strict,
 ) {
-    wire_read_clear_text_impl(port_, file_path)
+    wire_read_file_impl(port_, file_path)
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire_read_encrypted(
+pub extern "C" fn frbgen_rusty_chacha_wire_read_from_file_and_decrypt(
     port_: i64,
+    key: usize,
     file_path: *mut wire_cst_list_prim_u_8_strict,
 ) {
-    wire_read_encrypted_impl(port_, file_path)
+    wire_read_from_file_and_decrypt_impl(port_, key, file_path)
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire_write(
+pub extern "C" fn frbgen_rusty_chacha_wire_write_file(
     port_: i64,
-    encrypted: *mut wire_cst_list_prim_u_8_loose,
+    data: *mut wire_cst_list_prim_u_8_loose,
     file_path: *mut wire_cst_list_prim_u_8_strict,
 ) {
-    wire_write_impl(port_, encrypted, file_path)
+    wire_write_file_impl(port_, data, file_path)
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
+pub extern "C" fn frbgen_rusty_chacha_rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
     ptr: *const std::ffi::c_void,
 ) {
     unsafe {
-        StdArc::<flutter_rust_bridge::for_generated::rust_async::RwLock<Secrets>>::increment_strong_count(ptr as _);
+        StdArc::<flutter_rust_bridge::for_generated::rust_async::RwLock<Key>>::increment_strong_count(ptr as _);
     }
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
+pub extern "C" fn frbgen_rusty_chacha_rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
     ptr: *const std::ffi::c_void,
 ) {
     unsafe {
-        StdArc::<flutter_rust_bridge::for_generated::rust_async::RwLock<Secrets>>::decrement_strong_count(ptr as _);
+        StdArc::<flutter_rust_bridge::for_generated::rust_async::RwLock<Key>>::decrement_strong_count(ptr as _);
     }
 }
 

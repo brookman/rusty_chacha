@@ -63,35 +63,36 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
 
 abstract class RustLibApi extends BaseApi {
   Future<Uint8List> decrypt(
-      {required Secrets secrets, required List<int> encrypted, dynamic hint});
+      {required Key key, required List<int> encrypted, dynamic hint});
 
   Future<Uint8List> encrypt(
-      {required Secrets secrets, required List<int> clear, dynamic hint});
+      {required Key key, required List<int> cleartext, dynamic hint});
 
-  Future<Secrets> encryptAndWrite(
-      {required List<int> clear, required String filePath, dynamic hint});
+  Future<void> encryptAndWriteToFile(
+      {required Key key,
+      required List<int> cleartext,
+      required String filePath,
+      dynamic hint});
+
+  Future<Key> generateKey({dynamic hint});
 
   Future<U8Array32> generateRandomChaCha20Key({dynamic hint});
 
   Future<U8Array12> generateRandomChaCha20Nonce({dynamic hint});
 
-  Future<Secrets> generateSecrets({dynamic hint});
+  Future<Uint8List> readFile({required String filePath, dynamic hint});
 
-  Future<Uint8List> readAndDecrypt(
-      {required Secrets secrets, required String filePath, dynamic hint});
+  Future<Uint8List> readFromFileAndDecrypt(
+      {required Key key, required String filePath, dynamic hint});
 
-  Future<Uint8List> readClearText({required String filePath, dynamic hint});
+  Future<void> writeFile(
+      {required List<int> data, required String filePath, dynamic hint});
 
-  Future<Uint8List> readEncrypted({required String filePath, dynamic hint});
+  RustArcIncrementStrongCountFnType get rust_arc_increment_strong_count_Key;
 
-  Future<void> write(
-      {required List<int> encrypted, required String filePath, dynamic hint});
+  RustArcDecrementStrongCountFnType get rust_arc_decrement_strong_count_Key;
 
-  RustArcIncrementStrongCountFnType get rust_arc_increment_strong_count_Secrets;
-
-  RustArcDecrementStrongCountFnType get rust_arc_decrement_strong_count_Secrets;
-
-  CrossPlatformFinalizerArg get rust_arc_decrement_strong_count_SecretsPtr;
+  CrossPlatformFinalizerArg get rust_arc_decrement_strong_count_KeyPtr;
 }
 
 class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
@@ -104,12 +105,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   @override
   Future<Uint8List> decrypt(
-      {required Secrets secrets, required List<int> encrypted, dynamic hint}) {
+      {required Key key, required List<int> encrypted, dynamic hint}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
         var arg0 =
-            cst_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-                secrets);
+            cst_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+                key);
         var arg1 = cst_encode_list_prim_u_8_loose(encrypted);
         return wire.wire_decrypt(port_, arg0, arg1);
       },
@@ -118,7 +119,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         decodeErrorData: dco_decode_AnyhowException,
       ),
       constMeta: kDecryptConstMeta,
-      argValues: [secrets, encrypted],
+      argValues: [key, encrypted],
       apiImpl: this,
       hint: hint,
     ));
@@ -126,18 +127,18 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kDecryptConstMeta => const TaskConstMeta(
         debugName: "decrypt",
-        argNames: ["secrets", "encrypted"],
+        argNames: ["key", "encrypted"],
       );
 
   @override
   Future<Uint8List> encrypt(
-      {required Secrets secrets, required List<int> clear, dynamic hint}) {
+      {required Key key, required List<int> cleartext, dynamic hint}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
         var arg0 =
-            cst_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-                secrets);
-        var arg1 = cst_encode_list_prim_u_8_loose(clear);
+            cst_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+                key);
+        var arg1 = cst_encode_list_prim_u_8_loose(cleartext);
         return wire.wire_encrypt(port_, arg0, arg1);
       },
       codec: DcoCodec(
@@ -145,7 +146,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         decodeErrorData: dco_decode_AnyhowException,
       ),
       constMeta: kEncryptConstMeta,
-      argValues: [secrets, clear],
+      argValues: [key, cleartext],
       apiImpl: this,
       hint: hint,
     ));
@@ -153,33 +154,61 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kEncryptConstMeta => const TaskConstMeta(
         debugName: "encrypt",
-        argNames: ["secrets", "clear"],
+        argNames: ["key", "cleartext"],
       );
 
   @override
-  Future<Secrets> encryptAndWrite(
-      {required List<int> clear, required String filePath, dynamic hint}) {
+  Future<void> encryptAndWriteToFile(
+      {required Key key,
+      required List<int> cleartext,
+      required String filePath,
+      dynamic hint}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
-        var arg0 = cst_encode_list_prim_u_8_loose(clear);
-        var arg1 = cst_encode_String(filePath);
-        return wire.wire_encrypt_and_write(port_, arg0, arg1);
+        var arg0 =
+            cst_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+                key);
+        var arg1 = cst_encode_list_prim_u_8_loose(cleartext);
+        var arg2 = cst_encode_String(filePath);
+        return wire.wire_encrypt_and_write_to_file(port_, arg0, arg1, arg2);
       },
       codec: DcoCodec(
-        decodeSuccessData:
-            dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets,
+        decodeSuccessData: dco_decode_unit,
         decodeErrorData: dco_decode_AnyhowException,
       ),
-      constMeta: kEncryptAndWriteConstMeta,
-      argValues: [clear, filePath],
+      constMeta: kEncryptAndWriteToFileConstMeta,
+      argValues: [key, cleartext, filePath],
       apiImpl: this,
       hint: hint,
     ));
   }
 
-  TaskConstMeta get kEncryptAndWriteConstMeta => const TaskConstMeta(
-        debugName: "encrypt_and_write",
-        argNames: ["clear", "filePath"],
+  TaskConstMeta get kEncryptAndWriteToFileConstMeta => const TaskConstMeta(
+        debugName: "encrypt_and_write_to_file",
+        argNames: ["key", "cleartext", "filePath"],
+      );
+
+  @override
+  Future<Key> generateKey({dynamic hint}) {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
+        return wire.wire_generate_key(port_);
+      },
+      codec: DcoCodec(
+        decodeSuccessData:
+            dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey,
+        decodeErrorData: null,
+      ),
+      constMeta: kGenerateKeyConstMeta,
+      argValues: [],
+      apiImpl: this,
+      hint: hint,
+    ));
+  }
+
+  TaskConstMeta get kGenerateKeyConstMeta => const TaskConstMeta(
+        debugName: "generate_key",
+        argNames: [],
       );
 
   @override
@@ -228,133 +257,85 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
-  Future<Secrets> generateSecrets({dynamic hint}) {
+  Future<Uint8List> readFile({required String filePath, dynamic hint}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
-        return wire.wire_generate_secrets(port_);
+        var arg0 = cst_encode_String(filePath);
+        return wire.wire_read_file(port_, arg0);
       },
       codec: DcoCodec(
-        decodeSuccessData:
-            dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets,
-        decodeErrorData: null,
+        decodeSuccessData: dco_decode_list_prim_u_8_strict,
+        decodeErrorData: dco_decode_AnyhowException,
       ),
-      constMeta: kGenerateSecretsConstMeta,
-      argValues: [],
+      constMeta: kReadFileConstMeta,
+      argValues: [filePath],
       apiImpl: this,
       hint: hint,
     ));
   }
 
-  TaskConstMeta get kGenerateSecretsConstMeta => const TaskConstMeta(
-        debugName: "generate_secrets",
-        argNames: [],
+  TaskConstMeta get kReadFileConstMeta => const TaskConstMeta(
+        debugName: "read_file",
+        argNames: ["filePath"],
       );
 
   @override
-  Future<Uint8List> readAndDecrypt(
-      {required Secrets secrets, required String filePath, dynamic hint}) {
+  Future<Uint8List> readFromFileAndDecrypt(
+      {required Key key, required String filePath, dynamic hint}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
         var arg0 =
-            cst_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-                secrets);
+            cst_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+                key);
         var arg1 = cst_encode_String(filePath);
-        return wire.wire_read_and_decrypt(port_, arg0, arg1);
+        return wire.wire_read_from_file_and_decrypt(port_, arg0, arg1);
       },
       codec: DcoCodec(
         decodeSuccessData: dco_decode_list_prim_u_8_strict,
         decodeErrorData: dco_decode_AnyhowException,
       ),
-      constMeta: kReadAndDecryptConstMeta,
-      argValues: [secrets, filePath],
+      constMeta: kReadFromFileAndDecryptConstMeta,
+      argValues: [key, filePath],
       apiImpl: this,
       hint: hint,
     ));
   }
 
-  TaskConstMeta get kReadAndDecryptConstMeta => const TaskConstMeta(
-        debugName: "read_and_decrypt",
-        argNames: ["secrets", "filePath"],
+  TaskConstMeta get kReadFromFileAndDecryptConstMeta => const TaskConstMeta(
+        debugName: "read_from_file_and_decrypt",
+        argNames: ["key", "filePath"],
       );
 
   @override
-  Future<Uint8List> readClearText({required String filePath, dynamic hint}) {
+  Future<void> writeFile(
+      {required List<int> data, required String filePath, dynamic hint}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
-        var arg0 = cst_encode_String(filePath);
-        return wire.wire_read_clear_text(port_, arg0);
-      },
-      codec: DcoCodec(
-        decodeSuccessData: dco_decode_list_prim_u_8_strict,
-        decodeErrorData: dco_decode_AnyhowException,
-      ),
-      constMeta: kReadClearTextConstMeta,
-      argValues: [filePath],
-      apiImpl: this,
-      hint: hint,
-    ));
-  }
-
-  TaskConstMeta get kReadClearTextConstMeta => const TaskConstMeta(
-        debugName: "read_clear_text",
-        argNames: ["filePath"],
-      );
-
-  @override
-  Future<Uint8List> readEncrypted({required String filePath, dynamic hint}) {
-    return handler.executeNormal(NormalTask(
-      callFfi: (port_) {
-        var arg0 = cst_encode_String(filePath);
-        return wire.wire_read_encrypted(port_, arg0);
-      },
-      codec: DcoCodec(
-        decodeSuccessData: dco_decode_list_prim_u_8_strict,
-        decodeErrorData: dco_decode_AnyhowException,
-      ),
-      constMeta: kReadEncryptedConstMeta,
-      argValues: [filePath],
-      apiImpl: this,
-      hint: hint,
-    ));
-  }
-
-  TaskConstMeta get kReadEncryptedConstMeta => const TaskConstMeta(
-        debugName: "read_encrypted",
-        argNames: ["filePath"],
-      );
-
-  @override
-  Future<void> write(
-      {required List<int> encrypted, required String filePath, dynamic hint}) {
-    return handler.executeNormal(NormalTask(
-      callFfi: (port_) {
-        var arg0 = cst_encode_list_prim_u_8_loose(encrypted);
+        var arg0 = cst_encode_list_prim_u_8_loose(data);
         var arg1 = cst_encode_String(filePath);
-        return wire.wire_write(port_, arg0, arg1);
+        return wire.wire_write_file(port_, arg0, arg1);
       },
       codec: DcoCodec(
         decodeSuccessData: dco_decode_unit,
         decodeErrorData: dco_decode_AnyhowException,
       ),
-      constMeta: kWriteConstMeta,
-      argValues: [encrypted, filePath],
+      constMeta: kWriteFileConstMeta,
+      argValues: [data, filePath],
       apiImpl: this,
       hint: hint,
     ));
   }
 
-  TaskConstMeta get kWriteConstMeta => const TaskConstMeta(
-        debugName: "write",
-        argNames: ["encrypted", "filePath"],
+  TaskConstMeta get kWriteFileConstMeta => const TaskConstMeta(
+        debugName: "write_file",
+        argNames: ["data", "filePath"],
       );
 
-  RustArcIncrementStrongCountFnType
-      get rust_arc_increment_strong_count_Secrets => wire
-          .rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets;
+  RustArcIncrementStrongCountFnType get rust_arc_increment_strong_count_Key => wire
+      .rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey;
 
-  RustArcDecrementStrongCountFnType
-      get rust_arc_decrement_strong_count_Secrets => wire
-          .rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets;
+  RustArcDecrementStrongCountFnType get rust_arc_decrement_strong_count_Key => wire
+      .rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey;
 
   @protected
   AnyhowException dco_decode_AnyhowException(dynamic raw) {
@@ -363,27 +344,24 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  Secrets
-      dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-          dynamic raw) {
+  Key dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+      dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return Secrets.dcoDecode(raw as List<dynamic>);
+    return Key.dcoDecode(raw as List<dynamic>);
   }
 
   @protected
-  Secrets
-      dco_decode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-          dynamic raw) {
+  Key dco_decode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+      dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return Secrets.dcoDecode(raw as List<dynamic>);
+    return Key.dcoDecode(raw as List<dynamic>);
   }
 
   @protected
-  Secrets
-      dco_decode_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-          dynamic raw) {
+  Key dco_decode_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+      dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return Secrets.dcoDecode(raw as List<dynamic>);
+    return Key.dcoDecode(raw as List<dynamic>);
   }
 
   @protected
@@ -442,29 +420,26 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  Secrets
-      sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-          SseDeserializer deserializer) {
+  Key sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+      SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    return Secrets.sseDecode(
+    return Key.sseDecode(
         sse_decode_usize(deserializer), sse_decode_i_32(deserializer));
   }
 
   @protected
-  Secrets
-      sse_decode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-          SseDeserializer deserializer) {
+  Key sse_decode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+      SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    return Secrets.sseDecode(
+    return Key.sseDecode(
         sse_decode_usize(deserializer), sse_decode_i_32(deserializer));
   }
 
   @protected
-  Secrets
-      sse_decode_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-          SseDeserializer deserializer) {
+  Key sse_decode_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+      SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    return Secrets.sseDecode(
+    return Key.sseDecode(
         sse_decode_usize(deserializer), sse_decode_i_32(deserializer));
   }
 
@@ -533,24 +508,24 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  int cst_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-      Secrets raw) {
+  int cst_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+      Key raw) {
     // Codec=Cst (C-struct based), see doc to use other codecs
 // ignore: invalid_use_of_internal_member
     return raw.cstEncode(move: true);
   }
 
   @protected
-  int cst_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-      Secrets raw) {
+  int cst_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+      Key raw) {
     // Codec=Cst (C-struct based), see doc to use other codecs
 // ignore: invalid_use_of_internal_member
     return raw.cstEncode(move: false);
   }
 
   @protected
-  int cst_encode_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-      Secrets raw) {
+  int cst_encode_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+      Key raw) {
     // Codec=Cst (C-struct based), see doc to use other codecs
 // ignore: invalid_use_of_internal_member
     return raw.cstEncode();
@@ -583,24 +558,24 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   @protected
   void
-      sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-          Secrets self, SseSerializer serializer) {
+      sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+          Key self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_usize(self.sseEncode(move: true), serializer);
   }
 
   @protected
   void
-      sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-          Secrets self, SseSerializer serializer) {
+      sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+          Key self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_usize(self.sseEncode(move: false), serializer);
   }
 
   @protected
   void
-      sse_encode_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-          Secrets self, SseSerializer serializer) {
+      sse_encode_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+          Key self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_usize(self.sseEncode(move: null), serializer);
   }

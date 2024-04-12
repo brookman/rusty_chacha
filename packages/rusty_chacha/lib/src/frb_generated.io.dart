@@ -18,26 +18,23 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
     required super.portManager,
   });
 
-  CrossPlatformFinalizerArg get rust_arc_decrement_strong_count_SecretsPtr => wire
-      ._rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecretsPtr;
+  CrossPlatformFinalizerArg get rust_arc_decrement_strong_count_KeyPtr => wire
+      ._rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKeyPtr;
 
   @protected
   AnyhowException dco_decode_AnyhowException(dynamic raw);
 
   @protected
-  Secrets
-      dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-          dynamic raw);
+  Key dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+      dynamic raw);
 
   @protected
-  Secrets
-      dco_decode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-          dynamic raw);
+  Key dco_decode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+      dynamic raw);
 
   @protected
-  Secrets
-      dco_decode_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-          dynamic raw);
+  Key dco_decode_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+      dynamic raw);
 
   @protected
   String dco_decode_String(dynamic raw);
@@ -67,19 +64,16 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   AnyhowException sse_decode_AnyhowException(SseDeserializer deserializer);
 
   @protected
-  Secrets
-      sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-          SseDeserializer deserializer);
+  Key sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+      SseDeserializer deserializer);
 
   @protected
-  Secrets
-      sse_decode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-          SseDeserializer deserializer);
+  Key sse_decode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+      SseDeserializer deserializer);
 
   @protected
-  Secrets
-      sse_decode_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-          SseDeserializer deserializer);
+  Key sse_decode_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+      SseDeserializer deserializer);
 
   @protected
   String sse_decode_String(SseDeserializer deserializer);
@@ -161,16 +155,16 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   }
 
   @protected
-  int cst_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-      Secrets raw);
+  int cst_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+      Key raw);
 
   @protected
-  int cst_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-      Secrets raw);
+  int cst_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+      Key raw);
 
   @protected
-  int cst_encode_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-      Secrets raw);
+  int cst_encode_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+      Key raw);
 
   @protected
   int cst_encode_u_8(int raw);
@@ -187,18 +181,18 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   void
-      sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-          Secrets self, SseSerializer serializer);
+      sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+          Key self, SseSerializer serializer);
 
   @protected
   void
-      sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-          Secrets self, SseSerializer serializer);
+      sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+          Key self, SseSerializer serializer);
 
   @protected
   void
-      sse_encode_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
-          Secrets self, SseSerializer serializer);
+      sse_encode_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
+          Key self, SseSerializer serializer);
 
   @protected
   void sse_encode_String(String self, SseSerializer serializer);
@@ -275,12 +269,12 @@ class RustLibWire implements BaseWire {
 
   void wire_decrypt(
     int port_,
-    int secrets,
+    int key,
     ffi.Pointer<wire_cst_list_prim_u_8_loose> encrypted,
   ) {
     return _wire_decrypt(
       port_,
-      secrets,
+      key,
       encrypted,
     );
   }
@@ -295,13 +289,13 @@ class RustLibWire implements BaseWire {
 
   void wire_encrypt(
     int port_,
-    int secrets,
-    ffi.Pointer<wire_cst_list_prim_u_8_loose> clear,
+    int key,
+    ffi.Pointer<wire_cst_list_prim_u_8_loose> cleartext,
   ) {
     return _wire_encrypt(
       port_,
-      secrets,
-      clear,
+      key,
+      cleartext,
     );
   }
 
@@ -313,28 +307,46 @@ class RustLibWire implements BaseWire {
   late final _wire_encrypt = _wire_encryptPtr.asFunction<
       void Function(int, int, ffi.Pointer<wire_cst_list_prim_u_8_loose>)>();
 
-  void wire_encrypt_and_write(
+  void wire_encrypt_and_write_to_file(
     int port_,
-    ffi.Pointer<wire_cst_list_prim_u_8_loose> clear,
+    int key,
+    ffi.Pointer<wire_cst_list_prim_u_8_loose> cleartext,
     ffi.Pointer<wire_cst_list_prim_u_8_strict> file_path,
   ) {
-    return _wire_encrypt_and_write(
+    return _wire_encrypt_and_write_to_file(
       port_,
-      clear,
+      key,
+      cleartext,
       file_path,
     );
   }
 
-  late final _wire_encrypt_and_writePtr = _lookup<
+  late final _wire_encrypt_and_write_to_filePtr = _lookup<
           ffi.NativeFunction<
               ffi.Void Function(
                   ffi.Int64,
+                  ffi.UintPtr,
                   ffi.Pointer<wire_cst_list_prim_u_8_loose>,
                   ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
-      'frbgen_rusty_chacha_wire_encrypt_and_write');
-  late final _wire_encrypt_and_write = _wire_encrypt_and_writePtr.asFunction<
-      void Function(int, ffi.Pointer<wire_cst_list_prim_u_8_loose>,
-          ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
+      'frbgen_rusty_chacha_wire_encrypt_and_write_to_file');
+  late final _wire_encrypt_and_write_to_file =
+      _wire_encrypt_and_write_to_filePtr.asFunction<
+          void Function(int, int, ffi.Pointer<wire_cst_list_prim_u_8_loose>,
+              ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
+
+  void wire_generate_key(
+    int port_,
+  ) {
+    return _wire_generate_key(
+      port_,
+    );
+  }
+
+  late final _wire_generate_keyPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64)>>(
+          'frbgen_rusty_chacha_wire_generate_key');
+  late final _wire_generate_key =
+      _wire_generate_keyPtr.asFunction<void Function(int)>();
 
   void wire_generate_random_cha_cha20_key(
     int port_,
@@ -364,129 +376,99 @@ class RustLibWire implements BaseWire {
   late final _wire_generate_random_cha_cha20_nonce =
       _wire_generate_random_cha_cha20_noncePtr.asFunction<void Function(int)>();
 
-  void wire_generate_secrets(
+  void wire_read_file(
     int port_,
-  ) {
-    return _wire_generate_secrets(
-      port_,
-    );
-  }
-
-  late final _wire_generate_secretsPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64)>>(
-          'frbgen_rusty_chacha_wire_generate_secrets');
-  late final _wire_generate_secrets =
-      _wire_generate_secretsPtr.asFunction<void Function(int)>();
-
-  void wire_read_and_decrypt(
-    int port_,
-    int secrets,
     ffi.Pointer<wire_cst_list_prim_u_8_strict> file_path,
   ) {
-    return _wire_read_and_decrypt(
+    return _wire_read_file(
       port_,
-      secrets,
       file_path,
     );
   }
 
-  late final _wire_read_and_decryptPtr = _lookup<
+  late final _wire_read_filePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Int64, ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
+      'frbgen_rusty_chacha_wire_read_file');
+  late final _wire_read_file = _wire_read_filePtr.asFunction<
+      void Function(int, ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
+
+  void wire_read_from_file_and_decrypt(
+    int port_,
+    int key,
+    ffi.Pointer<wire_cst_list_prim_u_8_strict> file_path,
+  ) {
+    return _wire_read_from_file_and_decrypt(
+      port_,
+      key,
+      file_path,
+    );
+  }
+
+  late final _wire_read_from_file_and_decryptPtr = _lookup<
           ffi.NativeFunction<
               ffi.Void Function(ffi.Int64, ffi.UintPtr,
                   ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
-      'frbgen_rusty_chacha_wire_read_and_decrypt');
-  late final _wire_read_and_decrypt = _wire_read_and_decryptPtr.asFunction<
-      void Function(int, int, ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
+      'frbgen_rusty_chacha_wire_read_from_file_and_decrypt');
+  late final _wire_read_from_file_and_decrypt =
+      _wire_read_from_file_and_decryptPtr.asFunction<
+          void Function(
+              int, int, ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
 
-  void wire_read_clear_text(
+  void wire_write_file(
     int port_,
+    ffi.Pointer<wire_cst_list_prim_u_8_loose> data,
     ffi.Pointer<wire_cst_list_prim_u_8_strict> file_path,
   ) {
-    return _wire_read_clear_text(
+    return _wire_write_file(
       port_,
+      data,
       file_path,
     );
   }
 
-  late final _wire_read_clear_textPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(
-                  ffi.Int64, ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
-      'frbgen_rusty_chacha_wire_read_clear_text');
-  late final _wire_read_clear_text = _wire_read_clear_textPtr.asFunction<
-      void Function(int, ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
-
-  void wire_read_encrypted(
-    int port_,
-    ffi.Pointer<wire_cst_list_prim_u_8_strict> file_path,
-  ) {
-    return _wire_read_encrypted(
-      port_,
-      file_path,
-    );
-  }
-
-  late final _wire_read_encryptedPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(
-                  ffi.Int64, ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
-      'frbgen_rusty_chacha_wire_read_encrypted');
-  late final _wire_read_encrypted = _wire_read_encryptedPtr.asFunction<
-      void Function(int, ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
-
-  void wire_write(
-    int port_,
-    ffi.Pointer<wire_cst_list_prim_u_8_loose> encrypted,
-    ffi.Pointer<wire_cst_list_prim_u_8_strict> file_path,
-  ) {
-    return _wire_write(
-      port_,
-      encrypted,
-      file_path,
-    );
-  }
-
-  late final _wire_writePtr = _lookup<
+  late final _wire_write_filePtr = _lookup<
           ffi.NativeFunction<
               ffi.Void Function(
                   ffi.Int64,
                   ffi.Pointer<wire_cst_list_prim_u_8_loose>,
                   ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
-      'frbgen_rusty_chacha_wire_write');
-  late final _wire_write = _wire_writePtr.asFunction<
+      'frbgen_rusty_chacha_wire_write_file');
+  late final _wire_write_file = _wire_write_filePtr.asFunction<
       void Function(int, ffi.Pointer<wire_cst_list_prim_u_8_loose>,
           ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
 
   void
-      rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
+      rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
     ffi.Pointer<ffi.Void> ptr,
   ) {
-    return _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
+    return _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
       ptr,
     );
   }
 
-  late final _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecretsPtr =
+  late final _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKeyPtr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>(
-          'frbgen_rusty_chacha_rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets');
-  late final _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets =
-      _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecretsPtr
+          'frbgen_rusty_chacha_rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey');
+  late final _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey =
+      _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKeyPtr
           .asFunction<void Function(ffi.Pointer<ffi.Void>)>();
 
   void
-      rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
+      rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
     ffi.Pointer<ffi.Void> ptr,
   ) {
-    return _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets(
+    return _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey(
       ptr,
     );
   }
 
-  late final _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecretsPtr =
+  late final _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKeyPtr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>(
-          'frbgen_rusty_chacha_rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets');
-  late final _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecrets =
-      _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockSecretsPtr
+          'frbgen_rusty_chacha_rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey');
+  late final _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKey =
+      _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedrust_asyncRwLockKeyPtr
           .asFunction<void Function(ffi.Pointer<ffi.Void>)>();
 
   ffi.Pointer<wire_cst_list_prim_u_8_loose> cst_new_list_prim_u_8_loose(

@@ -7,66 +7,58 @@ import 'frb_generated.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
-// The type `Error` is not used by any `pub` functions, thus it is ignored.
-
 Future<U8Array32> generateRandomChaCha20Key({dynamic hint}) =>
     RustLib.instance.api.generateRandomChaCha20Key(hint: hint);
 
 Future<U8Array12> generateRandomChaCha20Nonce({dynamic hint}) =>
     RustLib.instance.api.generateRandomChaCha20Nonce(hint: hint);
 
-Future<Secrets> generateSecrets({dynamic hint}) =>
-    RustLib.instance.api.generateSecrets(hint: hint);
+Future<Key> generateKey({dynamic hint}) =>
+    RustLib.instance.api.generateKey(hint: hint);
 
-Future<Uint8List> readClearText({required String filePath, dynamic hint}) =>
-    RustLib.instance.api.readClearText(filePath: filePath, hint: hint);
+Future<Uint8List> readFile({required String filePath, dynamic hint}) =>
+    RustLib.instance.api.readFile(filePath: filePath, hint: hint);
+
+Future<void> writeFile(
+        {required List<int> data, required String filePath, dynamic hint}) =>
+    RustLib.instance.api.writeFile(data: data, filePath: filePath, hint: hint);
 
 Future<Uint8List> encrypt(
-        {required Secrets secrets, required List<int> clear, dynamic hint}) =>
-    RustLib.instance.api.encrypt(secrets: secrets, clear: clear, hint: hint);
-
-Future<void> write(
-        {required List<int> encrypted,
-        required String filePath,
-        dynamic hint}) =>
-    RustLib.instance.api
-        .write(encrypted: encrypted, filePath: filePath, hint: hint);
-
-Future<Uint8List> readEncrypted({required String filePath, dynamic hint}) =>
-    RustLib.instance.api.readEncrypted(filePath: filePath, hint: hint);
+        {required Key key, required List<int> cleartext, dynamic hint}) =>
+    RustLib.instance.api.encrypt(key: key, cleartext: cleartext, hint: hint);
 
 Future<Uint8List> decrypt(
-        {required Secrets secrets,
-        required List<int> encrypted,
+        {required Key key, required List<int> encrypted, dynamic hint}) =>
+    RustLib.instance.api.decrypt(key: key, encrypted: encrypted, hint: hint);
+
+Future<void> encryptAndWriteToFile(
+        {required Key key,
+        required List<int> cleartext,
+        required String filePath,
         dynamic hint}) =>
-    RustLib.instance.api
-        .decrypt(secrets: secrets, encrypted: encrypted, hint: hint);
+    RustLib.instance.api.encryptAndWriteToFile(
+        key: key, cleartext: cleartext, filePath: filePath, hint: hint);
 
-Future<Secrets> encryptAndWrite(
-        {required List<int> clear, required String filePath, dynamic hint}) =>
+Future<Uint8List> readFromFileAndDecrypt(
+        {required Key key, required String filePath, dynamic hint}) =>
     RustLib.instance.api
-        .encryptAndWrite(clear: clear, filePath: filePath, hint: hint);
+        .readFromFileAndDecrypt(key: key, filePath: filePath, hint: hint);
 
-Future<Uint8List> readAndDecrypt(
-        {required Secrets secrets, required String filePath, dynamic hint}) =>
-    RustLib.instance.api
-        .readAndDecrypt(secrets: secrets, filePath: filePath, hint: hint);
-
-// Rust type: RustOpaqueNom<flutter_rust_bridge::for_generated::rust_async::RwLock<Secrets>>
+// Rust type: RustOpaqueNom<flutter_rust_bridge::for_generated::rust_async::RwLock<Key>>
 @sealed
-class Secrets extends RustOpaque {
-  Secrets.dcoDecode(List<dynamic> wire) : super.dcoDecode(wire, _kStaticData);
+class Key extends RustOpaque {
+  Key.dcoDecode(List<dynamic> wire) : super.dcoDecode(wire, _kStaticData);
 
-  Secrets.sseDecode(int ptr, int externalSizeOnNative)
+  Key.sseDecode(int ptr, int externalSizeOnNative)
       : super.sseDecode(ptr, externalSizeOnNative, _kStaticData);
 
   static final _kStaticData = RustArcStaticData(
     rustArcIncrementStrongCount:
-        RustLib.instance.api.rust_arc_increment_strong_count_Secrets,
+        RustLib.instance.api.rust_arc_increment_strong_count_Key,
     rustArcDecrementStrongCount:
-        RustLib.instance.api.rust_arc_decrement_strong_count_Secrets,
+        RustLib.instance.api.rust_arc_decrement_strong_count_Key,
     rustArcDecrementStrongCountPtr:
-        RustLib.instance.api.rust_arc_decrement_strong_count_SecretsPtr,
+        RustLib.instance.api.rust_arc_decrement_strong_count_KeyPtr,
   );
 }
 
