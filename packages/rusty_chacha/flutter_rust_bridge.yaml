@@ -1,0 +1,7 @@
+rust_input: rust/src/api.rs
+dart_output: lib/src
+c_output: ios/Classes/frb.h
+duplicated_c_output:
+  - macos/Classes/frb.h
+full_dep: true
+web: false

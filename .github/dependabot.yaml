@@ -1,0 +1,20 @@
+version: 2
+enable-beta-ecosystems: true
+updates:
+  - package-ecosystem: pub
+    directory: "/"
+    schedule:
+      interval: weekly
+  - package-ecosystem: pub
+    directory: "/packages/rusty_chacha"
+    versioning-strategy: increase # https://github.com/dependabot/dependabot-core/issues/6446
+    schedule:
+      interval: weekly
+  - package-ecosystem: pub
+    directory: "/packages/rusty_chacha/example"
+    schedule:
+      interval: weekly
+  - package-ecosystem: cargo
+    directory: "/packages/rusty_chacha/rust"
+    schedule:
+      interval: weekly

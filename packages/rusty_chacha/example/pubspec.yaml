@@ -1,0 +1,25 @@
+name: rusty_chacha_example
+publish_to: none
+
+environment:
+  sdk: ^3.0.0
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  rusty_chacha: ^0.0.0
+
+#  For local testing
+#dependency_overrides:
+#  rusty_chacha:
+#    path: ..
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

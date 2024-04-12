@@ -1,0 +1,14 @@
+[package]
+name = "embedded_rusty_chacha"
+version = "0.0.0"
+edition = "2021"
+
+[lib]
+crate-type = ["staticlib", "cdylib"]
+
+[build-dependencies]
+flutter_rust_bridge_codegen = "2.0.0-dev.31"
+
+[dependencies]
+anyhow = "1.0.80"
+flutter_rust_bridge = "=2.0.0-dev.31"
