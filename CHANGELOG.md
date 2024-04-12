@@ -15,6 +15,27 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`rusty_chacha` - `v0.0.3`](#rusty_chacha---v003)
+
+---
+
+#### `rusty_chacha` - `v0.0.3`
+
+ - **FEAT**: try to trigger a melos version upgrade. ([134fec43](https://github.com/brookman/rusty_chacha/commit/134fec432a081f639bd10cfea3fb8f59732b7f2f))
+
+
+## 2024-04-12
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`rusty_chacha` - `v0.0.2`](#rusty_chacha---v002)
 
 ---

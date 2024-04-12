@@ -1,3 +1,7 @@
+## 0.0.3
+
+ - **FEAT**: try to trigger a melos version upgrade. ([134fec43](https://github.com/brookman/rusty_chacha/commit/134fec432a081f639bd10cfea3fb8f59732b7f2f))
+
 ## 0.0.1+2
 
  - **FIX**: try to manually update release tag in pubspec. ([7943e7e7](https://github.com/brookman/rusty_chacha/commit/7943e7e7dc9c287deff4d02d33a1d8c5f6c76dad))
