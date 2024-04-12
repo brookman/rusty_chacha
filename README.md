@@ -8,7 +8,7 @@
 <img src="https://github.com/brookman/rusty_chacha/blob/main/assets/banner.jpg?raw=true" width="100%" alt="Rusty ChaCha Banner" />
 </p>
 
-# Rusty ChaCha
+# Rusty ChaCha 💃🦀
 
 A Flutter library for fast ChaCha20-Poly1305 encryption, leveraging the capabilities of the
 Rust [chacha20poly1305](https://crates.io/crates/chacha20poly1305) crate.
@@ -19,7 +19,7 @@ Rust [chacha20poly1305](https://crates.io/crates/chacha20poly1305) crate.
 
 ## Features
 
-- ...
+- Encrypt and decrypt data with ChaCha20-Poly1305
 
 ## Getting Started
 
