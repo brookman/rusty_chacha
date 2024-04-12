@@ -1,3 +1,7 @@
+## 0.0.4
+
+ - **FEAT**: simplify API and make it safer. ([1bc116c9](https://github.com/brookman/rusty_chacha/commit/1bc116c9a006d18277e368b1a6b5bc17c6d34774))
+
 ## 0.0.3
 
  - **FEAT**: try to trigger a melos version upgrade. ([134fec43](https://github.com/brookman/rusty_chacha/commit/134fec432a081f639bd10cfea3fb8f59732b7f2f))

@@ -15,6 +15,27 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`rusty_chacha` - `v0.0.4`](#rusty_chacha---v004)
+
+---
+
+#### `rusty_chacha` - `v0.0.4`
+
+ - **FEAT**: simplify API and make it safer. ([1bc116c9](https://github.com/brookman/rusty_chacha/commit/1bc116c9a006d18277e368b1a6b5bc17c6d34774))
+
+
+## 2024-04-12
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`rusty_chacha` - `v0.0.3`](#rusty_chacha---v003)
 
 ---
