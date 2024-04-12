@@ -1,3 +1,8 @@
+## 0.0.1+2
+
+ - **FIX**: try to manually update release tag in pubspec. ([7943e7e7](https://github.com/brookman/rusty_chacha/commit/7943e7e7dc9c287deff4d02d33a1d8c5f6c76dad))
+ - **FIX**: rename podspec files. ([9f3ace16](https://github.com/brookman/rusty_chacha/commit/9f3ace16f3ee2dcfc130cd09dba7522896bf8219))
+
 ## 0.0.1+1
 
  - **FIX**: re-add symlinks. ([8476f67c](https://github.com/brookman/rusty_chacha/commit/8476f67cf1e96ab6c460a029a69be4e12c4b1c48))

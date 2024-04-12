@@ -15,6 +15,28 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`rusty_chacha` - `v0.0.1+2`](#rusty_chacha---v0012)
+
+---
+
+#### `rusty_chacha` - `v0.0.1+2`
+
+ - **FIX**: try to manually update release tag in pubspec. ([7943e7e7](https://github.com/brookman/rusty_chacha/commit/7943e7e7dc9c287deff4d02d33a1d8c5f6c76dad))
+ - **FIX**: rename podspec files. ([9f3ace16](https://github.com/brookman/rusty_chacha/commit/9f3ace16f3ee2dcfc130cd09dba7522896bf8219))
+
+
+## 2024-04-12
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`rusty_chacha` - `v0.0.1+1`](#rusty_chacha---v0011)
 
 ---
