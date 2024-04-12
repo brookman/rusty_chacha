@@ -1,3 +1,7 @@
+## 0.0.1
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
 ## 0.0.1-dev.1
 
  - **FIX**: analyzer and formatting. ([b2ee3495](https://github.com/brookman/rusty_chacha/commit/b2ee3495d9a50e827d13be5ceb6e098efcf2f44b))

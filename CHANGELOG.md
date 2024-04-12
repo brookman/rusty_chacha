@@ -15,6 +15,29 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`rusty_chacha` - `v0.0.1`](#rusty_chacha---v001)
+
+Packages graduated to a stable release (see pre-releases prior to the stable version for changelog entries):
+
+ - `rusty_chacha` - `v0.0.1`
+
+---
+
+#### `rusty_chacha` - `v0.0.1`
+
+
+## 2024-04-12
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`rusty_chacha` - `v0.0.1-dev.1`](#rusty_chacha---v001-dev1)
 
 ---
