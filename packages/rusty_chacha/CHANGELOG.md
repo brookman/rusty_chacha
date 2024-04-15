@@ -1,3 +1,7 @@
+## 0.0.6
+
+ - **FEAT**: add initializer with static linking for iOS and MacOS. ([49baeab4](https://github.com/brookman/rusty_chacha/commit/49baeab454f7ebe4d5813b1776b1ceb51258bd85))
+
 ## 0.0.5
 
  - **FEAT**: improve API, add unity tests. ([a4364d4e](https://github.com/brookman/rusty_chacha/commit/a4364d4e8c2335d58c4ff5775da1755db15f4258))

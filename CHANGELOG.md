@@ -15,6 +15,27 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`rusty_chacha` - `v0.0.6`](#rusty_chacha---v006)
+
+---
+
+#### `rusty_chacha` - `v0.0.6`
+
+ - **FEAT**: add initializer with static linking for iOS and MacOS. ([49baeab4](https://github.com/brookman/rusty_chacha/commit/49baeab454f7ebe4d5813b1776b1ceb51258bd85))
+
+
+## 2024-04-15
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`rusty_chacha` - `v0.0.5`](#rusty_chacha---v005)
 
 ---
