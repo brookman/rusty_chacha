@@ -1,3 +1,7 @@
+## 0.0.5
+
+ - **FEAT**: improve API, add unity tests. ([a4364d4e](https://github.com/brookman/rusty_chacha/commit/a4364d4e8c2335d58c4ff5775da1755db15f4258))
+
 ## 0.0.4
 
  - **FEAT**: simplify API and make it safer. ([1bc116c9](https://github.com/brookman/rusty_chacha/commit/1bc116c9a006d18277e368b1a6b5bc17c6d34774))

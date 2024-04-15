@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-04-15
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`rusty_chacha` - `v0.0.5`](#rusty_chacha---v005)
+
+---
+
+#### `rusty_chacha` - `v0.0.5`
+
+ - **FEAT**: improve API, add unity tests. ([a4364d4e](https://github.com/brookman/rusty_chacha/commit/a4364d4e8c2335d58c4ff5775da1755db15f4258))
+
+
 ## 2024-04-12
 
 ### Changes
