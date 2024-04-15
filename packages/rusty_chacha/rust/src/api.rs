@@ -13,7 +13,6 @@ pub fn generate_cha_cha_20_key() -> Vec<u8> {
 /// Important: A nonce must only be used once.
 /// Do not encrypt multiple pieces of data with the same nonce.
 pub fn generate_cha_cha_20_nonce() -> Vec<u8> {
-    // must be unique per piece of data!
     ChaCha20Poly1305::generate_nonce(&mut OsRng).to_vec()
 }
 
