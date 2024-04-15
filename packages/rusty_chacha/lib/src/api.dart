@@ -4,88 +4,61 @@
 // ignore_for_file: invalid_use_of_internal_member, unused_import, unnecessary_import
 
 import 'frb_generated.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
-Future<U8Array32> generateRandomChaCha20Key({dynamic hint}) =>
-    RustLib.instance.api.generateRandomChaCha20Key(hint: hint);
+Future<Uint8List> generateChaCha20Key({dynamic hint}) =>
+    RustLib.instance.api.generateChaCha20Key(hint: hint);
 
-Future<U8Array12> generateRandomChaCha20Nonce({dynamic hint}) =>
-    RustLib.instance.api.generateRandomChaCha20Nonce(hint: hint);
+/// Important: A nonce must only be used once.
+/// Do not encrypt multiple pieces of data with the same nonce.
+Future<Uint8List> generateChaCha20Nonce({dynamic hint}) =>
+    RustLib.instance.api.generateChaCha20Nonce(hint: hint);
 
-Future<Key> generateKey({dynamic hint}) =>
-    RustLib.instance.api.generateKey(hint: hint);
+/// Encrypts `cleartext` using the given ChaCha20 `key` (32 bytes).
+/// A randomly generated nonce is prepended to the result (first 12 bytes).
+Future<Uint8List> encrypt(
+        {required List<int> key,
+        required List<int> cleartext,
+        Uint8List? aad,
+        dynamic hint}) =>
+    RustLib.instance.api
+        .encrypt(key: key, cleartext: cleartext, aad: aad, hint: hint);
 
-Future<Uint8List> readFile({required String filePath, dynamic hint}) =>
-    RustLib.instance.api.readFile(filePath: filePath, hint: hint);
+/// Decrypts `ciphertext` using the given ChaCha20 `key` (32 bytes).
+/// The first 12 bytes of the `ciphertext` must contain the nonce.
+/// This is already the case when using `encrypt()`.
+Future<Uint8List> decrypt(
+        {required List<int> key,
+        required List<int> ciphertext,
+        Uint8List? aad,
+        dynamic hint}) =>
+    RustLib.instance.api
+        .decrypt(key: key, ciphertext: ciphertext, aad: aad, hint: hint);
+
+Future<void> encryptToFile(
+        {required List<int> key,
+        required List<int> cleartext,
+        required String filePath,
+        Uint8List? aad,
+        dynamic hint}) =>
+    RustLib.instance.api.encryptToFile(
+        key: key,
+        cleartext: cleartext,
+        filePath: filePath,
+        aad: aad,
+        hint: hint);
+
+Future<Uint8List> decryptFromFile(
+        {required List<int> key,
+        required String filePath,
+        Uint8List? aad,
+        dynamic hint}) =>
+    RustLib.instance.api
+        .decryptFromFile(key: key, filePath: filePath, aad: aad, hint: hint);
 
 Future<void> writeFile(
         {required List<int> data, required String filePath, dynamic hint}) =>
     RustLib.instance.api.writeFile(data: data, filePath: filePath, hint: hint);
 
-Future<Uint8List> encrypt(
-        {required Key key, required List<int> cleartext, dynamic hint}) =>
-    RustLib.instance.api.encrypt(key: key, cleartext: cleartext, hint: hint);
-
-Future<Uint8List> decrypt(
-        {required Key key, required List<int> encrypted, dynamic hint}) =>
-    RustLib.instance.api.decrypt(key: key, encrypted: encrypted, hint: hint);
-
-Future<void> encryptAndWriteToFile(
-        {required Key key,
-        required List<int> cleartext,
-        required String filePath,
-        dynamic hint}) =>
-    RustLib.instance.api.encryptAndWriteToFile(
-        key: key, cleartext: cleartext, filePath: filePath, hint: hint);
-
-Future<Uint8List> readFromFileAndDecrypt(
-        {required Key key, required String filePath, dynamic hint}) =>
-    RustLib.instance.api
-        .readFromFileAndDecrypt(key: key, filePath: filePath, hint: hint);
-
-// Rust type: RustOpaqueNom<flutter_rust_bridge::for_generated::rust_async::RwLock<Key>>
-@sealed
-class Key extends RustOpaque {
-  Key.dcoDecode(List<dynamic> wire) : super.dcoDecode(wire, _kStaticData);
-
-  Key.sseDecode(int ptr, int externalSizeOnNative)
-      : super.sseDecode(ptr, externalSizeOnNative, _kStaticData);
-
-  static final _kStaticData = RustArcStaticData(
-    rustArcIncrementStrongCount:
-        RustLib.instance.api.rust_arc_increment_strong_count_Key,
-    rustArcDecrementStrongCount:
-        RustLib.instance.api.rust_arc_decrement_strong_count_Key,
-    rustArcDecrementStrongCountPtr:
-        RustLib.instance.api.rust_arc_decrement_strong_count_KeyPtr,
-  );
-}
-
-class U8Array12 extends NonGrowableListView<int> {
-  static const arraySize = 12;
-
-  @internal
-  Uint8List get inner => _inner;
-  final Uint8List _inner;
-
-  U8Array12(this._inner)
-      : assert(_inner.length == arraySize),
-        super(_inner);
-
-  U8Array12.init() : this(Uint8List(arraySize));
-}
-
-class U8Array32 extends NonGrowableListView<int> {
-  static const arraySize = 32;
-
-  @internal
-  Uint8List get inner => _inner;
-  final Uint8List _inner;
-
-  U8Array32(this._inner)
-      : assert(_inner.length == arraySize),
-        super(_inner);
-
-  U8Array32.init() : this(Uint8List(arraySize));
-}
+Future<Uint8List> readFile({required String filePath, dynamic hint}) =>
+    RustLib.instance.api.readFile(filePath: filePath, hint: hint);
