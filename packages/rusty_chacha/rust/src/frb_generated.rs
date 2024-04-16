@@ -92,6 +92,7 @@ fn wire_encrypt_impl(
     key: impl CstDecode<Vec<u8>>,
     cleartext: impl CstDecode<Vec<u8>>,
     aad: impl CstDecode<Option<Vec<u8>>>,
+    zstd_compression_level: impl CstDecode<Option<i32>>,
 ) {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
         flutter_rust_bridge::for_generated::TaskInfo {
@@ -103,9 +104,10 @@ fn wire_encrypt_impl(
             let api_key = key.cst_decode();
             let api_cleartext = cleartext.cst_decode();
             let api_aad = aad.cst_decode();
+            let api_zstd_compression_level = zstd_compression_level.cst_decode();
             move |context| {
                 transform_result_dco((move || {
-                    crate::api::encrypt(api_key, api_cleartext, api_aad)
+                    crate::api::encrypt(api_key, api_cleartext, api_aad, api_zstd_compression_level)
                 })())
             }
         },
@@ -117,6 +119,7 @@ fn wire_encrypt_to_file_impl(
     cleartext: impl CstDecode<Vec<u8>>,
     file_path: impl CstDecode<String>,
     aad: impl CstDecode<Option<Vec<u8>>>,
+    zstd_compression_level: impl CstDecode<Option<i32>>,
 ) {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
         flutter_rust_bridge::for_generated::TaskInfo {
@@ -129,9 +132,16 @@ fn wire_encrypt_to_file_impl(
             let api_cleartext = cleartext.cst_decode();
             let api_file_path = file_path.cst_decode();
             let api_aad = aad.cst_decode();
+            let api_zstd_compression_level = zstd_compression_level.cst_decode();
             move |context| {
                 transform_result_dco((move || {
-                    crate::api::encrypt_to_file(api_key, api_cleartext, api_file_path, api_aad)
+                    crate::api::encrypt_to_file(
+                        api_key,
+                        api_cleartext,
+                        api_file_path,
+                        api_aad,
+                        api_zstd_compression_level,
+                    )
                 })())
             }
         },
@@ -208,6 +218,12 @@ fn wire_write_file_impl(
 
 // Section: dart2rust
 
+impl CstDecode<i32> for i32 {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    fn cst_decode(self) -> i32 {
+        self
+    }
+}
 impl CstDecode<u8> for u8 {
     // Codec=Cst (C-struct based), see doc to use other codecs
     fn cst_decode(self) -> u8 {
@@ -229,6 +245,13 @@ impl SseDecode for String {
     }
 }
 
+impl SseDecode for i32 {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        deserializer.cursor.read_i32::<NativeEndian>().unwrap()
+    }
+}
+
 impl SseDecode for Vec<u8> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -238,6 +261,17 @@ impl SseDecode for Vec<u8> {
             ans_.push(<u8>::sse_decode(deserializer));
         }
         return ans_;
+    }
+}
+
+impl SseDecode for Option<i32> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        if (<bool>::sse_decode(deserializer)) {
+            return Some(<i32>::sse_decode(deserializer));
+        } else {
+            return None;
+        }
     }
 }
 
@@ -262,13 +296,6 @@ impl SseDecode for u8 {
 impl SseDecode for () {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {}
-}
-
-impl SseDecode for i32 {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        deserializer.cursor.read_i32::<NativeEndian>().unwrap()
-    }
 }
 
 impl SseDecode for bool {
@@ -319,12 +346,29 @@ impl SseEncode for String {
     }
 }
 
+impl SseEncode for i32 {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        serializer.cursor.write_i32::<NativeEndian>(self).unwrap();
+    }
+}
+
 impl SseEncode for Vec<u8> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
         <i32>::sse_encode(self.len() as _, serializer);
         for item in self {
             <u8>::sse_encode(item, serializer);
+        }
+    }
+}
+
+impl SseEncode for Option<i32> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <bool>::sse_encode(self.is_some(), serializer);
+        if let Some(value) = self {
+            <i32>::sse_encode(value, serializer);
         }
     }
 }
@@ -349,13 +393,6 @@ impl SseEncode for u8 {
 impl SseEncode for () {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {}
-}
-
-impl SseEncode for i32 {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        serializer.cursor.write_i32::<NativeEndian>(self).unwrap();
-    }
 }
 
 impl SseEncode for bool {

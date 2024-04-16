@@ -81,6 +81,7 @@ abstract class RustLibApi extends BaseApi {
       {required List<int> key,
       required List<int> cleartext,
       Uint8List? aad,
+      int? zstdCompressionLevel,
       dynamic hint});
 
   Future<void> encryptToFile(
@@ -88,6 +89,7 @@ abstract class RustLibApi extends BaseApi {
       required List<int> cleartext,
       required String filePath,
       Uint8List? aad,
+      int? zstdCompressionLevel,
       dynamic hint});
 
   Future<Uint8List> generateChaCha20Key({dynamic hint});
@@ -171,20 +173,22 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       {required List<int> key,
       required List<int> cleartext,
       Uint8List? aad,
+      int? zstdCompressionLevel,
       dynamic hint}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
         var arg0 = cst_encode_list_prim_u_8_loose(key);
         var arg1 = cst_encode_list_prim_u_8_loose(cleartext);
         var arg2 = cst_encode_opt_list_prim_u_8_strict(aad);
-        return wire.wire_encrypt(port_, arg0, arg1, arg2);
+        var arg3 = cst_encode_opt_box_autoadd_i_32(zstdCompressionLevel);
+        return wire.wire_encrypt(port_, arg0, arg1, arg2, arg3);
       },
       codec: DcoCodec(
         decodeSuccessData: dco_decode_list_prim_u_8_strict,
         decodeErrorData: dco_decode_AnyhowException,
       ),
       constMeta: kEncryptConstMeta,
-      argValues: [key, cleartext, aad],
+      argValues: [key, cleartext, aad, zstdCompressionLevel],
       apiImpl: this,
       hint: hint,
     ));
@@ -192,7 +196,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kEncryptConstMeta => const TaskConstMeta(
         debugName: "encrypt",
-        argNames: ["key", "cleartext", "aad"],
+        argNames: ["key", "cleartext", "aad", "zstdCompressionLevel"],
       );
 
   @override
@@ -201,6 +205,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       required List<int> cleartext,
       required String filePath,
       Uint8List? aad,
+      int? zstdCompressionLevel,
       dynamic hint}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
@@ -208,14 +213,15 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         var arg1 = cst_encode_list_prim_u_8_loose(cleartext);
         var arg2 = cst_encode_String(filePath);
         var arg3 = cst_encode_opt_list_prim_u_8_strict(aad);
-        return wire.wire_encrypt_to_file(port_, arg0, arg1, arg2, arg3);
+        var arg4 = cst_encode_opt_box_autoadd_i_32(zstdCompressionLevel);
+        return wire.wire_encrypt_to_file(port_, arg0, arg1, arg2, arg3, arg4);
       },
       codec: DcoCodec(
         decodeSuccessData: dco_decode_unit,
         decodeErrorData: dco_decode_AnyhowException,
       ),
       constMeta: kEncryptToFileConstMeta,
-      argValues: [key, cleartext, filePath, aad],
+      argValues: [key, cleartext, filePath, aad, zstdCompressionLevel],
       apiImpl: this,
       hint: hint,
     ));
@@ -223,7 +229,13 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kEncryptToFileConstMeta => const TaskConstMeta(
         debugName: "encrypt_to_file",
-        argNames: ["key", "cleartext", "filePath", "aad"],
+        argNames: [
+          "key",
+          "cleartext",
+          "filePath",
+          "aad",
+          "zstdCompressionLevel"
+        ],
       );
 
   @override
@@ -331,6 +343,18 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  int dco_decode_box_autoadd_i_32(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return raw as int;
+  }
+
+  @protected
+  int dco_decode_i_32(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return raw as int;
+  }
+
+  @protected
   List<int> dco_decode_list_prim_u_8_loose(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw as List<int>;
@@ -340,6 +364,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   Uint8List dco_decode_list_prim_u_8_strict(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw as Uint8List;
+  }
+
+  @protected
+  int? dco_decode_opt_box_autoadd_i_32(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return raw == null ? null : dco_decode_box_autoadd_i_32(raw);
   }
 
   @protected
@@ -375,6 +405,18 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  int sse_decode_box_autoadd_i_32(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_i_32(deserializer));
+  }
+
+  @protected
+  int sse_decode_i_32(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return deserializer.buffer.getInt32();
+  }
+
+  @protected
   List<int> sse_decode_list_prim_u_8_loose(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     var len_ = sse_decode_i_32(deserializer);
@@ -386,6 +428,17 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     // Codec=Sse (Serialization based), see doc to use other codecs
     var len_ = sse_decode_i_32(deserializer);
     return deserializer.buffer.getUint8List(len_);
+  }
+
+  @protected
+  int? sse_decode_opt_box_autoadd_i_32(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    if (sse_decode_bool(deserializer)) {
+      return (sse_decode_box_autoadd_i_32(deserializer));
+    } else {
+      return null;
+    }
   }
 
   @protected
@@ -411,15 +464,15 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  int sse_decode_i_32(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return deserializer.buffer.getInt32();
-  }
-
-  @protected
   bool sse_decode_bool(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return deserializer.buffer.getUint8() != 0;
+  }
+
+  @protected
+  int cst_encode_i_32(int raw) {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    return raw;
   }
 
   @protected
@@ -448,6 +501,18 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_box_autoadd_i_32(int self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self, serializer);
+  }
+
+  @protected
+  void sse_encode_i_32(int self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    serializer.buffer.putInt32(self);
+  }
+
+  @protected
   void sse_encode_list_prim_u_8_loose(
       List<int> self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
@@ -462,6 +527,16 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_i_32(self.length, serializer);
     serializer.buffer.putUint8List(self);
+  }
+
+  @protected
+  void sse_encode_opt_box_autoadd_i_32(int? self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    sse_encode_bool(self != null, serializer);
+    if (self != null) {
+      sse_encode_box_autoadd_i_32(self, serializer);
+    }
   }
 
   @protected
@@ -484,12 +559,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   @protected
   void sse_encode_unit(void self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-  }
-
-  @protected
-  void sse_encode_i_32(int self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    serializer.buffer.putInt32(self);
   }
 
   @protected

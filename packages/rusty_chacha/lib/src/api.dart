@@ -16,13 +16,20 @@ Future<Uint8List> generateChaCha20Nonce({dynamic hint}) =>
 
 /// Encrypts `cleartext` using the given ChaCha20 `key` (32 bytes).
 /// A randomly generated nonce is prepended to the result (first 12 bytes).
+/// Optionally providing a zstd_compression_level will compress `cleartext`
+/// before encryption (using ZSTD).
 Future<Uint8List> encrypt(
         {required List<int> key,
         required List<int> cleartext,
         Uint8List? aad,
+        int? zstdCompressionLevel,
         dynamic hint}) =>
-    RustLib.instance.api
-        .encrypt(key: key, cleartext: cleartext, aad: aad, hint: hint);
+    RustLib.instance.api.encrypt(
+        key: key,
+        cleartext: cleartext,
+        aad: aad,
+        zstdCompressionLevel: zstdCompressionLevel,
+        hint: hint);
 
 /// Decrypts `ciphertext` using the given ChaCha20 `key` (32 bytes).
 /// The first 12 bytes of the `ciphertext` must contain the nonce.
@@ -40,12 +47,14 @@ Future<void> encryptToFile(
         required List<int> cleartext,
         required String filePath,
         Uint8List? aad,
+        int? zstdCompressionLevel,
         dynamic hint}) =>
     RustLib.instance.api.encryptToFile(
         key: key,
         cleartext: cleartext,
         filePath: filePath,
         aad: aad,
+        zstdCompressionLevel: zstdCompressionLevel,
         hint: hint);
 
 Future<Uint8List> decryptFromFile(

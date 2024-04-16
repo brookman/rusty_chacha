@@ -37,13 +37,15 @@ void frbgen_rusty_chacha_wire_decrypt_from_file(int64_t port_,
 void frbgen_rusty_chacha_wire_encrypt(int64_t port_,
                                       struct wire_cst_list_prim_u_8_loose *key,
                                       struct wire_cst_list_prim_u_8_loose *cleartext,
-                                      struct wire_cst_list_prim_u_8_strict *aad);
+                                      struct wire_cst_list_prim_u_8_strict *aad,
+                                      int32_t *zstd_compression_level);
 
 void frbgen_rusty_chacha_wire_encrypt_to_file(int64_t port_,
                                               struct wire_cst_list_prim_u_8_loose *key,
                                               struct wire_cst_list_prim_u_8_loose *cleartext,
                                               struct wire_cst_list_prim_u_8_strict *file_path,
-                                              struct wire_cst_list_prim_u_8_strict *aad);
+                                              struct wire_cst_list_prim_u_8_strict *aad,
+                                              int32_t *zstd_compression_level);
 
 void frbgen_rusty_chacha_wire_generate_cha_cha_20_key(int64_t port_);
 
@@ -56,11 +58,14 @@ void frbgen_rusty_chacha_wire_write_file(int64_t port_,
                                          struct wire_cst_list_prim_u_8_loose *data,
                                          struct wire_cst_list_prim_u_8_strict *file_path);
 
+int32_t *frbgen_rusty_chacha_cst_new_box_autoadd_i_32(int32_t value);
+
 struct wire_cst_list_prim_u_8_loose *frbgen_rusty_chacha_cst_new_list_prim_u_8_loose(int32_t len);
 
 struct wire_cst_list_prim_u_8_strict *frbgen_rusty_chacha_cst_new_list_prim_u_8_strict(int32_t len);
 static int64_t dummy_method_to_enforce_bundling(void) {
     int64_t dummy_var = 0;
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_cst_new_box_autoadd_i_32);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_cst_new_list_prim_u_8_loose);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_cst_new_list_prim_u_8_strict);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_wire_decrypt);

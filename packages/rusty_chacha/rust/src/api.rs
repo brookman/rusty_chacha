@@ -18,9 +18,23 @@ pub fn generate_cha_cha_20_nonce() -> Vec<u8> {
 
 /// Encrypts `cleartext` using the given ChaCha20 `key` (32 bytes).
 /// A randomly generated nonce is prepended to the result (first 12 bytes).
-pub fn encrypt(key: Vec<u8>, cleartext: Vec<u8>, aad: Option<Vec<u8>>) -> Result<Vec<u8>> {
+/// Optionally providing a zstd_compression_level will compress `cleartext`
+/// before encryption (using ZSTD).
+pub fn encrypt(
+    key: Vec<u8>,
+    cleartext: Vec<u8>,
+    aad: Option<Vec<u8>>,
+    zstd_compression_level: Option<i32>,
+) -> Result<Vec<u8>> {
     let aad = aad.unwrap_or_default();
     let nonce = generate_cha_cha_20_nonce();
+
+    let cleartext = if let Some(level) = zstd_compression_level {
+        zstd::stream::encode_all(cleartext.as_slice(), level)?
+    } else {
+        cleartext
+    };
+
     let cipertext = encrypt_internal(&key, &cleartext, &aad, &nonce)?;
 
     let mut result = vec![];
@@ -41,7 +55,17 @@ pub fn decrypt(key: Vec<u8>, ciphertext: Vec<u8>, aad: Option<Vec<u8>>) -> Resul
     let nonce = &ciphertext[..12]; // the first 12 bytes
     let ciphertext = &ciphertext[12..]; // the rest
 
-    decrypt_internal(&key, ciphertext, &aad, nonce)
+    let mut cleartext = decrypt_internal(&key, ciphertext, &aad, nonce)?;
+
+    // Check if the cleartext starts with the ZSTD magic number and try to decompress it.
+    // In case decompression fails we just return the original data
+    if cleartext.len() > 4 && cleartext[..4] == [0x28, 0xB5, 0x2F, 0xFD] {
+        if let Ok(decompressed) = zstd::stream::decode_all(cleartext.as_slice()) {
+            cleartext = decompressed;
+        }
+    }
+
+    Ok(cleartext)
 }
 
 fn encrypt_internal(key: &[u8], cleartext: &[u8], aad: &[u8], nonce: &[u8]) -> Result<Vec<u8>> {
@@ -83,8 +107,12 @@ pub fn encrypt_to_file(
     cleartext: Vec<u8>,
     file_path: String,
     aad: Option<Vec<u8>>,
+    zstd_compression_level: Option<i32>,
 ) -> Result<()> {
-    write_file(encrypt(key, cleartext, aad)?, file_path)
+    write_file(
+        encrypt(key, cleartext, aad, zstd_compression_level)?,
+        file_path,
+    )
 }
 
 pub fn decrypt_from_file(key: Vec<u8>, file_path: String, aad: Option<Vec<u8>>) -> Result<Vec<u8>> {
@@ -111,7 +139,7 @@ mod tests {
         let original_cleartext = vec![1, 2, 3];
         let key = generate_cha_cha_20_key();
 
-        let ciphertext = encrypt(key.clone(), original_cleartext.clone(), None).unwrap();
+        let ciphertext = encrypt(key.clone(), original_cleartext.clone(), None, None).unwrap();
         assert_eq!(ciphertext.len(), 3 + 12 + 16); // 12 bytes nonce + 16 bytes MAC
         let cleartext = decrypt(key, ciphertext, None).unwrap();
         assert_eq!(cleartext, original_cleartext);
@@ -123,8 +151,13 @@ mod tests {
         let aad = vec![4, 5, 6];
         let key = generate_cha_cha_20_key();
 
-        let ciphertext =
-            encrypt(key.clone(), original_cleartext.clone(), Some(aad.clone())).unwrap();
+        let ciphertext = encrypt(
+            key.clone(),
+            original_cleartext.clone(),
+            Some(aad.clone()),
+            None,
+        )
+        .unwrap();
         let cleartext = decrypt(key, ciphertext, Some(aad.clone())).unwrap();
         assert_eq!(cleartext, original_cleartext);
     }
@@ -140,6 +173,7 @@ mod tests {
             original_cleartext.clone(),
             file_path.clone(),
             None,
+            None,
         )
         .unwrap();
         let cleartext = decrypt_from_file(key.clone(), file_path, None).unwrap();
@@ -153,7 +187,7 @@ mod tests {
         let mut key2 = key.clone();
         key2[0] = (key2[0] + 1) % 255; // change byte 0
 
-        let ciphertext = encrypt(key.clone(), original_cleartext.clone(), None).unwrap();
+        let ciphertext = encrypt(key.clone(), original_cleartext.clone(), None, None).unwrap();
         let result = decrypt(key2, ciphertext, None);
         assert_eq!(result.is_err(), true);
     }
@@ -165,8 +199,13 @@ mod tests {
         let aad2 = vec![7, 8, 9];
         let key = generate_cha_cha_20_key();
 
-        let ciphertext =
-            encrypt(key.clone(), original_cleartext.clone(), Some(aad.clone())).unwrap();
+        let ciphertext = encrypt(
+            key.clone(),
+            original_cleartext.clone(),
+            Some(aad.clone()),
+            None,
+        )
+        .unwrap();
         let result = decrypt(key, ciphertext, Some(aad2.clone()));
         assert_eq!(result.is_err(), true);
     }
@@ -185,7 +224,37 @@ mod tests {
         let original_cleartext = vec![1, 2, 3];
         let key = vec![1, 2, 3, 4, 5, 6, 7];
 
-        let result = encrypt(key.clone(), original_cleartext.clone(), None);
+        let result = encrypt(key.clone(), original_cleartext.clone(), None, None);
         assert_eq!(result.is_err(), true);
+    }
+
+    #[test]
+    fn compression_decompression_works() {
+        // create some compressible data
+        let mut original_cleartext = vec![0; 10000];
+        original_cleartext[123] = 255;
+        original_cleartext[5000] = 22;
+        original_cleartext[7004] = 54;
+
+        let key = generate_cha_cha_20_key();
+
+        // test different compression levels
+        for i in -10..21 {
+            let ciphertext =
+                encrypt(key.clone(), original_cleartext.clone(), None, Some(i)).unwrap();
+            assert_eq!(ciphertext.len() < original_cleartext.len(), true); // should get smaller
+            let cleartext = decrypt(key.clone(), ciphertext, None).unwrap();
+            assert_eq!(cleartext, original_cleartext);
+        }
+    }
+
+    #[test]
+    fn decrypt_works_when_cleartext_starts_with_zstd_magic_bytes() {
+        let original_cleartext = vec![0x28, 0xB5, 0x2F, 0xFD, 0, 1, 2, 3, 4];
+        let key = generate_cha_cha_20_key();
+
+        let ciphertext = encrypt(key.clone(), original_cleartext.clone(), None, None).unwrap();
+        let cleartext = decrypt(key, ciphertext, None).unwrap();
+        assert_eq!(cleartext, original_cleartext);
     }
 }
