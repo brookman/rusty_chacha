@@ -7,9 +7,9 @@ edition = "2021"
 crate-type = ["staticlib", "cdylib"]
 
 [build-dependencies]
-flutter_rust_bridge_codegen = "2.0.0-dev.31"
+flutter_rust_bridge_codegen = "2.0.0-dev.32"
 
 [dependencies]
 anyhow = "1.0.80"
-flutter_rust_bridge = "=2.0.0-dev.31"
+flutter_rust_bridge = "=2.0.0-dev.32"
 chacha20poly1305 = "0.10.1"
