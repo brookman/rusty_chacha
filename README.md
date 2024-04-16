@@ -19,11 +19,60 @@ Rust [chacha20poly1305](https://crates.io/crates/chacha20poly1305) crate.
 
 ## Features
 
-- Encrypt and decrypt data with ChaCha20-Poly1305
+- Encrypt and decrypt data with ChaCha20-Poly1305 (authenticated)
+- [Additional authenticated data (AAD)](https://en.wikipedia.org/wiki/Authenticated_encryption)
+- Optional compression using [zstd](https://en.wikipedia.org/wiki/Zstd)
+
+## Blazingly fast 🔥
+
+Thanks to Rust encryption and decryption with ChaCha20-Poly1305 run with at 500-1000 MiB/s.
+This is up to *50x* faster than packages like [cryptography_flutter](https://pub.dev/packages/cryptography_flutter) or [pointycastle](https://pub.dev/packages/pointycastle).
 
 ## Getting Started
 
 - With Flutter, run `flutter pub add rusty_chacha`
+
+## Usage
+
+```dart
+import 'package:rusty_chacha/rusty_chacha.dart';
+
+main() async {
+  await RustyChaCha.init();
+
+
+  final key = await generateChaCha20Key(); // generate a random key
+  final myData = Uint8List.fromList([1, 2, 3, 4, 5]);
+
+
+  // basic example:
+  final myEncryptedData = await encrypt(key: key, cleartext: myData);
+  final myDataAgain1 = await decrypt(key: key, ciphertext: myEncryptedData);
+
+
+  // compression example:
+  final myCompressedAndEncryptedData = await encrypt(
+    key: key,
+    cleartext: myData,
+    zstdCompressionLevel: 3, // moderate compression
+  );
+  final myDataAgain2 = await decrypt(key: key, ciphertext: myCompressedAndEncryptedData);
+
+
+  // AAD example:
+  final additionalData = Uint8List.fromList([1, 2, 3]); // some additional (non-secret) data
+  final myEncryptedDataWithAad = await encrypt(
+    key: key,
+    cleartext: myData,
+    aad: additionalData, // pass it in when encrypting
+  );
+  final myDataAgain3 = await decrypt(
+    key: key,
+    ciphertext: myEncryptedDataWithAad,
+    aad: additionalData, // pass it in to decrypt (decrypt will fail if additionalData is not the same)
+  );
+}
+```
 
 ## Supported platforms (for now)
 
