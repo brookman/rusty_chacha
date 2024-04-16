@@ -1,3 +1,9 @@
+## 0.1.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: add optional compression with ZSTD. ([147131ad](https://github.com/brookman/rusty_chacha/commit/147131adf74ffbc6e7b4f769ad27a6bf1646bd2e))
+
 ## 0.0.6
 
  - **FEAT**: add initializer with static linking for iOS and MacOS. ([49baeab4](https://github.com/brookman/rusty_chacha/commit/49baeab454f7ebe4d5813b1776b1ceb51258bd85))

@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-04-16
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`rusty_chacha` - `v0.1.0`](#rusty_chacha---v010)
+
+Packages with other changes:
+
+ - There are no other changes in this release.
+
+---
+
+#### `rusty_chacha` - `v0.1.0`
+
+ - **BREAKING** **FEAT**: add optional compression with ZSTD. ([147131ad](https://github.com/brookman/rusty_chacha/commit/147131adf74ffbc6e7b4f769ad27a6bf1646bd2e))
+
+
 ## 2024-04-15
 
 ### Changes
