@@ -128,6 +128,38 @@ pub fn read_file(file_path: String) -> Result<Vec<u8>> {
     Ok(fs::read(file_path)?)
 }
 
+// pub fn compress_to_stream_experimental(
+//     data: Vec<u8>,
+//     sink: StreamSink<Vec<u8>>,
+//     zstd_compression_level: Option<i32>,
+// ) -> Result<()> {
+//     let mut reader = BufReader::new(Cursor::new(data));
+//     let mut writer = BufWriter::new(sink);
+
+//     if let Some(level) = zstd_compression_level {
+//         zstd::stream::copy_encode(&mut reader, &mut writer, level)?;
+//     } else {
+//         io::copy(&mut reader, &mut writer)?;
+//     };
+
+//     Ok(())
+// }
+
+// impl Write for StreamSink<Vec<u8>> {
+//     fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
+//         let data = buf.to_vec();
+//         match self.add(data) {
+//             Ok(_) => Ok(buf.len()),
+//             Err(e) => Err(io::Error::new(io::ErrorKind::Other, e.to_string())),
+//         }
+//     }
+
+//     fn flush(&mut self) -> io::Result<()> {
+//         // Assuming there's no explicit flush mechanism in StreamSink
+//         Ok(())
+//     }
+// }
+
 #[cfg(test)]
 mod tests {
     use crate::api::{
