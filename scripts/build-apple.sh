@@ -16,6 +16,9 @@ do
     cargo build -r --target=$TARGET
 done
 
+# List all files from target/aarch64-apple-darwin
+ls -Rh ../target/aarch64-apple-darwin
+
 # Create XCFramework zip
 FRAMEWORK="EmbeddedRustyChacha.xcframework"
 LIBNAME=libembedded_rusty_chacha.a
