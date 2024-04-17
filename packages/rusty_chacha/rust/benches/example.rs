@@ -2,8 +2,34 @@ use divan::{counter::BytesCount, Bencher};
 use embedded_rusty_chacha::api::{
     decrypt, decrypt_from_file, encrypt, encrypt_to_file, generate_cha_cha_20_key,
 };
+use sysinfo::System;
 
 fn main() {
+    let mut sys = System::new_all();
+    sys.refresh_all();
+
+    println!("=> System info");
+    println!(
+        "System name          : {}",
+        System::name().unwrap_or_default()
+    );
+    println!(
+        "System kernel version: {}",
+        System::kernel_version().unwrap_or_default()
+    );
+    println!(
+        "System OS version    : {}",
+        System::os_version().unwrap_or_default()
+    );
+    println!("Total memory         : {} bytes", sys.total_memory());
+    println!("Used memory          : {} bytes", sys.used_memory());
+    println!("Total swap           : {} bytes", sys.total_swap());
+    println!("Used swap            : {} bytes", sys.used_swap());
+    println!("Number of CPUs       : {}", sys.cpus().len());
+    for cpu in sys.cpus() {
+        println!("                       {}", cpu.brand());
+    }
+
     divan::main();
 }
 
