@@ -15,6 +15,27 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`rusty_chacha` - `v0.1.1-dev.1`](#rusty_chacha---v011-dev1)
+
+---
+
+#### `rusty_chacha` - `v0.1.1-dev.1`
+
+ - **FEAT**: update example. ([e8c6d23a](https://github.com/brookman/rusty_chacha/commit/e8c6d23aa3e308dc85e0c21ff5db80b641d4db8d))
+
+
+## 2024-04-17
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`rusty_chacha` - `v0.1.1-dev.0`](#rusty_chacha---v011-dev0)
 
 ---
