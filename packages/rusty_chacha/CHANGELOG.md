@@ -1,3 +1,10 @@
+## 0.1.1-dev.0
+
+ - **FIX**: try to disable build.rs in benchmarks. ([8f9cc32d](https://github.com/brookman/rusty_chacha/commit/8f9cc32d5ea7ccefc2cc20a4583a308ce1dfc77b))
+ - **FEAT**: add some (commented) experiments. ([fa488d05](https://github.com/brookman/rusty_chacha/commit/fa488d059d3e74baea8dbbfa6b8ff3bc5be02d67))
+ - **FEAT**: add more benchmarks. ([f7f322a2](https://github.com/brookman/rusty_chacha/commit/f7f322a2e5ae1cf72177defd79625d8967c7c35f))
+ - **FEAT**: print system info before benchmaks. ([24429181](https://github.com/brookman/rusty_chacha/commit/24429181c1e439445e0d11570aec1d84ae68e9b2))
+
 ## 0.1.0
 
 > Note: This release has breaking changes.
