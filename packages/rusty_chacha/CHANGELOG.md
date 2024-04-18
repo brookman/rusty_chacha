@@ -1,3 +1,7 @@
+## 0.1.1-dev.1
+
+ - **FEAT**: update example. ([e8c6d23a](https://github.com/brookman/rusty_chacha/commit/e8c6d23aa3e308dc85e0c21ff5db80b641d4db8d))
+
 ## 0.1.1-dev.0
 
  - **FIX**: try to disable build.rs in benchmarks. ([8f9cc32d](https://github.com/brookman/rusty_chacha/commit/8f9cc32d5ea7ccefc2cc20a4583a308ce1dfc77b))
