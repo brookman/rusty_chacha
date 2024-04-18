@@ -71,3 +71,13 @@ Future<void> writeFile(
 
 Future<Uint8List> readFile({required String filePath, dynamic hint}) =>
     RustLib.instance.api.readFile(filePath: filePath, hint: hint);
+
+Future<Uint8List> compress(
+        {required List<int> data,
+        required int zstdCompressionLevel,
+        dynamic hint}) =>
+    RustLib.instance.api.compress(
+        data: data, zstdCompressionLevel: zstdCompressionLevel, hint: hint);
+
+Future<Uint8List> decompress({required List<int> data, dynamic hint}) =>
+    RustLib.instance.api.decompress(data: data, hint: hint);

@@ -218,6 +218,45 @@ class RustLibWire implements BaseWire {
   late final _store_dart_post_cobject = _store_dart_post_cobjectPtr
       .asFunction<void Function(DartPostCObjectFnType)>();
 
+  void wire_compress(
+    int port_,
+    ffi.Pointer<wire_cst_list_prim_u_8_loose> data,
+    int zstd_compression_level,
+  ) {
+    return _wire_compress(
+      port_,
+      data,
+      zstd_compression_level,
+    );
+  }
+
+  late final _wire_compressPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ffi.Int64,
+              ffi.Pointer<wire_cst_list_prim_u_8_loose>,
+              ffi.Int32)>>('frbgen_rusty_chacha_wire_compress');
+  late final _wire_compress = _wire_compressPtr.asFunction<
+      void Function(int, ffi.Pointer<wire_cst_list_prim_u_8_loose>, int)>();
+
+  void wire_decompress(
+    int port_,
+    ffi.Pointer<wire_cst_list_prim_u_8_loose> data,
+  ) {
+    return _wire_decompress(
+      port_,
+      data,
+    );
+  }
+
+  late final _wire_decompressPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Int64, ffi.Pointer<wire_cst_list_prim_u_8_loose>)>>(
+      'frbgen_rusty_chacha_wire_decompress');
+  late final _wire_decompress = _wire_decompressPtr.asFunction<
+      void Function(int, ffi.Pointer<wire_cst_list_prim_u_8_loose>)>();
+
   void wire_decrypt(
     int port_,
     ffi.Pointer<wire_cst_list_prim_u_8_loose> key,

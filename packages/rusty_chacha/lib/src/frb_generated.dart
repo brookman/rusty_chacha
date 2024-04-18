@@ -54,7 +54,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
   String get codegenVersion => '2.0.0-dev.32';
 
   @override
-  int get rustContentHash => -661496614;
+  int get rustContentHash => -1380020171;
 
   static const kDefaultExternalLibraryLoaderConfig =
       ExternalLibraryLoaderConfig(
@@ -65,6 +65,13 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
 }
 
 abstract class RustLibApi extends BaseApi {
+  Future<Uint8List> compress(
+      {required List<int> data,
+      required int zstdCompressionLevel,
+      dynamic hint});
+
+  Future<Uint8List> decompress({required List<int> data, dynamic hint});
+
   Future<Uint8List> decrypt(
       {required List<int> key,
       required List<int> ciphertext,
@@ -109,6 +116,56 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     required super.generalizedFrbRustBinding,
     required super.portManager,
   });
+
+  @override
+  Future<Uint8List> compress(
+      {required List<int> data,
+      required int zstdCompressionLevel,
+      dynamic hint}) {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
+        var arg0 = cst_encode_list_prim_u_8_loose(data);
+        var arg1 = cst_encode_i_32(zstdCompressionLevel);
+        return wire.wire_compress(port_, arg0, arg1);
+      },
+      codec: DcoCodec(
+        decodeSuccessData: dco_decode_list_prim_u_8_strict,
+        decodeErrorData: dco_decode_AnyhowException,
+      ),
+      constMeta: kCompressConstMeta,
+      argValues: [data, zstdCompressionLevel],
+      apiImpl: this,
+      hint: hint,
+    ));
+  }
+
+  TaskConstMeta get kCompressConstMeta => const TaskConstMeta(
+        debugName: "compress",
+        argNames: ["data", "zstdCompressionLevel"],
+      );
+
+  @override
+  Future<Uint8List> decompress({required List<int> data, dynamic hint}) {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
+        var arg0 = cst_encode_list_prim_u_8_loose(data);
+        return wire.wire_decompress(port_, arg0);
+      },
+      codec: DcoCodec(
+        decodeSuccessData: dco_decode_list_prim_u_8_strict,
+        decodeErrorData: dco_decode_AnyhowException,
+      ),
+      constMeta: kDecompressConstMeta,
+      argValues: [data],
+      apiImpl: this,
+      hint: hint,
+    ));
+  }
+
+  TaskConstMeta get kDecompressConstMeta => const TaskConstMeta(
+        debugName: "decompress",
+        argNames: ["data"],
+      );
 
   @override
   Future<Uint8List> decrypt(

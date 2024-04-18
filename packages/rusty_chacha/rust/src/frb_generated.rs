@@ -31,7 +31,7 @@ flutter_rust_bridge::frb_generated_boilerplate!(
     default_rust_auto_opaque = RustAutoOpaqueNom,
 );
 pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_VERSION: &str = "2.0.0-dev.32";
-pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = -661496614;
+pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = -1380020171;
 
 // Section: executor
 
@@ -39,6 +39,44 @@ flutter_rust_bridge::frb_generated_default_handler!();
 
 // Section: wire_funcs
 
+fn wire_compress_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    data: impl CstDecode<Vec<u8>>,
+    zstd_compression_level: impl CstDecode<i32>,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "compress",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let api_data = data.cst_decode();
+            let api_zstd_compression_level = zstd_compression_level.cst_decode();
+            move |context| {
+                transform_result_dco((move || {
+                    crate::api::compress(api_data, api_zstd_compression_level)
+                })())
+            }
+        },
+    )
+}
+fn wire_decompress_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    data: impl CstDecode<Vec<u8>>,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "decompress",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let api_data = data.cst_decode();
+            move |context| transform_result_dco((move || crate::api::decompress(api_data))())
+        },
+    )
+}
 fn wire_decrypt_impl(
     port_: flutter_rust_bridge::for_generated::MessagePort,
     key: impl CstDecode<Vec<u8>>,

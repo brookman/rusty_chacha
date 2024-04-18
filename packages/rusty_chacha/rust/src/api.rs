@@ -128,6 +128,16 @@ pub fn read_file(file_path: String) -> Result<Vec<u8>> {
     Ok(fs::read(file_path)?)
 }
 
+pub fn compress(data: Vec<u8>, zstd_compression_level: i32) -> Result<Vec<u8>> {
+    let compressed = zstd::stream::encode_all(data.as_slice(), zstd_compression_level)?;
+    Ok(compressed)
+}
+
+pub fn decompress(data: Vec<u8>) -> Result<Vec<u8>> {
+    let decompressed = zstd::stream::decode_all(data.as_slice())?;
+    Ok(decompressed)
+}
+
 // pub fn compress_to_stream_experimental(
 //     data: Vec<u8>,
 //     sink: StreamSink<Vec<u8>>,

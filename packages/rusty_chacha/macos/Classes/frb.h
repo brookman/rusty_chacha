@@ -24,6 +24,12 @@ typedef struct wire_cst_list_prim_u_8_strict {
   int32_t len;
 } wire_cst_list_prim_u_8_strict;
 
+void frbgen_rusty_chacha_wire_compress(int64_t port_,
+                                       struct wire_cst_list_prim_u_8_loose *data,
+                                       int32_t zstd_compression_level);
+
+void frbgen_rusty_chacha_wire_decompress(int64_t port_, struct wire_cst_list_prim_u_8_loose *data);
+
 void frbgen_rusty_chacha_wire_decrypt(int64_t port_,
                                       struct wire_cst_list_prim_u_8_loose *key,
                                       struct wire_cst_list_prim_u_8_loose *ciphertext,
@@ -68,6 +74,8 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_cst_new_box_autoadd_i_32);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_cst_new_list_prim_u_8_loose);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_cst_new_list_prim_u_8_strict);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_wire_compress);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_wire_decompress);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_wire_decrypt);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_wire_decrypt_from_file);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_wire_encrypt);

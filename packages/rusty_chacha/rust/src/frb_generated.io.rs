@@ -55,6 +55,23 @@ impl CstDecode<Vec<u8>> for *mut wire_cst_list_prim_u_8_strict {
 }
 
 #[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_wire_compress(
+    port_: i64,
+    data: *mut wire_cst_list_prim_u_8_loose,
+    zstd_compression_level: i32,
+) {
+    wire_compress_impl(port_, data, zstd_compression_level)
+}
+
+#[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_wire_decompress(
+    port_: i64,
+    data: *mut wire_cst_list_prim_u_8_loose,
+) {
+    wire_decompress_impl(port_, data)
+}
+
+#[no_mangle]
 pub extern "C" fn frbgen_rusty_chacha_wire_decrypt(
     port_: i64,
     key: *mut wire_cst_list_prim_u_8_loose,
