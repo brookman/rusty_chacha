@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-04-18
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`rusty_chacha` - `v0.1.1-dev.2`](#rusty_chacha---v011-dev2)
+
+---
+
+#### `rusty_chacha` - `v0.1.1-dev.2`
+
+ - **FEAT**: expose zstd compress/decompress functions. ([64888e22](https://github.com/brookman/rusty_chacha/commit/64888e22664eba9b8eac705f9789ca1daba28029))
+
+
 ## 2024-04-17
 
 ### Changes

@@ -1,3 +1,7 @@
+## 0.1.1-dev.2
+
+ - **FEAT**: expose zstd compress/decompress functions. ([64888e22](https://github.com/brookman/rusty_chacha/commit/64888e22664eba9b8eac705f9789ca1daba28029))
+
 ## 0.1.1-dev.1
 
  - **FEAT**: update example. ([e8c6d23a](https://github.com/brookman/rusty_chacha/commit/e8c6d23aa3e308dc85e0c21ff5db80b641d4db8d))
