@@ -1,3 +1,9 @@
+## 0.2.0-dev.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: try to use dynamic linking on MacOS and iOS. ([c0a50365](https://github.com/brookman/rusty_chacha/commit/c0a50365fc8d28d5e471b0f5f633b19820ff4968))
+
 ## 0.1.1
 
  - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.

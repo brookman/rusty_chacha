@@ -11,6 +11,27 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 Packages with breaking changes:
 
+ - [`rusty_chacha` - `v0.2.0-dev.0`](#rusty_chacha---v020-dev0)
+
+Packages with other changes:
+
+ - There are no other changes in this release.
+
+---
+
+#### `rusty_chacha` - `v0.2.0-dev.0`
+
+ - **BREAKING** **FEAT**: try to use dynamic linking on MacOS and iOS. ([c0a50365](https://github.com/brookman/rusty_chacha/commit/c0a50365fc8d28d5e471b0f5f633b19820ff4968))
+
+
+## 2024-04-20
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
  - [`rusty_chacha` - `v0.1.1`](#rusty_chacha---v011)
 
 Packages with other changes:
