@@ -21,7 +21,7 @@ ls -Rh ../target/aarch64-apple-darwin
 
 # Create XCFramework zip
 FRAMEWORK="EmbeddedRustyChacha.xcframework"
-LIBNAME=libembedded_rusty_chacha.a
+LIBNAME=libembedded_rusty_chacha.dylib
 mkdir mac-lipo ios-sim-lipo
 IOS_SIM_LIPO=ios-sim-lipo/$LIBNAME
 MAC_LIPO=mac-lipo/$LIBNAME
