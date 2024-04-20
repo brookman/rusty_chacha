@@ -31,7 +31,7 @@ flutter_rust_bridge::frb_generated_boilerplate!(
     default_rust_auto_opaque = RustAutoOpaqueNom,
 );
 pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_VERSION: &str = "2.0.0-dev.32";
-pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = -1380020171;
+pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = -809400070;
 
 // Section: executor
 
@@ -101,6 +101,30 @@ fn wire_decrypt_impl(
         },
     )
 }
+fn wire_decrypt_compressed_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    key: impl CstDecode<Vec<u8>>,
+    ciphertext: impl CstDecode<Vec<u8>>,
+    aad: impl CstDecode<Option<Vec<u8>>>,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "decrypt_compressed",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let api_key = key.cst_decode();
+            let api_ciphertext = ciphertext.cst_decode();
+            let api_aad = aad.cst_decode();
+            move |context| {
+                transform_result_dco((move || {
+                    crate::api::decrypt_compressed(api_key, api_ciphertext, api_aad)
+                })())
+            }
+        },
+    )
+}
 fn wire_decrypt_from_file_impl(
     port_: flutter_rust_bridge::for_generated::MessagePort,
     key: impl CstDecode<Vec<u8>>,
@@ -125,12 +149,35 @@ fn wire_decrypt_from_file_impl(
         },
     )
 }
+fn wire_decrypt_from_file_compressed_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    key: impl CstDecode<Vec<u8>>,
+    file_path: impl CstDecode<String>,
+    aad: impl CstDecode<Option<Vec<u8>>>,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "decrypt_from_file_compressed",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let api_key = key.cst_decode();
+            let api_file_path = file_path.cst_decode();
+            let api_aad = aad.cst_decode();
+            move |context| {
+                transform_result_dco((move || {
+                    crate::api::decrypt_from_file_compressed(api_key, api_file_path, api_aad)
+                })())
+            }
+        },
+    )
+}
 fn wire_encrypt_impl(
     port_: flutter_rust_bridge::for_generated::MessagePort,
     key: impl CstDecode<Vec<u8>>,
     cleartext: impl CstDecode<Vec<u8>>,
     aad: impl CstDecode<Option<Vec<u8>>>,
-    zstd_compression_level: impl CstDecode<Option<i32>>,
 ) {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
         flutter_rust_bridge::for_generated::TaskInfo {
@@ -142,10 +189,40 @@ fn wire_encrypt_impl(
             let api_key = key.cst_decode();
             let api_cleartext = cleartext.cst_decode();
             let api_aad = aad.cst_decode();
-            let api_zstd_compression_level = zstd_compression_level.cst_decode();
             move |context| {
                 transform_result_dco((move || {
-                    crate::api::encrypt(api_key, api_cleartext, api_aad, api_zstd_compression_level)
+                    crate::api::encrypt(api_key, api_cleartext, api_aad)
+                })())
+            }
+        },
+    )
+}
+fn wire_encrypt_compressed_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    key: impl CstDecode<Vec<u8>>,
+    cleartext: impl CstDecode<Vec<u8>>,
+    zstd_compression_level: impl CstDecode<i32>,
+    aad: impl CstDecode<Option<Vec<u8>>>,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "encrypt_compressed",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let api_key = key.cst_decode();
+            let api_cleartext = cleartext.cst_decode();
+            let api_zstd_compression_level = zstd_compression_level.cst_decode();
+            let api_aad = aad.cst_decode();
+            move |context| {
+                transform_result_dco((move || {
+                    crate::api::encrypt_compressed(
+                        api_key,
+                        api_cleartext,
+                        api_zstd_compression_level,
+                        api_aad,
+                    )
                 })())
             }
         },
@@ -157,7 +234,6 @@ fn wire_encrypt_to_file_impl(
     cleartext: impl CstDecode<Vec<u8>>,
     file_path: impl CstDecode<String>,
     aad: impl CstDecode<Option<Vec<u8>>>,
-    zstd_compression_level: impl CstDecode<Option<i32>>,
 ) {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
         flutter_rust_bridge::for_generated::TaskInfo {
@@ -170,15 +246,42 @@ fn wire_encrypt_to_file_impl(
             let api_cleartext = cleartext.cst_decode();
             let api_file_path = file_path.cst_decode();
             let api_aad = aad.cst_decode();
-            let api_zstd_compression_level = zstd_compression_level.cst_decode();
             move |context| {
                 transform_result_dco((move || {
-                    crate::api::encrypt_to_file(
+                    crate::api::encrypt_to_file(api_key, api_cleartext, api_file_path, api_aad)
+                })())
+            }
+        },
+    )
+}
+fn wire_encrypt_to_file_compressed_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    key: impl CstDecode<Vec<u8>>,
+    cleartext: impl CstDecode<Vec<u8>>,
+    file_path: impl CstDecode<String>,
+    zstd_compression_level: impl CstDecode<i32>,
+    aad: impl CstDecode<Option<Vec<u8>>>,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "encrypt_to_file_compressed",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let api_key = key.cst_decode();
+            let api_cleartext = cleartext.cst_decode();
+            let api_file_path = file_path.cst_decode();
+            let api_zstd_compression_level = zstd_compression_level.cst_decode();
+            let api_aad = aad.cst_decode();
+            move |context| {
+                transform_result_dco((move || {
+                    crate::api::encrypt_to_file_compressed(
                         api_key,
                         api_cleartext,
                         api_file_path,
-                        api_aad,
                         api_zstd_compression_level,
+                        api_aad,
                     )
                 })())
             }
@@ -213,42 +316,6 @@ fn wire_generate_cha_cha_20_nonce_impl(port_: flutter_rust_bridge::for_generated
                 transform_result_dco((move || {
                     Result::<_, ()>::Ok(crate::api::generate_cha_cha_20_nonce())
                 })())
-            }
-        },
-    )
-}
-fn wire_read_file_impl(
-    port_: flutter_rust_bridge::for_generated::MessagePort,
-    file_path: impl CstDecode<String>,
-) {
-    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
-        flutter_rust_bridge::for_generated::TaskInfo {
-            debug_name: "read_file",
-            port: Some(port_),
-            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
-        },
-        move || {
-            let api_file_path = file_path.cst_decode();
-            move |context| transform_result_dco((move || crate::api::read_file(api_file_path))())
-        },
-    )
-}
-fn wire_write_file_impl(
-    port_: flutter_rust_bridge::for_generated::MessagePort,
-    data: impl CstDecode<Vec<u8>>,
-    file_path: impl CstDecode<String>,
-) {
-    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
-        flutter_rust_bridge::for_generated::TaskInfo {
-            debug_name: "write_file",
-            port: Some(port_),
-            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
-        },
-        move || {
-            let api_data = data.cst_decode();
-            let api_file_path = file_path.cst_decode();
-            move |context| {
-                transform_result_dco((move || crate::api::write_file(api_data, api_file_path))())
             }
         },
     )
@@ -299,17 +366,6 @@ impl SseDecode for Vec<u8> {
             ans_.push(<u8>::sse_decode(deserializer));
         }
         return ans_;
-    }
-}
-
-impl SseDecode for Option<i32> {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        if (<bool>::sse_decode(deserializer)) {
-            return Some(<i32>::sse_decode(deserializer));
-        } else {
-            return None;
-        }
     }
 }
 
@@ -397,16 +453,6 @@ impl SseEncode for Vec<u8> {
         <i32>::sse_encode(self.len() as _, serializer);
         for item in self {
             <u8>::sse_encode(item, serializer);
-        }
-    }
-}
-
-impl SseEncode for Option<i32> {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <bool>::sse_encode(self.is_some(), serializer);
-        if let Some(value) = self {
-            <i32>::sse_encode(value, serializer);
         }
     }
 }

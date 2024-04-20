@@ -29,12 +29,6 @@ impl CstDecode<String> for *mut wire_cst_list_prim_u_8_strict {
         String::from_utf8(vec).unwrap()
     }
 }
-impl CstDecode<i32> for *mut i32 {
-    // Codec=Cst (C-struct based), see doc to use other codecs
-    fn cst_decode(self) -> i32 {
-        unsafe { *flutter_rust_bridge::for_generated::box_from_leak_ptr(self) }
-    }
-}
 impl CstDecode<Vec<u8>> for *mut wire_cst_list_prim_u_8_loose {
     // Codec=Cst (C-struct based), see doc to use other codecs
     fn cst_decode(self) -> Vec<u8> {
@@ -82,6 +76,16 @@ pub extern "C" fn frbgen_rusty_chacha_wire_decrypt(
 }
 
 #[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_wire_decrypt_compressed(
+    port_: i64,
+    key: *mut wire_cst_list_prim_u_8_loose,
+    ciphertext: *mut wire_cst_list_prim_u_8_loose,
+    aad: *mut wire_cst_list_prim_u_8_strict,
+) {
+    wire_decrypt_compressed_impl(port_, key, ciphertext, aad)
+}
+
+#[no_mangle]
 pub extern "C" fn frbgen_rusty_chacha_wire_decrypt_from_file(
     port_: i64,
     key: *mut wire_cst_list_prim_u_8_loose,
@@ -92,14 +96,34 @@ pub extern "C" fn frbgen_rusty_chacha_wire_decrypt_from_file(
 }
 
 #[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_wire_decrypt_from_file_compressed(
+    port_: i64,
+    key: *mut wire_cst_list_prim_u_8_loose,
+    file_path: *mut wire_cst_list_prim_u_8_strict,
+    aad: *mut wire_cst_list_prim_u_8_strict,
+) {
+    wire_decrypt_from_file_compressed_impl(port_, key, file_path, aad)
+}
+
+#[no_mangle]
 pub extern "C" fn frbgen_rusty_chacha_wire_encrypt(
     port_: i64,
     key: *mut wire_cst_list_prim_u_8_loose,
     cleartext: *mut wire_cst_list_prim_u_8_loose,
     aad: *mut wire_cst_list_prim_u_8_strict,
-    zstd_compression_level: *mut i32,
 ) {
-    wire_encrypt_impl(port_, key, cleartext, aad, zstd_compression_level)
+    wire_encrypt_impl(port_, key, cleartext, aad)
+}
+
+#[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_wire_encrypt_compressed(
+    port_: i64,
+    key: *mut wire_cst_list_prim_u_8_loose,
+    cleartext: *mut wire_cst_list_prim_u_8_loose,
+    zstd_compression_level: i32,
+    aad: *mut wire_cst_list_prim_u_8_strict,
+) {
+    wire_encrypt_compressed_impl(port_, key, cleartext, zstd_compression_level, aad)
 }
 
 #[no_mangle]
@@ -109,15 +133,26 @@ pub extern "C" fn frbgen_rusty_chacha_wire_encrypt_to_file(
     cleartext: *mut wire_cst_list_prim_u_8_loose,
     file_path: *mut wire_cst_list_prim_u_8_strict,
     aad: *mut wire_cst_list_prim_u_8_strict,
-    zstd_compression_level: *mut i32,
 ) {
-    wire_encrypt_to_file_impl(
+    wire_encrypt_to_file_impl(port_, key, cleartext, file_path, aad)
+}
+
+#[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_wire_encrypt_to_file_compressed(
+    port_: i64,
+    key: *mut wire_cst_list_prim_u_8_loose,
+    cleartext: *mut wire_cst_list_prim_u_8_loose,
+    file_path: *mut wire_cst_list_prim_u_8_strict,
+    zstd_compression_level: i32,
+    aad: *mut wire_cst_list_prim_u_8_strict,
+) {
+    wire_encrypt_to_file_compressed_impl(
         port_,
         key,
         cleartext,
         file_path,
-        aad,
         zstd_compression_level,
+        aad,
     )
 }
 
@@ -129,28 +164,6 @@ pub extern "C" fn frbgen_rusty_chacha_wire_generate_cha_cha_20_key(port_: i64) {
 #[no_mangle]
 pub extern "C" fn frbgen_rusty_chacha_wire_generate_cha_cha_20_nonce(port_: i64) {
     wire_generate_cha_cha_20_nonce_impl(port_)
-}
-
-#[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire_read_file(
-    port_: i64,
-    file_path: *mut wire_cst_list_prim_u_8_strict,
-) {
-    wire_read_file_impl(port_, file_path)
-}
-
-#[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire_write_file(
-    port_: i64,
-    data: *mut wire_cst_list_prim_u_8_loose,
-    file_path: *mut wire_cst_list_prim_u_8_strict,
-) {
-    wire_write_file_impl(port_, data, file_path)
-}
-
-#[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_cst_new_box_autoadd_i_32(value: i32) -> *mut i32 {
-    flutter_rust_bridge::for_generated::new_leak_box_ptr(value)
 }
 
 #[no_mangle]

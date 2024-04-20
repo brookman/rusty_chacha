@@ -1,6 +1,7 @@
 use divan::{counter::BytesCount, Bencher};
 use embedded_rusty_chacha::api::{
-    decrypt, decrypt_from_file, encrypt, encrypt_to_file, generate_cha_cha_20_key,
+    decrypt, decrypt_compressed, decrypt_from_file, encrypt, encrypt_compressed, encrypt_to_file,
+    generate_cha_cha_20_key,
 };
 use rand::{thread_rng, Rng};
 use sysinfo::System;
@@ -43,7 +44,7 @@ fn bench_encrypt(bencher: Bencher, size: usize) {
         .counter(BytesCount::new(size))
         .with_inputs(|| (generate_cha_cha_20_key(), vec![0; size]))
         .bench_values(|(key, cleartext)| {
-            let _ = encrypt(key, cleartext, None, None).unwrap();
+            let _ = encrypt(key, cleartext, None).unwrap();
         });
 }
 
@@ -58,7 +59,7 @@ fn bench_decrypt(bencher: divan::Bencher, size: usize) {
         .with_inputs(|| {
             (
                 key.clone(),
-                encrypt(key.clone(), vec![0; size], None, None).unwrap(),
+                encrypt(key.clone(), vec![0; size], None).unwrap(),
             )
         })
         .bench_values(|(key, ciphertext)| {
@@ -75,8 +76,7 @@ fn bench_encrypt_to_file(bencher: Bencher, size: usize) {
         .counter(BytesCount::new(size))
         .with_inputs(|| (generate_cha_cha_20_key(), vec![0; size]))
         .bench_values(|(key, cleartext)| {
-            let _ =
-                encrypt_to_file(key, cleartext, "test_file.bin".to_string(), None, None).unwrap();
+            let _ = encrypt_to_file(key, cleartext, "test_file.bin".to_string(), None).unwrap();
         });
 }
 
@@ -95,7 +95,6 @@ fn bench_decrypt_from_file(bencher: Bencher, size: usize) {
                     key.clone(),
                     vec![0; size],
                     "test_file.bin".to_string(),
-                    None,
                     None,
                 )
                 .unwrap(),
@@ -126,7 +125,7 @@ fn bench_compress_encrypt(bencher: Bencher, args: (f64, i32)) {
             )
         })
         .bench_values(|(key, cleartext)| {
-            let _ = encrypt(key, cleartext, None, Some(compression_level)).unwrap();
+            let _ = encrypt_compressed(key, cleartext, compression_level, None).unwrap();
         });
 }
 
@@ -147,11 +146,11 @@ fn bench_decrypt_decompress(bencher: Bencher, args: (f64, i32)) {
         .with_inputs(|| {
             (key.clone(), {
                 let cleartext = generate_test_data(size, data_randomness);
-                encrypt(key.clone(), cleartext, None, Some(compression_level)).unwrap()
+                encrypt_compressed(key.clone(), cleartext, compression_level, None).unwrap()
             })
         })
         .bench_values(|(key, ciphertext)| {
-            let _ = decrypt(key, ciphertext, None).unwrap();
+            let _ = decrypt_compressed(key, ciphertext, None).unwrap();
         });
 }
 

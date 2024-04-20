@@ -1,4 +1,4 @@
 # Rust library related
 Cargo.lock
 target
-test_file.bin
+test_file*

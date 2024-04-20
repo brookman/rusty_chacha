@@ -54,7 +54,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
   String get codegenVersion => '2.0.0-dev.32';
 
   @override
-  int get rustContentHash => -1380020171;
+  int get rustContentHash => -809400070;
 
   static const kDefaultExternalLibraryLoaderConfig =
       ExternalLibraryLoaderConfig(
@@ -78,7 +78,19 @@ abstract class RustLibApi extends BaseApi {
       Uint8List? aad,
       dynamic hint});
 
+  Future<Uint8List> decryptCompressed(
+      {required List<int> key,
+      required List<int> ciphertext,
+      Uint8List? aad,
+      dynamic hint});
+
   Future<Uint8List> decryptFromFile(
+      {required List<int> key,
+      required String filePath,
+      Uint8List? aad,
+      dynamic hint});
+
+  Future<Uint8List> decryptFromFileCompressed(
       {required List<int> key,
       required String filePath,
       Uint8List? aad,
@@ -88,7 +100,13 @@ abstract class RustLibApi extends BaseApi {
       {required List<int> key,
       required List<int> cleartext,
       Uint8List? aad,
-      int? zstdCompressionLevel,
+      dynamic hint});
+
+  Future<Uint8List> encryptCompressed(
+      {required List<int> key,
+      required List<int> cleartext,
+      required int zstdCompressionLevel,
+      Uint8List? aad,
       dynamic hint});
 
   Future<void> encryptToFile(
@@ -96,17 +114,19 @@ abstract class RustLibApi extends BaseApi {
       required List<int> cleartext,
       required String filePath,
       Uint8List? aad,
-      int? zstdCompressionLevel,
+      dynamic hint});
+
+  Future<void> encryptToFileCompressed(
+      {required List<int> key,
+      required List<int> cleartext,
+      required String filePath,
+      required int zstdCompressionLevel,
+      Uint8List? aad,
       dynamic hint});
 
   Future<Uint8List> generateChaCha20Key({dynamic hint});
 
   Future<Uint8List> generateChaCha20Nonce({dynamic hint});
-
-  Future<Uint8List> readFile({required String filePath, dynamic hint});
-
-  Future<void> writeFile(
-      {required List<int> data, required String filePath, dynamic hint});
 }
 
 class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
@@ -197,6 +217,35 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
+  Future<Uint8List> decryptCompressed(
+      {required List<int> key,
+      required List<int> ciphertext,
+      Uint8List? aad,
+      dynamic hint}) {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
+        var arg0 = cst_encode_list_prim_u_8_loose(key);
+        var arg1 = cst_encode_list_prim_u_8_loose(ciphertext);
+        var arg2 = cst_encode_opt_list_prim_u_8_strict(aad);
+        return wire.wire_decrypt_compressed(port_, arg0, arg1, arg2);
+      },
+      codec: DcoCodec(
+        decodeSuccessData: dco_decode_list_prim_u_8_strict,
+        decodeErrorData: dco_decode_AnyhowException,
+      ),
+      constMeta: kDecryptCompressedConstMeta,
+      argValues: [key, ciphertext, aad],
+      apiImpl: this,
+      hint: hint,
+    ));
+  }
+
+  TaskConstMeta get kDecryptCompressedConstMeta => const TaskConstMeta(
+        debugName: "decrypt_compressed",
+        argNames: ["key", "ciphertext", "aad"],
+      );
+
+  @override
   Future<Uint8List> decryptFromFile(
       {required List<int> key,
       required String filePath,
@@ -226,26 +275,53 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
+  Future<Uint8List> decryptFromFileCompressed(
+      {required List<int> key,
+      required String filePath,
+      Uint8List? aad,
+      dynamic hint}) {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
+        var arg0 = cst_encode_list_prim_u_8_loose(key);
+        var arg1 = cst_encode_String(filePath);
+        var arg2 = cst_encode_opt_list_prim_u_8_strict(aad);
+        return wire.wire_decrypt_from_file_compressed(port_, arg0, arg1, arg2);
+      },
+      codec: DcoCodec(
+        decodeSuccessData: dco_decode_list_prim_u_8_strict,
+        decodeErrorData: dco_decode_AnyhowException,
+      ),
+      constMeta: kDecryptFromFileCompressedConstMeta,
+      argValues: [key, filePath, aad],
+      apiImpl: this,
+      hint: hint,
+    ));
+  }
+
+  TaskConstMeta get kDecryptFromFileCompressedConstMeta => const TaskConstMeta(
+        debugName: "decrypt_from_file_compressed",
+        argNames: ["key", "filePath", "aad"],
+      );
+
+  @override
   Future<Uint8List> encrypt(
       {required List<int> key,
       required List<int> cleartext,
       Uint8List? aad,
-      int? zstdCompressionLevel,
       dynamic hint}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
         var arg0 = cst_encode_list_prim_u_8_loose(key);
         var arg1 = cst_encode_list_prim_u_8_loose(cleartext);
         var arg2 = cst_encode_opt_list_prim_u_8_strict(aad);
-        var arg3 = cst_encode_opt_box_autoadd_i_32(zstdCompressionLevel);
-        return wire.wire_encrypt(port_, arg0, arg1, arg2, arg3);
+        return wire.wire_encrypt(port_, arg0, arg1, arg2);
       },
       codec: DcoCodec(
         decodeSuccessData: dco_decode_list_prim_u_8_strict,
         decodeErrorData: dco_decode_AnyhowException,
       ),
       constMeta: kEncryptConstMeta,
-      argValues: [key, cleartext, aad, zstdCompressionLevel],
+      argValues: [key, cleartext, aad],
       apiImpl: this,
       hint: hint,
     ));
@@ -253,7 +329,38 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kEncryptConstMeta => const TaskConstMeta(
         debugName: "encrypt",
-        argNames: ["key", "cleartext", "aad", "zstdCompressionLevel"],
+        argNames: ["key", "cleartext", "aad"],
+      );
+
+  @override
+  Future<Uint8List> encryptCompressed(
+      {required List<int> key,
+      required List<int> cleartext,
+      required int zstdCompressionLevel,
+      Uint8List? aad,
+      dynamic hint}) {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
+        var arg0 = cst_encode_list_prim_u_8_loose(key);
+        var arg1 = cst_encode_list_prim_u_8_loose(cleartext);
+        var arg2 = cst_encode_i_32(zstdCompressionLevel);
+        var arg3 = cst_encode_opt_list_prim_u_8_strict(aad);
+        return wire.wire_encrypt_compressed(port_, arg0, arg1, arg2, arg3);
+      },
+      codec: DcoCodec(
+        decodeSuccessData: dco_decode_list_prim_u_8_strict,
+        decodeErrorData: dco_decode_AnyhowException,
+      ),
+      constMeta: kEncryptCompressedConstMeta,
+      argValues: [key, cleartext, zstdCompressionLevel, aad],
+      apiImpl: this,
+      hint: hint,
+    ));
+  }
+
+  TaskConstMeta get kEncryptCompressedConstMeta => const TaskConstMeta(
+        debugName: "encrypt_compressed",
+        argNames: ["key", "cleartext", "zstdCompressionLevel", "aad"],
       );
 
   @override
@@ -262,7 +369,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       required List<int> cleartext,
       required String filePath,
       Uint8List? aad,
-      int? zstdCompressionLevel,
       dynamic hint}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
@@ -270,15 +376,14 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         var arg1 = cst_encode_list_prim_u_8_loose(cleartext);
         var arg2 = cst_encode_String(filePath);
         var arg3 = cst_encode_opt_list_prim_u_8_strict(aad);
-        var arg4 = cst_encode_opt_box_autoadd_i_32(zstdCompressionLevel);
-        return wire.wire_encrypt_to_file(port_, arg0, arg1, arg2, arg3, arg4);
+        return wire.wire_encrypt_to_file(port_, arg0, arg1, arg2, arg3);
       },
       codec: DcoCodec(
         decodeSuccessData: dco_decode_unit,
         decodeErrorData: dco_decode_AnyhowException,
       ),
       constMeta: kEncryptToFileConstMeta,
-      argValues: [key, cleartext, filePath, aad, zstdCompressionLevel],
+      argValues: [key, cleartext, filePath, aad],
       apiImpl: this,
       hint: hint,
     ));
@@ -286,12 +391,46 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kEncryptToFileConstMeta => const TaskConstMeta(
         debugName: "encrypt_to_file",
+        argNames: ["key", "cleartext", "filePath", "aad"],
+      );
+
+  @override
+  Future<void> encryptToFileCompressed(
+      {required List<int> key,
+      required List<int> cleartext,
+      required String filePath,
+      required int zstdCompressionLevel,
+      Uint8List? aad,
+      dynamic hint}) {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
+        var arg0 = cst_encode_list_prim_u_8_loose(key);
+        var arg1 = cst_encode_list_prim_u_8_loose(cleartext);
+        var arg2 = cst_encode_String(filePath);
+        var arg3 = cst_encode_i_32(zstdCompressionLevel);
+        var arg4 = cst_encode_opt_list_prim_u_8_strict(aad);
+        return wire.wire_encrypt_to_file_compressed(
+            port_, arg0, arg1, arg2, arg3, arg4);
+      },
+      codec: DcoCodec(
+        decodeSuccessData: dco_decode_unit,
+        decodeErrorData: dco_decode_AnyhowException,
+      ),
+      constMeta: kEncryptToFileCompressedConstMeta,
+      argValues: [key, cleartext, filePath, zstdCompressionLevel, aad],
+      apiImpl: this,
+      hint: hint,
+    ));
+  }
+
+  TaskConstMeta get kEncryptToFileCompressedConstMeta => const TaskConstMeta(
+        debugName: "encrypt_to_file_compressed",
         argNames: [
           "key",
           "cleartext",
           "filePath",
-          "aad",
-          "zstdCompressionLevel"
+          "zstdCompressionLevel",
+          "aad"
         ],
       );
 
@@ -339,54 +478,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         argNames: [],
       );
 
-  @override
-  Future<Uint8List> readFile({required String filePath, dynamic hint}) {
-    return handler.executeNormal(NormalTask(
-      callFfi: (port_) {
-        var arg0 = cst_encode_String(filePath);
-        return wire.wire_read_file(port_, arg0);
-      },
-      codec: DcoCodec(
-        decodeSuccessData: dco_decode_list_prim_u_8_strict,
-        decodeErrorData: dco_decode_AnyhowException,
-      ),
-      constMeta: kReadFileConstMeta,
-      argValues: [filePath],
-      apiImpl: this,
-      hint: hint,
-    ));
-  }
-
-  TaskConstMeta get kReadFileConstMeta => const TaskConstMeta(
-        debugName: "read_file",
-        argNames: ["filePath"],
-      );
-
-  @override
-  Future<void> writeFile(
-      {required List<int> data, required String filePath, dynamic hint}) {
-    return handler.executeNormal(NormalTask(
-      callFfi: (port_) {
-        var arg0 = cst_encode_list_prim_u_8_loose(data);
-        var arg1 = cst_encode_String(filePath);
-        return wire.wire_write_file(port_, arg0, arg1);
-      },
-      codec: DcoCodec(
-        decodeSuccessData: dco_decode_unit,
-        decodeErrorData: dco_decode_AnyhowException,
-      ),
-      constMeta: kWriteFileConstMeta,
-      argValues: [data, filePath],
-      apiImpl: this,
-      hint: hint,
-    ));
-  }
-
-  TaskConstMeta get kWriteFileConstMeta => const TaskConstMeta(
-        debugName: "write_file",
-        argNames: ["data", "filePath"],
-      );
-
   @protected
   AnyhowException dco_decode_AnyhowException(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
@@ -397,12 +488,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   String dco_decode_String(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw as String;
-  }
-
-  @protected
-  int dco_decode_box_autoadd_i_32(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw as int;
   }
 
   @protected
@@ -421,12 +506,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   Uint8List dco_decode_list_prim_u_8_strict(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw as Uint8List;
-  }
-
-  @protected
-  int? dco_decode_opt_box_autoadd_i_32(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw == null ? null : dco_decode_box_autoadd_i_32(raw);
   }
 
   @protected
@@ -462,12 +541,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  int sse_decode_box_autoadd_i_32(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return (sse_decode_i_32(deserializer));
-  }
-
-  @protected
   int sse_decode_i_32(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return deserializer.buffer.getInt32();
@@ -485,17 +558,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     // Codec=Sse (Serialization based), see doc to use other codecs
     var len_ = sse_decode_i_32(deserializer);
     return deserializer.buffer.getUint8List(len_);
-  }
-
-  @protected
-  int? sse_decode_opt_box_autoadd_i_32(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    if (sse_decode_bool(deserializer)) {
-      return (sse_decode_box_autoadd_i_32(deserializer));
-    } else {
-      return null;
-    }
   }
 
   @protected
@@ -558,12 +620,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  void sse_encode_box_autoadd_i_32(int self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_i_32(self, serializer);
-  }
-
-  @protected
   void sse_encode_i_32(int self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     serializer.buffer.putInt32(self);
@@ -584,16 +640,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_i_32(self.length, serializer);
     serializer.buffer.putUint8List(self);
-  }
-
-  @protected
-  void sse_encode_opt_box_autoadd_i_32(int? self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    sse_encode_bool(self != null, serializer);
-    if (self != null) {
-      sse_encode_box_autoadd_i_32(self, serializer);
-    }
   }
 
   @protected
