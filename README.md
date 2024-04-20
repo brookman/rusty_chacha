@@ -25,8 +25,8 @@ Rust [chacha20poly1305](https://crates.io/crates/chacha20poly1305) crate.
 
 ## Blazingly fast 🔥
 
-Thanks to Rust encryption and decryption with ChaCha20-Poly1305 run with at 500-1000 MiB/s.
-This is up to *50x* faster than packages like [cryptography_flutter](https://pub.dev/packages/cryptography_flutter) or [pointycastle](https://pub.dev/packages/pointycastle).
+Thanks to Rust encryption and decryption with ChaCha20-Poly1305 run at 500-1000 MiB/s.
+This is up to **50x** faster than packages like [cryptography_flutter](https://pub.dev/packages/cryptography_flutter) or [pointycastle](https://pub.dev/packages/pointycastle).
 
 ## Getting Started
 
