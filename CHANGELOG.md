@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-04-20
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`rusty_chacha` - `v0.1.1`](#rusty_chacha---v011)
+
+Packages with other changes:
+
+ - There are no other changes in this release.
+
+Packages graduated to a stable release (see pre-releases prior to the stable version for changelog entries):
+
+ - `rusty_chacha` - `v0.1.1`
+
+---
+
+#### `rusty_chacha` - `v0.1.1`
+
+
 ## 2024-04-18
 
 ### Changes

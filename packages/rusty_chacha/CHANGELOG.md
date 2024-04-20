@@ -1,3 +1,7 @@
+## 0.1.1
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
 ## 0.1.1-dev.2
 
  - **FEAT**: expose zstd compress/decompress functions. ([64888e22](https://github.com/brookman/rusty_chacha/commit/64888e22664eba9b8eac705f9789ca1daba28029))
