@@ -51,12 +51,12 @@ main() async {
 
 
   // compression example:
-  final myCompressedAndEncryptedData = await encrypt(
+  final myCompressedAndEncryptedData = await encrypt_compressed(
     key: key,
-    cleartext: myData,
     zstdCompressionLevel: 3, // moderate compression
+    cleartext: myData,
   );
-  final myDataAgain2 = await decrypt(key: key, ciphertext: myCompressedAndEncryptedData);
+  final myDataAgain2 = await decrypt_compressed(key: key, ciphertext: myCompressedAndEncryptedData);
 
 
   // AAD example:
