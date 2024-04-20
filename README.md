@@ -13,7 +13,7 @@
 A Flutter library for fast ChaCha20-Poly1305 encryption, leveraging the capabilities of the
 Rust [chacha20poly1305](https://crates.io/crates/chacha20poly1305) crate.
 
-🚧 Under Development: Not recommended for production use. 🚧
+🚧 Under Development: Not recommended for production use yet. 🚧
 
 ---
 
