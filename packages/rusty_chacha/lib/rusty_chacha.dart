@@ -4,10 +4,7 @@ import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 import 'package:rusty_chacha/rusty_chacha.dart';
 
 export 'src/api.dart';
-export 'src/chacha20_poly1305.dart';
 export 'src/frb_generated.dart';
-export 'src/xchacha20_poly1305.dart';
-
 
 /// Use this to initialize RustyChaCha
 class RustyChaCha {
@@ -17,8 +14,7 @@ class RustyChaCha {
     required Uint8List key,
     required Compression compression,
   }) async {
-    await _ensureInitialized
-();
+    await _ensureInitialized();
     return RustyChaCha20Poly1305.createInternal(key: key, compression: compression);
   }
 
@@ -26,8 +22,7 @@ class RustyChaCha {
     required Uint8List key,
     required Compression compression,
   }) async {
-    await _ensureInitialized
-();
+    await _ensureInitialized();
     return RustyXChaCha20Poly1305.createInternal(key: key, compression: compression);
   }
 
