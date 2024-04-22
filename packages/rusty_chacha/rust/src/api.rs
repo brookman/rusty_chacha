@@ -38,11 +38,11 @@ impl RustyChaCha20Poly1305 {
 
     /// Do not use this. Use `create()` instead.
     pub fn create_internal(key: Option<Vec<u8>>, compression: Option<Compression>) -> Result<Self> {
-        let key = key.unwrap_or_else(|| Self::generate_key());
+        let key = key.unwrap_or_else(Self::generate_key);
         if key.len() != 32 {
             bail!("Key must be 32 bytes long");
         }
-        let compression = compression.unwrap_or_else(|| Compression::Uncompressed);
+        let compression = compression.unwrap_or(Compression::Uncompressed);
         Ok(Self { key, compression })
     }
 
@@ -143,11 +143,11 @@ impl RustyXChaCha20Poly1305 {
 
     /// Do not use this. Use `create()` instead.
     pub fn create_internal(key: Option<Vec<u8>>, compression: Option<Compression>) -> Result<Self> {
-        let key = key.unwrap_or_else(|| Self::generate_key());
+        let key = key.unwrap_or_else(Self::generate_key);
         if key.len() != 32 {
             bail!("Key must be 32 bytes long");
         }
-        let compression = compression.unwrap_or_else(|| Compression::Uncompressed);
+        let compression = compression.unwrap_or(Compression::Uncompressed);
         Ok(Self { key, compression })
     }
 
