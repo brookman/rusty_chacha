@@ -35,42 +35,56 @@ This is up to **50x** faster than packages like [cryptography_flutter](https://p
 ## Usage
 
 ```dart
+import 'package:collection/collection.dart';
 import 'package:rusty_chacha/rusty_chacha.dart';
 
 main() async {
-  await RustyChaCha.init();
+  
+  final data = Uint8List.fromList([1, 2, 3, 4, 5]);
 
 
-  final key = await generateChaCha20Key(); // generate a random key
-  final myData = Uint8List.fromList([1, 2, 3, 4, 5]);
+  // Create and use a ChaCha20Poly1305 cipher with a random key:
+  RustyChaCha20Poly1305 cipher = await RustyChaCha.createChaCha20Poly1305();
+  Uint8List myEncryptedData = await cipher.encrypt(cleartext: data);
+  Uint8List decrypted1 = await cipher.decrypt(ciphertext: myEncryptedData);
+
+  assert(const ListEquality().equals(data, decrypted1));
 
 
-  // basic example:
-  final myEncryptedData = await encrypt(key: key, cleartext: myData);
-  final myDataAgain1 = await decrypt(key: key, ciphertext: myEncryptedData);
+  // Or with explicit key:
+  Uint8List key = await RustyChaCha20Poly1305.generateKey();
+  cipher = await RustyChaCha.createChaCha20Poly1305(key: key);
 
 
-  // compression example:
-  final myCompressedAndEncryptedData = await encrypt_compressed(
+  // Compression example:
+  // If compression is used during encryption, it also has to be set for decryption!
+  // However compressionLevel does not matter.
+  cipher = await RustyChaCha.createChaCha20Poly1305(
     key: key,
-    zstdCompressionLevel: 3, // moderate compression
-    cleartext: myData,
+    compression: const Compression.zstd(compressionLevel: 3), // moderate compression
   );
-  final myDataAgain2 = await decrypt_compressed(key: key, ciphertext: myCompressedAndEncryptedData);
+  Uint8List myCompressedAndEncryptedData = await cipher.encrypt(cleartext: data);
+  Uint8List decrypted2 = await cipher.decrypt(ciphertext: myCompressedAndEncryptedData);
+
+  assert(const ListEquality().equals(data, decrypted2));
 
 
   // AAD example:
-  final additionalData = Uint8List.fromList([1, 2, 3]); // some additional (non-secret) data
-  final myEncryptedDataWithAad = await encrypt(
-    key: key,
-    cleartext: myData,
+  cipher = await RustyChaCha.createChaCha20Poly1305();
+  Uint8List additionalData = Uint8List.fromList([1, 2, 3]); // some additional (non-secret) data
+  Uint8List myEncryptedDataWithAad = await cipher.encrypt(
+    cleartext: data,
     aad: additionalData, // pass it in when encrypting
   );
-  final myDataAgain3 = await decrypt(
-    key: key,
+  Uint8List decrypted3 = await cipher.decrypt(
     ciphertext: myEncryptedDataWithAad,
     aad: additionalData, // pass it in to decrypt (decrypt will fail if additionalData is not the same)
   );
+
+  assert(const ListEquality().equals(data, decrypted3));
+
+  // Create and use a XChaCha20Poly1305 (24 byte nonce instead of 12) cipher with a random key:
+  RustyXChaCha20Poly1305 cipherX = await RustyChaCha.createXChaCha20Poly1305();
 }
 ```
 
