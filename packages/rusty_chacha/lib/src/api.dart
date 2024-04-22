@@ -5,120 +5,8 @@
 
 import 'frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
-
-Future<Uint8List> generateChaCha20Key({dynamic hint}) =>
-    RustLib.instance.api.generateChaCha20Key(hint: hint);
-
-/// Important: A nonce must only be used once!
-/// Do not encrypt multiple pieces of data with the same nonce.
-Future<Uint8List> generateChaCha20Nonce({dynamic hint}) =>
-    RustLib.instance.api.generateChaCha20Nonce(hint: hint);
-
-/// Encrypts `cleartext` using the given ChaCha20 `key` (32 bytes).
-/// A randomly generated nonce will be prepended to the result (first 12 bytes).
-Future<Uint8List> encrypt(
-        {required List<int> key,
-        required List<int> cleartext,
-        Uint8List? aad,
-        dynamic hint}) =>
-    RustLib.instance.api
-        .encrypt(key: key, cleartext: cleartext, aad: aad, hint: hint);
-
-/// Decrypts `ciphertext` using the given ChaCha20 `key` (32 bytes).
-/// The first 12 bytes of the `ciphertext` must contain the nonce.
-/// This is already the case when using `encrypt()`.
-Future<Uint8List> decrypt(
-        {required List<int> key,
-        required List<int> ciphertext,
-        Uint8List? aad,
-        dynamic hint}) =>
-    RustLib.instance.api
-        .decrypt(key: key, ciphertext: ciphertext, aad: aad, hint: hint);
-
-/// Encrypts `cleartext` using the given ChaCha20 `key` (32 bytes).
-/// A randomly generated nonce will be prepended to the result (first 12 bytes).
-/// `cleartext` will be compressed with the given `zstd_compression_level` before encryption
-/// (using ZSTD).
-Future<Uint8List> encryptCompressed(
-        {required List<int> key,
-        required List<int> cleartext,
-        required int zstdCompressionLevel,
-        Uint8List? aad,
-        dynamic hint}) =>
-    RustLib.instance.api.encryptCompressed(
-        key: key,
-        cleartext: cleartext,
-        zstdCompressionLevel: zstdCompressionLevel,
-        aad: aad,
-        hint: hint);
-
-/// Decrypts `ciphertext` using the given ChaCha20 `key` (32 bytes).
-/// The first 12 bytes of the `ciphertext` must contain the nonce.
-/// Use this function if the cleartext has been compressed with `encrypt_compressed()`.
-Future<Uint8List> decryptCompressed(
-        {required List<int> key,
-        required List<int> ciphertext,
-        Uint8List? aad,
-        dynamic hint}) =>
-    RustLib.instance.api.decryptCompressed(
-        key: key, ciphertext: ciphertext, aad: aad, hint: hint);
-
-/// Encrypts `cleartext` using the given ChaCha20 `key` (32 bytes).
-/// A randomly generated nonce will be prepended to the result (first 12 bytes).
-/// The result is written to `file_path`.
-Future<void> encryptToFile(
-        {required List<int> key,
-        required List<int> cleartext,
-        required String filePath,
-        Uint8List? aad,
-        dynamic hint}) =>
-    RustLib.instance.api.encryptToFile(
-        key: key,
-        cleartext: cleartext,
-        filePath: filePath,
-        aad: aad,
-        hint: hint);
-
-/// Reads `file_path` and decrypts the contents using the given ChaCha20 `key` (32 bytes).
-/// The first 12 bytes of the must contain the nonce.
-Future<Uint8List> decryptFromFile(
-        {required List<int> key,
-        required String filePath,
-        Uint8List? aad,
-        dynamic hint}) =>
-    RustLib.instance.api
-        .decryptFromFile(key: key, filePath: filePath, aad: aad, hint: hint);
-
-/// Encrypts `cleartext` using the given ChaCha20 `key` (32 bytes).
-/// A randomly generated nonce will be prepended to the result (first 12 bytes).
-/// `cleartext` will be compressed with the given `zstd_compression_level` before encryption
-/// (using ZSTD).
-/// The result is written to `file_path`.
-Future<void> encryptToFileCompressed(
-        {required List<int> key,
-        required List<int> cleartext,
-        required String filePath,
-        required int zstdCompressionLevel,
-        Uint8List? aad,
-        dynamic hint}) =>
-    RustLib.instance.api.encryptToFileCompressed(
-        key: key,
-        cleartext: cleartext,
-        filePath: filePath,
-        zstdCompressionLevel: zstdCompressionLevel,
-        aad: aad,
-        hint: hint);
-
-/// Reads `file_path` and decrypts the contents using the given ChaCha20 `key` (32 bytes)
-/// and decompresses it using ZSTD.
-/// The first 12 bytes of the must contain the nonce.
-Future<Uint8List> decryptFromFileCompressed(
-        {required List<int> key,
-        required String filePath,
-        Uint8List? aad,
-        dynamic hint}) =>
-    RustLib.instance.api.decryptFromFileCompressed(
-        key: key, filePath: filePath, aad: aad, hint: hint);
+import 'package:freezed_annotation/freezed_annotation.dart' hide protected;
+part 'api.freezed.dart';
 
 /// public for benchmarking
 Future<Uint8List> compress(
@@ -131,3 +19,167 @@ Future<Uint8List> compress(
 /// public for benchmarking
 Future<Uint8List> decompress({required List<int> data, dynamic hint}) =>
     RustLib.instance.api.decompress(data: data, hint: hint);
+
+@freezed
+sealed class Compression with _$Compression {
+  const Compression._();
+
+  const factory Compression.uncompressed() = Compression_Uncompressed;
+  const factory Compression.zstd({
+    required int compressionLevel,
+  }) = Compression_Zstd;
+}
+
+class RustyChaCha20Poly1305 {
+  final Uint8List key;
+  final Compression compression;
+
+  const RustyChaCha20Poly1305({
+    required this.key,
+    required this.compression,
+  });
+
+  /// Do not use this. Use `create()` instead.
+  static Future<RustyChaCha20Poly1305> createInternal(
+          {Uint8List? key, Compression? compression, dynamic hint}) =>
+      RustLib.instance.api.rustyChaCha20Poly1305CreateInternal(
+          key: key, compression: compression, hint: hint);
+
+  /// Decrypts `ciphertext` and returns the cleartext.
+  /// The first NONCE_LEN bytes of the `ciphertext` must contain the nonce.
+  Future<Uint8List> decrypt(
+          {required List<int> ciphertext, Uint8List? aad, dynamic hint}) =>
+      RustLib.instance.api.rustyChaCha20Poly1305Decrypt(
+          that: this, ciphertext: ciphertext, aad: aad, hint: hint);
+
+  /// Reads `file_path` decrypts the contents and returns the cleartext.
+  /// The first NONCE_LEN bytes of the `ciphertext` must contain the nonce.
+  Future<Uint8List> decryptFromFile(
+          {required String filePath, Uint8List? aad, dynamic hint}) =>
+      RustLib.instance.api.rustyChaCha20Poly1305DecryptFromFile(
+          that: this, filePath: filePath, aad: aad, hint: hint);
+
+  /// Encrypts `cleartext` and returns the ciphertext.
+  /// If no `nonce` is given, a random one will be generated.
+  /// The nonce is always prepended to the ciphertext (first NONCE_LEN bytes).
+  Future<Uint8List> encrypt(
+          {required List<int> cleartext,
+          Uint8List? nonce,
+          Uint8List? aad,
+          dynamic hint}) =>
+      RustLib.instance.api.rustyChaCha20Poly1305Encrypt(
+          that: this, cleartext: cleartext, nonce: nonce, aad: aad, hint: hint);
+
+  /// Encrypts `cleartext` and write the result to `file_path`.
+  /// If no `nonce` is given, a randomly generated one will be generated.
+  /// The nonce is always prepended to the result (first NONCE_LEN bytes).
+  Future<void> encryptToFile(
+          {required List<int> cleartext,
+          required String filePath,
+          Uint8List? nonce,
+          Uint8List? aad,
+          dynamic hint}) =>
+      RustLib.instance.api.rustyChaCha20Poly1305EncryptToFile(
+          that: this,
+          cleartext: cleartext,
+          filePath: filePath,
+          nonce: nonce,
+          aad: aad,
+          hint: hint);
+
+  static Future<Uint8List> generateKey({dynamic hint}) =>
+      RustLib.instance.api.rustyChaCha20Poly1305GenerateKey(hint: hint);
+
+  /// Important: A nonce must only be used once!
+  /// Do not encrypt multiple pieces of data with the same nonce.
+  static Future<Uint8List> generateNonce({dynamic hint}) =>
+      RustLib.instance.api.rustyChaCha20Poly1305GenerateNonce(hint: hint);
+
+  @override
+  int get hashCode => key.hashCode ^ compression.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is RustyChaCha20Poly1305 &&
+          runtimeType == other.runtimeType &&
+          key == other.key &&
+          compression == other.compression;
+}
+
+class RustyXChaCha20Poly1305 {
+  final Uint8List key;
+  final Compression compression;
+
+  const RustyXChaCha20Poly1305({
+    required this.key,
+    required this.compression,
+  });
+
+  /// Do not use this. Use `create()` instead.
+  static Future<RustyXChaCha20Poly1305> createInternal(
+          {Uint8List? key, Compression? compression, dynamic hint}) =>
+      RustLib.instance.api.rustyXChaCha20Poly1305CreateInternal(
+          key: key, compression: compression, hint: hint);
+
+  /// Decrypts `ciphertext` and returns the cleartext.
+  /// The first NONCE_LEN bytes of the `ciphertext` must contain the nonce.
+  Future<Uint8List> decrypt(
+          {required List<int> ciphertext, Uint8List? aad, dynamic hint}) =>
+      RustLib.instance.api.rustyXChaCha20Poly1305Decrypt(
+          that: this, ciphertext: ciphertext, aad: aad, hint: hint);
+
+  /// Reads `file_path` decrypts the contents and returns the cleartext.
+  /// The first NONCE_LEN bytes of the `ciphertext` must contain the nonce.
+  Future<Uint8List> decryptFromFile(
+          {required String filePath, Uint8List? aad, dynamic hint}) =>
+      RustLib.instance.api.rustyXChaCha20Poly1305DecryptFromFile(
+          that: this, filePath: filePath, aad: aad, hint: hint);
+
+  /// Encrypts `cleartext` and returns the ciphertext.
+  /// If no `nonce` is given, a random one will be generated.
+  /// The nonce is always prepended to the ciphertext (first NONCE_LEN bytes).
+  Future<Uint8List> encrypt(
+          {required List<int> cleartext,
+          Uint8List? nonce,
+          Uint8List? aad,
+          dynamic hint}) =>
+      RustLib.instance.api.rustyXChaCha20Poly1305Encrypt(
+          that: this, cleartext: cleartext, nonce: nonce, aad: aad, hint: hint);
+
+  /// Encrypts `cleartext` and write the result to `file_path`.
+  /// If no `nonce` is given, a randomly generated one will be generated.
+  /// The nonce is always prepended to the result (first NONCE_LEN bytes).
+  Future<void> encryptToFile(
+          {required List<int> cleartext,
+          required String filePath,
+          Uint8List? nonce,
+          Uint8List? aad,
+          dynamic hint}) =>
+      RustLib.instance.api.rustyXChaCha20Poly1305EncryptToFile(
+          that: this,
+          cleartext: cleartext,
+          filePath: filePath,
+          nonce: nonce,
+          aad: aad,
+          hint: hint);
+
+  static Future<Uint8List> generateKey({dynamic hint}) =>
+      RustLib.instance.api.rustyXChaCha20Poly1305GenerateKey(hint: hint);
+
+  /// Important: A nonce must only be used once!
+  /// Do not encrypt multiple pieces of data with the same nonce.
+  static Future<Uint8List> generateNonce({dynamic hint}) =>
+      RustLib.instance.api.rustyXChaCha20Poly1305GenerateNonce(hint: hint);
+
+  @override
+  int get hashCode => key.hashCode ^ compression.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is RustyXChaCha20Poly1305 &&
+          runtimeType == other.runtimeType &&
+          key == other.key &&
+          compression == other.compression;
+}

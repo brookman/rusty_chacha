@@ -54,7 +54,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
   String get codegenVersion => '2.0.0-dev.32';
 
   @override
-  int get rustContentHash => -809400070;
+  int get rustContentHash => 1378991708;
 
   static const kDefaultExternalLibraryLoaderConfig =
       ExternalLibraryLoaderConfig(
@@ -72,61 +72,73 @@ abstract class RustLibApi extends BaseApi {
 
   Future<Uint8List> decompress({required List<int> data, dynamic hint});
 
-  Future<Uint8List> decrypt(
-      {required List<int> key,
+  Future<RustyChaCha20Poly1305> rustyChaCha20Poly1305CreateInternal(
+      {Uint8List? key, Compression? compression, dynamic hint});
+
+  Future<Uint8List> rustyChaCha20Poly1305Decrypt(
+      {required RustyChaCha20Poly1305 that,
       required List<int> ciphertext,
       Uint8List? aad,
       dynamic hint});
 
-  Future<Uint8List> decryptCompressed(
-      {required List<int> key,
+  Future<Uint8List> rustyChaCha20Poly1305DecryptFromFile(
+      {required RustyChaCha20Poly1305 that,
+      required String filePath,
+      Uint8List? aad,
+      dynamic hint});
+
+  Future<Uint8List> rustyChaCha20Poly1305Encrypt(
+      {required RustyChaCha20Poly1305 that,
+      required List<int> cleartext,
+      Uint8List? nonce,
+      Uint8List? aad,
+      dynamic hint});
+
+  Future<void> rustyChaCha20Poly1305EncryptToFile(
+      {required RustyChaCha20Poly1305 that,
+      required List<int> cleartext,
+      required String filePath,
+      Uint8List? nonce,
+      Uint8List? aad,
+      dynamic hint});
+
+  Future<Uint8List> rustyChaCha20Poly1305GenerateKey({dynamic hint});
+
+  Future<Uint8List> rustyChaCha20Poly1305GenerateNonce({dynamic hint});
+
+  Future<RustyXChaCha20Poly1305> rustyXChaCha20Poly1305CreateInternal(
+      {Uint8List? key, Compression? compression, dynamic hint});
+
+  Future<Uint8List> rustyXChaCha20Poly1305Decrypt(
+      {required RustyXChaCha20Poly1305 that,
       required List<int> ciphertext,
       Uint8List? aad,
       dynamic hint});
 
-  Future<Uint8List> decryptFromFile(
-      {required List<int> key,
+  Future<Uint8List> rustyXChaCha20Poly1305DecryptFromFile(
+      {required RustyXChaCha20Poly1305 that,
       required String filePath,
       Uint8List? aad,
       dynamic hint});
 
-  Future<Uint8List> decryptFromFileCompressed(
-      {required List<int> key,
-      required String filePath,
-      Uint8List? aad,
-      dynamic hint});
-
-  Future<Uint8List> encrypt(
-      {required List<int> key,
+  Future<Uint8List> rustyXChaCha20Poly1305Encrypt(
+      {required RustyXChaCha20Poly1305 that,
       required List<int> cleartext,
+      Uint8List? nonce,
       Uint8List? aad,
       dynamic hint});
 
-  Future<Uint8List> encryptCompressed(
-      {required List<int> key,
-      required List<int> cleartext,
-      required int zstdCompressionLevel,
-      Uint8List? aad,
-      dynamic hint});
-
-  Future<void> encryptToFile(
-      {required List<int> key,
+  Future<void> rustyXChaCha20Poly1305EncryptToFile(
+      {required RustyXChaCha20Poly1305 that,
       required List<int> cleartext,
       required String filePath,
+      Uint8List? nonce,
       Uint8List? aad,
       dynamic hint});
 
-  Future<void> encryptToFileCompressed(
-      {required List<int> key,
-      required List<int> cleartext,
-      required String filePath,
-      required int zstdCompressionLevel,
-      Uint8List? aad,
-      dynamic hint});
+  Future<Uint8List> rustyXChaCha20Poly1305GenerateKey({dynamic hint});
 
-  Future<Uint8List> generateChaCha20Key({dynamic hint});
-
-  Future<Uint8List> generateChaCha20Nonce({dynamic hint});
+  Future<Uint8List> rustyXChaCha20Poly1305GenerateNonce({dynamic hint});
 }
 
 class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
@@ -188,293 +200,408 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
-  Future<Uint8List> decrypt(
-      {required List<int> key,
+  Future<RustyChaCha20Poly1305> rustyChaCha20Poly1305CreateInternal(
+      {Uint8List? key, Compression? compression, dynamic hint}) {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
+        var arg0 = cst_encode_opt_list_prim_u_8_strict(key);
+        var arg1 = cst_encode_opt_box_autoadd_compression(compression);
+        return wire.wire_rusty_cha_cha_20_poly_1305_create_internal(
+            port_, arg0, arg1);
+      },
+      codec: DcoCodec(
+        decodeSuccessData: dco_decode_rusty_cha_cha_20_poly_1305,
+        decodeErrorData: dco_decode_AnyhowException,
+      ),
+      constMeta: kRustyChaCha20Poly1305CreateInternalConstMeta,
+      argValues: [key, compression],
+      apiImpl: this,
+      hint: hint,
+    ));
+  }
+
+  TaskConstMeta get kRustyChaCha20Poly1305CreateInternalConstMeta =>
+      const TaskConstMeta(
+        debugName: "rusty_cha_cha_20_poly_1305_create_internal",
+        argNames: ["key", "compression"],
+      );
+
+  @override
+  Future<Uint8List> rustyChaCha20Poly1305Decrypt(
+      {required RustyChaCha20Poly1305 that,
       required List<int> ciphertext,
       Uint8List? aad,
       dynamic hint}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
-        var arg0 = cst_encode_list_prim_u_8_loose(key);
+        var arg0 = cst_encode_box_autoadd_rusty_cha_cha_20_poly_1305(that);
         var arg1 = cst_encode_list_prim_u_8_loose(ciphertext);
         var arg2 = cst_encode_opt_list_prim_u_8_strict(aad);
-        return wire.wire_decrypt(port_, arg0, arg1, arg2);
+        return wire.wire_rusty_cha_cha_20_poly_1305_decrypt(
+            port_, arg0, arg1, arg2);
       },
       codec: DcoCodec(
         decodeSuccessData: dco_decode_list_prim_u_8_strict,
         decodeErrorData: dco_decode_AnyhowException,
       ),
-      constMeta: kDecryptConstMeta,
-      argValues: [key, ciphertext, aad],
+      constMeta: kRustyChaCha20Poly1305DecryptConstMeta,
+      argValues: [that, ciphertext, aad],
       apiImpl: this,
       hint: hint,
     ));
   }
 
-  TaskConstMeta get kDecryptConstMeta => const TaskConstMeta(
-        debugName: "decrypt",
-        argNames: ["key", "ciphertext", "aad"],
+  TaskConstMeta get kRustyChaCha20Poly1305DecryptConstMeta =>
+      const TaskConstMeta(
+        debugName: "rusty_cha_cha_20_poly_1305_decrypt",
+        argNames: ["that", "ciphertext", "aad"],
       );
 
   @override
-  Future<Uint8List> decryptCompressed(
-      {required List<int> key,
-      required List<int> ciphertext,
-      Uint8List? aad,
-      dynamic hint}) {
-    return handler.executeNormal(NormalTask(
-      callFfi: (port_) {
-        var arg0 = cst_encode_list_prim_u_8_loose(key);
-        var arg1 = cst_encode_list_prim_u_8_loose(ciphertext);
-        var arg2 = cst_encode_opt_list_prim_u_8_strict(aad);
-        return wire.wire_decrypt_compressed(port_, arg0, arg1, arg2);
-      },
-      codec: DcoCodec(
-        decodeSuccessData: dco_decode_list_prim_u_8_strict,
-        decodeErrorData: dco_decode_AnyhowException,
-      ),
-      constMeta: kDecryptCompressedConstMeta,
-      argValues: [key, ciphertext, aad],
-      apiImpl: this,
-      hint: hint,
-    ));
-  }
-
-  TaskConstMeta get kDecryptCompressedConstMeta => const TaskConstMeta(
-        debugName: "decrypt_compressed",
-        argNames: ["key", "ciphertext", "aad"],
-      );
-
-  @override
-  Future<Uint8List> decryptFromFile(
-      {required List<int> key,
+  Future<Uint8List> rustyChaCha20Poly1305DecryptFromFile(
+      {required RustyChaCha20Poly1305 that,
       required String filePath,
       Uint8List? aad,
       dynamic hint}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
-        var arg0 = cst_encode_list_prim_u_8_loose(key);
+        var arg0 = cst_encode_box_autoadd_rusty_cha_cha_20_poly_1305(that);
         var arg1 = cst_encode_String(filePath);
         var arg2 = cst_encode_opt_list_prim_u_8_strict(aad);
-        return wire.wire_decrypt_from_file(port_, arg0, arg1, arg2);
+        return wire.wire_rusty_cha_cha_20_poly_1305_decrypt_from_file(
+            port_, arg0, arg1, arg2);
       },
       codec: DcoCodec(
         decodeSuccessData: dco_decode_list_prim_u_8_strict,
         decodeErrorData: dco_decode_AnyhowException,
       ),
-      constMeta: kDecryptFromFileConstMeta,
-      argValues: [key, filePath, aad],
+      constMeta: kRustyChaCha20Poly1305DecryptFromFileConstMeta,
+      argValues: [that, filePath, aad],
       apiImpl: this,
       hint: hint,
     ));
   }
 
-  TaskConstMeta get kDecryptFromFileConstMeta => const TaskConstMeta(
-        debugName: "decrypt_from_file",
-        argNames: ["key", "filePath", "aad"],
+  TaskConstMeta get kRustyChaCha20Poly1305DecryptFromFileConstMeta =>
+      const TaskConstMeta(
+        debugName: "rusty_cha_cha_20_poly_1305_decrypt_from_file",
+        argNames: ["that", "filePath", "aad"],
       );
 
   @override
-  Future<Uint8List> decryptFromFileCompressed(
-      {required List<int> key,
-      required String filePath,
-      Uint8List? aad,
-      dynamic hint}) {
-    return handler.executeNormal(NormalTask(
-      callFfi: (port_) {
-        var arg0 = cst_encode_list_prim_u_8_loose(key);
-        var arg1 = cst_encode_String(filePath);
-        var arg2 = cst_encode_opt_list_prim_u_8_strict(aad);
-        return wire.wire_decrypt_from_file_compressed(port_, arg0, arg1, arg2);
-      },
-      codec: DcoCodec(
-        decodeSuccessData: dco_decode_list_prim_u_8_strict,
-        decodeErrorData: dco_decode_AnyhowException,
-      ),
-      constMeta: kDecryptFromFileCompressedConstMeta,
-      argValues: [key, filePath, aad],
-      apiImpl: this,
-      hint: hint,
-    ));
-  }
-
-  TaskConstMeta get kDecryptFromFileCompressedConstMeta => const TaskConstMeta(
-        debugName: "decrypt_from_file_compressed",
-        argNames: ["key", "filePath", "aad"],
-      );
-
-  @override
-  Future<Uint8List> encrypt(
-      {required List<int> key,
+  Future<Uint8List> rustyChaCha20Poly1305Encrypt(
+      {required RustyChaCha20Poly1305 that,
       required List<int> cleartext,
+      Uint8List? nonce,
       Uint8List? aad,
       dynamic hint}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
-        var arg0 = cst_encode_list_prim_u_8_loose(key);
+        var arg0 = cst_encode_box_autoadd_rusty_cha_cha_20_poly_1305(that);
         var arg1 = cst_encode_list_prim_u_8_loose(cleartext);
-        var arg2 = cst_encode_opt_list_prim_u_8_strict(aad);
-        return wire.wire_encrypt(port_, arg0, arg1, arg2);
-      },
-      codec: DcoCodec(
-        decodeSuccessData: dco_decode_list_prim_u_8_strict,
-        decodeErrorData: dco_decode_AnyhowException,
-      ),
-      constMeta: kEncryptConstMeta,
-      argValues: [key, cleartext, aad],
-      apiImpl: this,
-      hint: hint,
-    ));
-  }
-
-  TaskConstMeta get kEncryptConstMeta => const TaskConstMeta(
-        debugName: "encrypt",
-        argNames: ["key", "cleartext", "aad"],
-      );
-
-  @override
-  Future<Uint8List> encryptCompressed(
-      {required List<int> key,
-      required List<int> cleartext,
-      required int zstdCompressionLevel,
-      Uint8List? aad,
-      dynamic hint}) {
-    return handler.executeNormal(NormalTask(
-      callFfi: (port_) {
-        var arg0 = cst_encode_list_prim_u_8_loose(key);
-        var arg1 = cst_encode_list_prim_u_8_loose(cleartext);
-        var arg2 = cst_encode_i_32(zstdCompressionLevel);
+        var arg2 = cst_encode_opt_list_prim_u_8_strict(nonce);
         var arg3 = cst_encode_opt_list_prim_u_8_strict(aad);
-        return wire.wire_encrypt_compressed(port_, arg0, arg1, arg2, arg3);
+        return wire.wire_rusty_cha_cha_20_poly_1305_encrypt(
+            port_, arg0, arg1, arg2, arg3);
       },
       codec: DcoCodec(
         decodeSuccessData: dco_decode_list_prim_u_8_strict,
         decodeErrorData: dco_decode_AnyhowException,
       ),
-      constMeta: kEncryptCompressedConstMeta,
-      argValues: [key, cleartext, zstdCompressionLevel, aad],
+      constMeta: kRustyChaCha20Poly1305EncryptConstMeta,
+      argValues: [that, cleartext, nonce, aad],
       apiImpl: this,
       hint: hint,
     ));
   }
 
-  TaskConstMeta get kEncryptCompressedConstMeta => const TaskConstMeta(
-        debugName: "encrypt_compressed",
-        argNames: ["key", "cleartext", "zstdCompressionLevel", "aad"],
+  TaskConstMeta get kRustyChaCha20Poly1305EncryptConstMeta =>
+      const TaskConstMeta(
+        debugName: "rusty_cha_cha_20_poly_1305_encrypt",
+        argNames: ["that", "cleartext", "nonce", "aad"],
       );
 
   @override
-  Future<void> encryptToFile(
-      {required List<int> key,
+  Future<void> rustyChaCha20Poly1305EncryptToFile(
+      {required RustyChaCha20Poly1305 that,
       required List<int> cleartext,
       required String filePath,
+      Uint8List? nonce,
       Uint8List? aad,
       dynamic hint}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
-        var arg0 = cst_encode_list_prim_u_8_loose(key);
+        var arg0 = cst_encode_box_autoadd_rusty_cha_cha_20_poly_1305(that);
         var arg1 = cst_encode_list_prim_u_8_loose(cleartext);
         var arg2 = cst_encode_String(filePath);
-        var arg3 = cst_encode_opt_list_prim_u_8_strict(aad);
-        return wire.wire_encrypt_to_file(port_, arg0, arg1, arg2, arg3);
-      },
-      codec: DcoCodec(
-        decodeSuccessData: dco_decode_unit,
-        decodeErrorData: dco_decode_AnyhowException,
-      ),
-      constMeta: kEncryptToFileConstMeta,
-      argValues: [key, cleartext, filePath, aad],
-      apiImpl: this,
-      hint: hint,
-    ));
-  }
-
-  TaskConstMeta get kEncryptToFileConstMeta => const TaskConstMeta(
-        debugName: "encrypt_to_file",
-        argNames: ["key", "cleartext", "filePath", "aad"],
-      );
-
-  @override
-  Future<void> encryptToFileCompressed(
-      {required List<int> key,
-      required List<int> cleartext,
-      required String filePath,
-      required int zstdCompressionLevel,
-      Uint8List? aad,
-      dynamic hint}) {
-    return handler.executeNormal(NormalTask(
-      callFfi: (port_) {
-        var arg0 = cst_encode_list_prim_u_8_loose(key);
-        var arg1 = cst_encode_list_prim_u_8_loose(cleartext);
-        var arg2 = cst_encode_String(filePath);
-        var arg3 = cst_encode_i_32(zstdCompressionLevel);
+        var arg3 = cst_encode_opt_list_prim_u_8_strict(nonce);
         var arg4 = cst_encode_opt_list_prim_u_8_strict(aad);
-        return wire.wire_encrypt_to_file_compressed(
+        return wire.wire_rusty_cha_cha_20_poly_1305_encrypt_to_file(
             port_, arg0, arg1, arg2, arg3, arg4);
       },
       codec: DcoCodec(
         decodeSuccessData: dco_decode_unit,
         decodeErrorData: dco_decode_AnyhowException,
       ),
-      constMeta: kEncryptToFileCompressedConstMeta,
-      argValues: [key, cleartext, filePath, zstdCompressionLevel, aad],
+      constMeta: kRustyChaCha20Poly1305EncryptToFileConstMeta,
+      argValues: [that, cleartext, filePath, nonce, aad],
       apiImpl: this,
       hint: hint,
     ));
   }
 
-  TaskConstMeta get kEncryptToFileCompressedConstMeta => const TaskConstMeta(
-        debugName: "encrypt_to_file_compressed",
-        argNames: [
-          "key",
-          "cleartext",
-          "filePath",
-          "zstdCompressionLevel",
-          "aad"
-        ],
+  TaskConstMeta get kRustyChaCha20Poly1305EncryptToFileConstMeta =>
+      const TaskConstMeta(
+        debugName: "rusty_cha_cha_20_poly_1305_encrypt_to_file",
+        argNames: ["that", "cleartext", "filePath", "nonce", "aad"],
       );
 
   @override
-  Future<Uint8List> generateChaCha20Key({dynamic hint}) {
+  Future<Uint8List> rustyChaCha20Poly1305GenerateKey({dynamic hint}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
-        return wire.wire_generate_cha_cha_20_key(port_);
+        return wire.wire_rusty_cha_cha_20_poly_1305_generate_key(port_);
       },
       codec: DcoCodec(
         decodeSuccessData: dco_decode_list_prim_u_8_strict,
         decodeErrorData: null,
       ),
-      constMeta: kGenerateChaCha20KeyConstMeta,
+      constMeta: kRustyChaCha20Poly1305GenerateKeyConstMeta,
       argValues: [],
       apiImpl: this,
       hint: hint,
     ));
   }
 
-  TaskConstMeta get kGenerateChaCha20KeyConstMeta => const TaskConstMeta(
-        debugName: "generate_cha_cha_20_key",
+  TaskConstMeta get kRustyChaCha20Poly1305GenerateKeyConstMeta =>
+      const TaskConstMeta(
+        debugName: "rusty_cha_cha_20_poly_1305_generate_key",
         argNames: [],
       );
 
   @override
-  Future<Uint8List> generateChaCha20Nonce({dynamic hint}) {
+  Future<Uint8List> rustyChaCha20Poly1305GenerateNonce({dynamic hint}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
-        return wire.wire_generate_cha_cha_20_nonce(port_);
+        return wire.wire_rusty_cha_cha_20_poly_1305_generate_nonce(port_);
       },
       codec: DcoCodec(
         decodeSuccessData: dco_decode_list_prim_u_8_strict,
         decodeErrorData: null,
       ),
-      constMeta: kGenerateChaCha20NonceConstMeta,
+      constMeta: kRustyChaCha20Poly1305GenerateNonceConstMeta,
       argValues: [],
       apiImpl: this,
       hint: hint,
     ));
   }
 
-  TaskConstMeta get kGenerateChaCha20NonceConstMeta => const TaskConstMeta(
-        debugName: "generate_cha_cha_20_nonce",
+  TaskConstMeta get kRustyChaCha20Poly1305GenerateNonceConstMeta =>
+      const TaskConstMeta(
+        debugName: "rusty_cha_cha_20_poly_1305_generate_nonce",
+        argNames: [],
+      );
+
+  @override
+  Future<RustyXChaCha20Poly1305> rustyXChaCha20Poly1305CreateInternal(
+      {Uint8List? key, Compression? compression, dynamic hint}) {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
+        var arg0 = cst_encode_opt_list_prim_u_8_strict(key);
+        var arg1 = cst_encode_opt_box_autoadd_compression(compression);
+        return wire.wire_rusty_x_cha_cha_20_poly_1305_create_internal(
+            port_, arg0, arg1);
+      },
+      codec: DcoCodec(
+        decodeSuccessData: dco_decode_rusty_x_cha_cha_20_poly_1305,
+        decodeErrorData: dco_decode_AnyhowException,
+      ),
+      constMeta: kRustyXChaCha20Poly1305CreateInternalConstMeta,
+      argValues: [key, compression],
+      apiImpl: this,
+      hint: hint,
+    ));
+  }
+
+  TaskConstMeta get kRustyXChaCha20Poly1305CreateInternalConstMeta =>
+      const TaskConstMeta(
+        debugName: "rusty_x_cha_cha_20_poly_1305_create_internal",
+        argNames: ["key", "compression"],
+      );
+
+  @override
+  Future<Uint8List> rustyXChaCha20Poly1305Decrypt(
+      {required RustyXChaCha20Poly1305 that,
+      required List<int> ciphertext,
+      Uint8List? aad,
+      dynamic hint}) {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
+        var arg0 = cst_encode_box_autoadd_rusty_x_cha_cha_20_poly_1305(that);
+        var arg1 = cst_encode_list_prim_u_8_loose(ciphertext);
+        var arg2 = cst_encode_opt_list_prim_u_8_strict(aad);
+        return wire.wire_rusty_x_cha_cha_20_poly_1305_decrypt(
+            port_, arg0, arg1, arg2);
+      },
+      codec: DcoCodec(
+        decodeSuccessData: dco_decode_list_prim_u_8_strict,
+        decodeErrorData: dco_decode_AnyhowException,
+      ),
+      constMeta: kRustyXChaCha20Poly1305DecryptConstMeta,
+      argValues: [that, ciphertext, aad],
+      apiImpl: this,
+      hint: hint,
+    ));
+  }
+
+  TaskConstMeta get kRustyXChaCha20Poly1305DecryptConstMeta =>
+      const TaskConstMeta(
+        debugName: "rusty_x_cha_cha_20_poly_1305_decrypt",
+        argNames: ["that", "ciphertext", "aad"],
+      );
+
+  @override
+  Future<Uint8List> rustyXChaCha20Poly1305DecryptFromFile(
+      {required RustyXChaCha20Poly1305 that,
+      required String filePath,
+      Uint8List? aad,
+      dynamic hint}) {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
+        var arg0 = cst_encode_box_autoadd_rusty_x_cha_cha_20_poly_1305(that);
+        var arg1 = cst_encode_String(filePath);
+        var arg2 = cst_encode_opt_list_prim_u_8_strict(aad);
+        return wire.wire_rusty_x_cha_cha_20_poly_1305_decrypt_from_file(
+            port_, arg0, arg1, arg2);
+      },
+      codec: DcoCodec(
+        decodeSuccessData: dco_decode_list_prim_u_8_strict,
+        decodeErrorData: dco_decode_AnyhowException,
+      ),
+      constMeta: kRustyXChaCha20Poly1305DecryptFromFileConstMeta,
+      argValues: [that, filePath, aad],
+      apiImpl: this,
+      hint: hint,
+    ));
+  }
+
+  TaskConstMeta get kRustyXChaCha20Poly1305DecryptFromFileConstMeta =>
+      const TaskConstMeta(
+        debugName: "rusty_x_cha_cha_20_poly_1305_decrypt_from_file",
+        argNames: ["that", "filePath", "aad"],
+      );
+
+  @override
+  Future<Uint8List> rustyXChaCha20Poly1305Encrypt(
+      {required RustyXChaCha20Poly1305 that,
+      required List<int> cleartext,
+      Uint8List? nonce,
+      Uint8List? aad,
+      dynamic hint}) {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
+        var arg0 = cst_encode_box_autoadd_rusty_x_cha_cha_20_poly_1305(that);
+        var arg1 = cst_encode_list_prim_u_8_loose(cleartext);
+        var arg2 = cst_encode_opt_list_prim_u_8_strict(nonce);
+        var arg3 = cst_encode_opt_list_prim_u_8_strict(aad);
+        return wire.wire_rusty_x_cha_cha_20_poly_1305_encrypt(
+            port_, arg0, arg1, arg2, arg3);
+      },
+      codec: DcoCodec(
+        decodeSuccessData: dco_decode_list_prim_u_8_strict,
+        decodeErrorData: dco_decode_AnyhowException,
+      ),
+      constMeta: kRustyXChaCha20Poly1305EncryptConstMeta,
+      argValues: [that, cleartext, nonce, aad],
+      apiImpl: this,
+      hint: hint,
+    ));
+  }
+
+  TaskConstMeta get kRustyXChaCha20Poly1305EncryptConstMeta =>
+      const TaskConstMeta(
+        debugName: "rusty_x_cha_cha_20_poly_1305_encrypt",
+        argNames: ["that", "cleartext", "nonce", "aad"],
+      );
+
+  @override
+  Future<void> rustyXChaCha20Poly1305EncryptToFile(
+      {required RustyXChaCha20Poly1305 that,
+      required List<int> cleartext,
+      required String filePath,
+      Uint8List? nonce,
+      Uint8List? aad,
+      dynamic hint}) {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
+        var arg0 = cst_encode_box_autoadd_rusty_x_cha_cha_20_poly_1305(that);
+        var arg1 = cst_encode_list_prim_u_8_loose(cleartext);
+        var arg2 = cst_encode_String(filePath);
+        var arg3 = cst_encode_opt_list_prim_u_8_strict(nonce);
+        var arg4 = cst_encode_opt_list_prim_u_8_strict(aad);
+        return wire.wire_rusty_x_cha_cha_20_poly_1305_encrypt_to_file(
+            port_, arg0, arg1, arg2, arg3, arg4);
+      },
+      codec: DcoCodec(
+        decodeSuccessData: dco_decode_unit,
+        decodeErrorData: dco_decode_AnyhowException,
+      ),
+      constMeta: kRustyXChaCha20Poly1305EncryptToFileConstMeta,
+      argValues: [that, cleartext, filePath, nonce, aad],
+      apiImpl: this,
+      hint: hint,
+    ));
+  }
+
+  TaskConstMeta get kRustyXChaCha20Poly1305EncryptToFileConstMeta =>
+      const TaskConstMeta(
+        debugName: "rusty_x_cha_cha_20_poly_1305_encrypt_to_file",
+        argNames: ["that", "cleartext", "filePath", "nonce", "aad"],
+      );
+
+  @override
+  Future<Uint8List> rustyXChaCha20Poly1305GenerateKey({dynamic hint}) {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
+        return wire.wire_rusty_x_cha_cha_20_poly_1305_generate_key(port_);
+      },
+      codec: DcoCodec(
+        decodeSuccessData: dco_decode_list_prim_u_8_strict,
+        decodeErrorData: null,
+      ),
+      constMeta: kRustyXChaCha20Poly1305GenerateKeyConstMeta,
+      argValues: [],
+      apiImpl: this,
+      hint: hint,
+    ));
+  }
+
+  TaskConstMeta get kRustyXChaCha20Poly1305GenerateKeyConstMeta =>
+      const TaskConstMeta(
+        debugName: "rusty_x_cha_cha_20_poly_1305_generate_key",
+        argNames: [],
+      );
+
+  @override
+  Future<Uint8List> rustyXChaCha20Poly1305GenerateNonce({dynamic hint}) {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
+        return wire.wire_rusty_x_cha_cha_20_poly_1305_generate_nonce(port_);
+      },
+      codec: DcoCodec(
+        decodeSuccessData: dco_decode_list_prim_u_8_strict,
+        decodeErrorData: null,
+      ),
+      constMeta: kRustyXChaCha20Poly1305GenerateNonceConstMeta,
+      argValues: [],
+      apiImpl: this,
+      hint: hint,
+    ));
+  }
+
+  TaskConstMeta get kRustyXChaCha20Poly1305GenerateNonceConstMeta =>
+      const TaskConstMeta(
+        debugName: "rusty_x_cha_cha_20_poly_1305_generate_nonce",
         argNames: [],
       );
 
@@ -488,6 +615,41 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   String dco_decode_String(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw as String;
+  }
+
+  @protected
+  Compression dco_decode_box_autoadd_compression(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_compression(raw);
+  }
+
+  @protected
+  RustyChaCha20Poly1305 dco_decode_box_autoadd_rusty_cha_cha_20_poly_1305(
+      dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_rusty_cha_cha_20_poly_1305(raw);
+  }
+
+  @protected
+  RustyXChaCha20Poly1305 dco_decode_box_autoadd_rusty_x_cha_cha_20_poly_1305(
+      dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_rusty_x_cha_cha_20_poly_1305(raw);
+  }
+
+  @protected
+  Compression dco_decode_compression(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    switch (raw[0]) {
+      case 0:
+        return Compression_Uncompressed();
+      case 1:
+        return Compression_Zstd(
+          compressionLevel: dco_decode_i_32(raw[1]),
+        );
+      default:
+        throw Exception("unreachable");
+    }
   }
 
   @protected
@@ -509,9 +671,39 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  Compression? dco_decode_opt_box_autoadd_compression(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return raw == null ? null : dco_decode_box_autoadd_compression(raw);
+  }
+
+  @protected
   Uint8List? dco_decode_opt_list_prim_u_8_strict(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw == null ? null : dco_decode_list_prim_u_8_strict(raw);
+  }
+
+  @protected
+  RustyChaCha20Poly1305 dco_decode_rusty_cha_cha_20_poly_1305(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 2)
+      throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
+    return RustyChaCha20Poly1305(
+      key: dco_decode_list_prim_u_8_strict(arr[0]),
+      compression: dco_decode_compression(arr[1]),
+    );
+  }
+
+  @protected
+  RustyXChaCha20Poly1305 dco_decode_rusty_x_cha_cha_20_poly_1305(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 2)
+      throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
+    return RustyXChaCha20Poly1305(
+      key: dco_decode_list_prim_u_8_strict(arr[0]),
+      compression: dco_decode_compression(arr[1]),
+    );
   }
 
   @protected
@@ -541,6 +733,42 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  Compression sse_decode_box_autoadd_compression(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_compression(deserializer));
+  }
+
+  @protected
+  RustyChaCha20Poly1305 sse_decode_box_autoadd_rusty_cha_cha_20_poly_1305(
+      SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_rusty_cha_cha_20_poly_1305(deserializer));
+  }
+
+  @protected
+  RustyXChaCha20Poly1305 sse_decode_box_autoadd_rusty_x_cha_cha_20_poly_1305(
+      SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_rusty_x_cha_cha_20_poly_1305(deserializer));
+  }
+
+  @protected
+  Compression sse_decode_compression(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    var tag_ = sse_decode_i_32(deserializer);
+    switch (tag_) {
+      case 0:
+        return Compression_Uncompressed();
+      case 1:
+        var var_compressionLevel = sse_decode_i_32(deserializer);
+        return Compression_Zstd(compressionLevel: var_compressionLevel);
+      default:
+        throw UnimplementedError('');
+    }
+  }
+
+  @protected
   int sse_decode_i_32(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return deserializer.buffer.getInt32();
@@ -561,6 +789,18 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  Compression? sse_decode_opt_box_autoadd_compression(
+      SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    if (sse_decode_bool(deserializer)) {
+      return (sse_decode_box_autoadd_compression(deserializer));
+    } else {
+      return null;
+    }
+  }
+
+  @protected
   Uint8List? sse_decode_opt_list_prim_u_8_strict(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
 
@@ -569,6 +809,24 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     } else {
       return null;
     }
+  }
+
+  @protected
+  RustyChaCha20Poly1305 sse_decode_rusty_cha_cha_20_poly_1305(
+      SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_key = sse_decode_list_prim_u_8_strict(deserializer);
+    var var_compression = sse_decode_compression(deserializer);
+    return RustyChaCha20Poly1305(key: var_key, compression: var_compression);
+  }
+
+  @protected
+  RustyXChaCha20Poly1305 sse_decode_rusty_x_cha_cha_20_poly_1305(
+      SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_key = sse_decode_list_prim_u_8_strict(deserializer);
+    var var_compression = sse_decode_compression(deserializer);
+    return RustyXChaCha20Poly1305(key: var_key, compression: var_compression);
   }
 
   @protected
@@ -620,6 +878,39 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_box_autoadd_compression(
+      Compression self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_compression(self, serializer);
+  }
+
+  @protected
+  void sse_encode_box_autoadd_rusty_cha_cha_20_poly_1305(
+      RustyChaCha20Poly1305 self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_rusty_cha_cha_20_poly_1305(self, serializer);
+  }
+
+  @protected
+  void sse_encode_box_autoadd_rusty_x_cha_cha_20_poly_1305(
+      RustyXChaCha20Poly1305 self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_rusty_x_cha_cha_20_poly_1305(self, serializer);
+  }
+
+  @protected
+  void sse_encode_compression(Compression self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    switch (self) {
+      case Compression_Uncompressed():
+        sse_encode_i_32(0, serializer);
+      case Compression_Zstd(compressionLevel: final compressionLevel):
+        sse_encode_i_32(1, serializer);
+        sse_encode_i_32(compressionLevel, serializer);
+    }
+  }
+
+  @protected
   void sse_encode_i_32(int self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     serializer.buffer.putInt32(self);
@@ -643,6 +934,17 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_opt_box_autoadd_compression(
+      Compression? self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    sse_encode_bool(self != null, serializer);
+    if (self != null) {
+      sse_encode_box_autoadd_compression(self, serializer);
+    }
+  }
+
+  @protected
   void sse_encode_opt_list_prim_u_8_strict(
       Uint8List? self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
@@ -651,6 +953,22 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     if (self != null) {
       sse_encode_list_prim_u_8_strict(self, serializer);
     }
+  }
+
+  @protected
+  void sse_encode_rusty_cha_cha_20_poly_1305(
+      RustyChaCha20Poly1305 self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_list_prim_u_8_strict(self.key, serializer);
+    sse_encode_compression(self.compression, serializer);
+  }
+
+  @protected
+  void sse_encode_rusty_x_cha_cha_20_poly_1305(
+      RustyXChaCha20Poly1305 self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_list_prim_u_8_strict(self.key, serializer);
+    sse_encode_compression(self.compression, serializer);
   }
 
   @protected

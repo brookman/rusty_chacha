@@ -31,7 +31,7 @@ flutter_rust_bridge::frb_generated_boilerplate!(
     default_rust_auto_opaque = RustAutoOpaqueNom,
 );
 pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_VERSION: &str = "2.0.0-dev.32";
-pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = -809400070;
+pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = 1378991708;
 
 // Section: executor
 
@@ -77,150 +77,73 @@ fn wire_decompress_impl(
         },
     )
 }
-fn wire_decrypt_impl(
+fn wire_rusty_cha_cha_20_poly_1305_create_internal_impl(
     port_: flutter_rust_bridge::for_generated::MessagePort,
-    key: impl CstDecode<Vec<u8>>,
+    key: impl CstDecode<Option<Vec<u8>>>,
+    compression: impl CstDecode<Option<crate::api::Compression>>,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "rusty_cha_cha_20_poly_1305_create_internal",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let api_key = key.cst_decode();
+            let api_compression = compression.cst_decode();
+            move |context| {
+                transform_result_dco((move || {
+                    crate::api::RustyChaCha20Poly1305::create_internal(api_key, api_compression)
+                })())
+            }
+        },
+    )
+}
+fn wire_rusty_cha_cha_20_poly_1305_decrypt_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    that: impl CstDecode<crate::api::RustyChaCha20Poly1305>,
     ciphertext: impl CstDecode<Vec<u8>>,
     aad: impl CstDecode<Option<Vec<u8>>>,
 ) {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
         flutter_rust_bridge::for_generated::TaskInfo {
-            debug_name: "decrypt",
+            debug_name: "rusty_cha_cha_20_poly_1305_decrypt",
             port: Some(port_),
             mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
         },
         move || {
-            let api_key = key.cst_decode();
+            let api_that = that.cst_decode();
             let api_ciphertext = ciphertext.cst_decode();
             let api_aad = aad.cst_decode();
             move |context| {
                 transform_result_dco((move || {
-                    crate::api::decrypt(api_key, api_ciphertext, api_aad)
+                    crate::api::RustyChaCha20Poly1305::decrypt(&api_that, api_ciphertext, api_aad)
                 })())
             }
         },
     )
 }
-fn wire_decrypt_compressed_impl(
+fn wire_rusty_cha_cha_20_poly_1305_decrypt_from_file_impl(
     port_: flutter_rust_bridge::for_generated::MessagePort,
-    key: impl CstDecode<Vec<u8>>,
-    ciphertext: impl CstDecode<Vec<u8>>,
-    aad: impl CstDecode<Option<Vec<u8>>>,
-) {
-    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
-        flutter_rust_bridge::for_generated::TaskInfo {
-            debug_name: "decrypt_compressed",
-            port: Some(port_),
-            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
-        },
-        move || {
-            let api_key = key.cst_decode();
-            let api_ciphertext = ciphertext.cst_decode();
-            let api_aad = aad.cst_decode();
-            move |context| {
-                transform_result_dco((move || {
-                    crate::api::decrypt_compressed(api_key, api_ciphertext, api_aad)
-                })())
-            }
-        },
-    )
-}
-fn wire_decrypt_from_file_impl(
-    port_: flutter_rust_bridge::for_generated::MessagePort,
-    key: impl CstDecode<Vec<u8>>,
+    that: impl CstDecode<crate::api::RustyChaCha20Poly1305>,
     file_path: impl CstDecode<String>,
     aad: impl CstDecode<Option<Vec<u8>>>,
 ) {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
         flutter_rust_bridge::for_generated::TaskInfo {
-            debug_name: "decrypt_from_file",
+            debug_name: "rusty_cha_cha_20_poly_1305_decrypt_from_file",
             port: Some(port_),
             mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
         },
         move || {
-            let api_key = key.cst_decode();
+            let api_that = that.cst_decode();
             let api_file_path = file_path.cst_decode();
             let api_aad = aad.cst_decode();
             move |context| {
                 transform_result_dco((move || {
-                    crate::api::decrypt_from_file(api_key, api_file_path, api_aad)
-                })())
-            }
-        },
-    )
-}
-fn wire_decrypt_from_file_compressed_impl(
-    port_: flutter_rust_bridge::for_generated::MessagePort,
-    key: impl CstDecode<Vec<u8>>,
-    file_path: impl CstDecode<String>,
-    aad: impl CstDecode<Option<Vec<u8>>>,
-) {
-    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
-        flutter_rust_bridge::for_generated::TaskInfo {
-            debug_name: "decrypt_from_file_compressed",
-            port: Some(port_),
-            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
-        },
-        move || {
-            let api_key = key.cst_decode();
-            let api_file_path = file_path.cst_decode();
-            let api_aad = aad.cst_decode();
-            move |context| {
-                transform_result_dco((move || {
-                    crate::api::decrypt_from_file_compressed(api_key, api_file_path, api_aad)
-                })())
-            }
-        },
-    )
-}
-fn wire_encrypt_impl(
-    port_: flutter_rust_bridge::for_generated::MessagePort,
-    key: impl CstDecode<Vec<u8>>,
-    cleartext: impl CstDecode<Vec<u8>>,
-    aad: impl CstDecode<Option<Vec<u8>>>,
-) {
-    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
-        flutter_rust_bridge::for_generated::TaskInfo {
-            debug_name: "encrypt",
-            port: Some(port_),
-            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
-        },
-        move || {
-            let api_key = key.cst_decode();
-            let api_cleartext = cleartext.cst_decode();
-            let api_aad = aad.cst_decode();
-            move |context| {
-                transform_result_dco((move || {
-                    crate::api::encrypt(api_key, api_cleartext, api_aad)
-                })())
-            }
-        },
-    )
-}
-fn wire_encrypt_compressed_impl(
-    port_: flutter_rust_bridge::for_generated::MessagePort,
-    key: impl CstDecode<Vec<u8>>,
-    cleartext: impl CstDecode<Vec<u8>>,
-    zstd_compression_level: impl CstDecode<i32>,
-    aad: impl CstDecode<Option<Vec<u8>>>,
-) {
-    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
-        flutter_rust_bridge::for_generated::TaskInfo {
-            debug_name: "encrypt_compressed",
-            port: Some(port_),
-            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
-        },
-        move || {
-            let api_key = key.cst_decode();
-            let api_cleartext = cleartext.cst_decode();
-            let api_zstd_compression_level = zstd_compression_level.cst_decode();
-            let api_aad = aad.cst_decode();
-            move |context| {
-                transform_result_dco((move || {
-                    crate::api::encrypt_compressed(
-                        api_key,
-                        api_cleartext,
-                        api_zstd_compression_level,
+                    crate::api::RustyChaCha20Poly1305::decrypt_from_file(
+                        &api_that,
+                        api_file_path,
                         api_aad,
                     )
                 })())
@@ -228,59 +151,64 @@ fn wire_encrypt_compressed_impl(
         },
     )
 }
-fn wire_encrypt_to_file_impl(
+fn wire_rusty_cha_cha_20_poly_1305_encrypt_impl(
     port_: flutter_rust_bridge::for_generated::MessagePort,
-    key: impl CstDecode<Vec<u8>>,
+    that: impl CstDecode<crate::api::RustyChaCha20Poly1305>,
     cleartext: impl CstDecode<Vec<u8>>,
-    file_path: impl CstDecode<String>,
+    nonce: impl CstDecode<Option<Vec<u8>>>,
     aad: impl CstDecode<Option<Vec<u8>>>,
 ) {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
         flutter_rust_bridge::for_generated::TaskInfo {
-            debug_name: "encrypt_to_file",
+            debug_name: "rusty_cha_cha_20_poly_1305_encrypt",
             port: Some(port_),
             mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
         },
         move || {
-            let api_key = key.cst_decode();
+            let api_that = that.cst_decode();
             let api_cleartext = cleartext.cst_decode();
-            let api_file_path = file_path.cst_decode();
+            let api_nonce = nonce.cst_decode();
             let api_aad = aad.cst_decode();
             move |context| {
                 transform_result_dco((move || {
-                    crate::api::encrypt_to_file(api_key, api_cleartext, api_file_path, api_aad)
+                    crate::api::RustyChaCha20Poly1305::encrypt(
+                        &api_that,
+                        api_cleartext,
+                        api_nonce,
+                        api_aad,
+                    )
                 })())
             }
         },
     )
 }
-fn wire_encrypt_to_file_compressed_impl(
+fn wire_rusty_cha_cha_20_poly_1305_encrypt_to_file_impl(
     port_: flutter_rust_bridge::for_generated::MessagePort,
-    key: impl CstDecode<Vec<u8>>,
+    that: impl CstDecode<crate::api::RustyChaCha20Poly1305>,
     cleartext: impl CstDecode<Vec<u8>>,
     file_path: impl CstDecode<String>,
-    zstd_compression_level: impl CstDecode<i32>,
+    nonce: impl CstDecode<Option<Vec<u8>>>,
     aad: impl CstDecode<Option<Vec<u8>>>,
 ) {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
         flutter_rust_bridge::for_generated::TaskInfo {
-            debug_name: "encrypt_to_file_compressed",
+            debug_name: "rusty_cha_cha_20_poly_1305_encrypt_to_file",
             port: Some(port_),
             mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
         },
         move || {
-            let api_key = key.cst_decode();
+            let api_that = that.cst_decode();
             let api_cleartext = cleartext.cst_decode();
             let api_file_path = file_path.cst_decode();
-            let api_zstd_compression_level = zstd_compression_level.cst_decode();
+            let api_nonce = nonce.cst_decode();
             let api_aad = aad.cst_decode();
             move |context| {
                 transform_result_dco((move || {
-                    crate::api::encrypt_to_file_compressed(
-                        api_key,
+                    crate::api::RustyChaCha20Poly1305::encrypt_to_file(
+                        &api_that,
                         api_cleartext,
                         api_file_path,
-                        api_zstd_compression_level,
+                        api_nonce,
                         api_aad,
                     )
                 })())
@@ -288,33 +216,212 @@ fn wire_encrypt_to_file_compressed_impl(
         },
     )
 }
-fn wire_generate_cha_cha_20_key_impl(port_: flutter_rust_bridge::for_generated::MessagePort) {
+fn wire_rusty_cha_cha_20_poly_1305_generate_key_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+) {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
         flutter_rust_bridge::for_generated::TaskInfo {
-            debug_name: "generate_cha_cha_20_key",
+            debug_name: "rusty_cha_cha_20_poly_1305_generate_key",
             port: Some(port_),
             mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
         },
         move || {
             move |context| {
                 transform_result_dco((move || {
-                    Result::<_, ()>::Ok(crate::api::generate_cha_cha_20_key())
+                    Result::<_, ()>::Ok(crate::api::RustyChaCha20Poly1305::generate_key())
                 })())
             }
         },
     )
 }
-fn wire_generate_cha_cha_20_nonce_impl(port_: flutter_rust_bridge::for_generated::MessagePort) {
+fn wire_rusty_cha_cha_20_poly_1305_generate_nonce_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+) {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
         flutter_rust_bridge::for_generated::TaskInfo {
-            debug_name: "generate_cha_cha_20_nonce",
+            debug_name: "rusty_cha_cha_20_poly_1305_generate_nonce",
             port: Some(port_),
             mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
         },
         move || {
             move |context| {
                 transform_result_dco((move || {
-                    Result::<_, ()>::Ok(crate::api::generate_cha_cha_20_nonce())
+                    Result::<_, ()>::Ok(crate::api::RustyChaCha20Poly1305::generate_nonce())
+                })())
+            }
+        },
+    )
+}
+fn wire_rusty_x_cha_cha_20_poly_1305_create_internal_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    key: impl CstDecode<Option<Vec<u8>>>,
+    compression: impl CstDecode<Option<crate::api::Compression>>,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "rusty_x_cha_cha_20_poly_1305_create_internal",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let api_key = key.cst_decode();
+            let api_compression = compression.cst_decode();
+            move |context| {
+                transform_result_dco((move || {
+                    crate::api::RustyXChaCha20Poly1305::create_internal(api_key, api_compression)
+                })())
+            }
+        },
+    )
+}
+fn wire_rusty_x_cha_cha_20_poly_1305_decrypt_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    that: impl CstDecode<crate::api::RustyXChaCha20Poly1305>,
+    ciphertext: impl CstDecode<Vec<u8>>,
+    aad: impl CstDecode<Option<Vec<u8>>>,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "rusty_x_cha_cha_20_poly_1305_decrypt",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let api_that = that.cst_decode();
+            let api_ciphertext = ciphertext.cst_decode();
+            let api_aad = aad.cst_decode();
+            move |context| {
+                transform_result_dco((move || {
+                    crate::api::RustyXChaCha20Poly1305::decrypt(&api_that, api_ciphertext, api_aad)
+                })())
+            }
+        },
+    )
+}
+fn wire_rusty_x_cha_cha_20_poly_1305_decrypt_from_file_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    that: impl CstDecode<crate::api::RustyXChaCha20Poly1305>,
+    file_path: impl CstDecode<String>,
+    aad: impl CstDecode<Option<Vec<u8>>>,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "rusty_x_cha_cha_20_poly_1305_decrypt_from_file",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let api_that = that.cst_decode();
+            let api_file_path = file_path.cst_decode();
+            let api_aad = aad.cst_decode();
+            move |context| {
+                transform_result_dco((move || {
+                    crate::api::RustyXChaCha20Poly1305::decrypt_from_file(
+                        &api_that,
+                        api_file_path,
+                        api_aad,
+                    )
+                })())
+            }
+        },
+    )
+}
+fn wire_rusty_x_cha_cha_20_poly_1305_encrypt_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    that: impl CstDecode<crate::api::RustyXChaCha20Poly1305>,
+    cleartext: impl CstDecode<Vec<u8>>,
+    nonce: impl CstDecode<Option<Vec<u8>>>,
+    aad: impl CstDecode<Option<Vec<u8>>>,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "rusty_x_cha_cha_20_poly_1305_encrypt",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let api_that = that.cst_decode();
+            let api_cleartext = cleartext.cst_decode();
+            let api_nonce = nonce.cst_decode();
+            let api_aad = aad.cst_decode();
+            move |context| {
+                transform_result_dco((move || {
+                    crate::api::RustyXChaCha20Poly1305::encrypt(
+                        &api_that,
+                        api_cleartext,
+                        api_nonce,
+                        api_aad,
+                    )
+                })())
+            }
+        },
+    )
+}
+fn wire_rusty_x_cha_cha_20_poly_1305_encrypt_to_file_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    that: impl CstDecode<crate::api::RustyXChaCha20Poly1305>,
+    cleartext: impl CstDecode<Vec<u8>>,
+    file_path: impl CstDecode<String>,
+    nonce: impl CstDecode<Option<Vec<u8>>>,
+    aad: impl CstDecode<Option<Vec<u8>>>,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "rusty_x_cha_cha_20_poly_1305_encrypt_to_file",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let api_that = that.cst_decode();
+            let api_cleartext = cleartext.cst_decode();
+            let api_file_path = file_path.cst_decode();
+            let api_nonce = nonce.cst_decode();
+            let api_aad = aad.cst_decode();
+            move |context| {
+                transform_result_dco((move || {
+                    crate::api::RustyXChaCha20Poly1305::encrypt_to_file(
+                        &api_that,
+                        api_cleartext,
+                        api_file_path,
+                        api_nonce,
+                        api_aad,
+                    )
+                })())
+            }
+        },
+    )
+}
+fn wire_rusty_x_cha_cha_20_poly_1305_generate_key_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "rusty_x_cha_cha_20_poly_1305_generate_key",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            move |context| {
+                transform_result_dco((move || {
+                    Result::<_, ()>::Ok(crate::api::RustyXChaCha20Poly1305::generate_key())
+                })())
+            }
+        },
+    )
+}
+fn wire_rusty_x_cha_cha_20_poly_1305_generate_nonce_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::DcoCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "rusty_x_cha_cha_20_poly_1305_generate_nonce",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            move |context| {
+                transform_result_dco((move || {
+                    Result::<_, ()>::Ok(crate::api::RustyXChaCha20Poly1305::generate_nonce())
                 })())
             }
         },
@@ -350,6 +457,27 @@ impl SseDecode for String {
     }
 }
 
+impl SseDecode for crate::api::Compression {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut tag_ = <i32>::sse_decode(deserializer);
+        match tag_ {
+            0 => {
+                return crate::api::Compression::Uncompressed;
+            }
+            1 => {
+                let mut var_compressionLevel = <i32>::sse_decode(deserializer);
+                return crate::api::Compression::Zstd {
+                    compression_level: var_compressionLevel,
+                };
+            }
+            _ => {
+                unimplemented!("");
+            }
+        }
+    }
+}
+
 impl SseDecode for i32 {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -369,6 +497,17 @@ impl SseDecode for Vec<u8> {
     }
 }
 
+impl SseDecode for Option<crate::api::Compression> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        if (<bool>::sse_decode(deserializer)) {
+            return Some(<crate::api::Compression>::sse_decode(deserializer));
+        } else {
+            return None;
+        }
+    }
+}
+
 impl SseDecode for Option<Vec<u8>> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -377,6 +516,30 @@ impl SseDecode for Option<Vec<u8>> {
         } else {
             return None;
         }
+    }
+}
+
+impl SseDecode for crate::api::RustyChaCha20Poly1305 {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_key = <Vec<u8>>::sse_decode(deserializer);
+        let mut var_compression = <crate::api::Compression>::sse_decode(deserializer);
+        return crate::api::RustyChaCha20Poly1305 {
+            key: var_key,
+            compression: var_compression,
+        };
+    }
+}
+
+impl SseDecode for crate::api::RustyXChaCha20Poly1305 {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_key = <Vec<u8>>::sse_decode(deserializer);
+        let mut var_compression = <crate::api::Compression>::sse_decode(deserializer);
+        return crate::api::RustyXChaCha20Poly1305 {
+            key: var_key,
+            compression: var_compression,
+        };
     }
 }
 
@@ -426,6 +589,68 @@ fn pde_ffi_dispatcher_sync_impl(
 
 // Section: rust2dart
 
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::Compression {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        match self {
+            crate::api::Compression::Uncompressed => [0.into_dart()].into_dart(),
+            crate::api::Compression::Zstd { compression_level } => [
+                1.into_dart(),
+                compression_level.into_into_dart().into_dart(),
+            ]
+            .into_dart(),
+        }
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive for crate::api::Compression {}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::Compression> for crate::api::Compression {
+    fn into_into_dart(self) -> crate::api::Compression {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::RustyChaCha20Poly1305 {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.key.into_into_dart().into_dart(),
+            self.compression.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::RustyChaCha20Poly1305
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::RustyChaCha20Poly1305>
+    for crate::api::RustyChaCha20Poly1305
+{
+    fn into_into_dart(self) -> crate::api::RustyChaCha20Poly1305 {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::RustyXChaCha20Poly1305 {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.key.into_into_dart().into_dart(),
+            self.compression.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::RustyXChaCha20Poly1305
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::RustyXChaCha20Poly1305>
+    for crate::api::RustyXChaCha20Poly1305
+{
+    fn into_into_dart(self) -> crate::api::RustyXChaCha20Poly1305 {
+        self
+    }
+}
+
 impl SseEncode for flutter_rust_bridge::for_generated::anyhow::Error {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -437,6 +662,21 @@ impl SseEncode for String {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
         <Vec<u8>>::sse_encode(self.into_bytes(), serializer);
+    }
+}
+
+impl SseEncode for crate::api::Compression {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        match self {
+            crate::api::Compression::Uncompressed => {
+                <i32>::sse_encode(0, serializer);
+            }
+            crate::api::Compression::Zstd { compression_level } => {
+                <i32>::sse_encode(1, serializer);
+                <i32>::sse_encode(compression_level, serializer);
+            }
+        }
     }
 }
 
@@ -457,6 +697,16 @@ impl SseEncode for Vec<u8> {
     }
 }
 
+impl SseEncode for Option<crate::api::Compression> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <bool>::sse_encode(self.is_some(), serializer);
+        if let Some(value) = self {
+            <crate::api::Compression>::sse_encode(value, serializer);
+        }
+    }
+}
+
 impl SseEncode for Option<Vec<u8>> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -464,6 +714,22 @@ impl SseEncode for Option<Vec<u8>> {
         if let Some(value) = self {
             <Vec<u8>>::sse_encode(value, serializer);
         }
+    }
+}
+
+impl SseEncode for crate::api::RustyChaCha20Poly1305 {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <Vec<u8>>::sse_encode(self.key, serializer);
+        <crate::api::Compression>::sse_encode(self.compression, serializer);
+    }
+}
+
+impl SseEncode for crate::api::RustyXChaCha20Poly1305 {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <Vec<u8>>::sse_encode(self.key, serializer);
+        <crate::api::Compression>::sse_encode(self.compression, serializer);
     }
 }
 

@@ -25,6 +25,20 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   String dco_decode_String(dynamic raw);
 
   @protected
+  Compression dco_decode_box_autoadd_compression(dynamic raw);
+
+  @protected
+  RustyChaCha20Poly1305 dco_decode_box_autoadd_rusty_cha_cha_20_poly_1305(
+      dynamic raw);
+
+  @protected
+  RustyXChaCha20Poly1305 dco_decode_box_autoadd_rusty_x_cha_cha_20_poly_1305(
+      dynamic raw);
+
+  @protected
+  Compression dco_decode_compression(dynamic raw);
+
+  @protected
   int dco_decode_i_32(dynamic raw);
 
   @protected
@@ -34,7 +48,16 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   Uint8List dco_decode_list_prim_u_8_strict(dynamic raw);
 
   @protected
+  Compression? dco_decode_opt_box_autoadd_compression(dynamic raw);
+
+  @protected
   Uint8List? dco_decode_opt_list_prim_u_8_strict(dynamic raw);
+
+  @protected
+  RustyChaCha20Poly1305 dco_decode_rusty_cha_cha_20_poly_1305(dynamic raw);
+
+  @protected
+  RustyXChaCha20Poly1305 dco_decode_rusty_x_cha_cha_20_poly_1305(dynamic raw);
 
   @protected
   int dco_decode_u_8(dynamic raw);
@@ -49,6 +72,20 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   String sse_decode_String(SseDeserializer deserializer);
 
   @protected
+  Compression sse_decode_box_autoadd_compression(SseDeserializer deserializer);
+
+  @protected
+  RustyChaCha20Poly1305 sse_decode_box_autoadd_rusty_cha_cha_20_poly_1305(
+      SseDeserializer deserializer);
+
+  @protected
+  RustyXChaCha20Poly1305 sse_decode_box_autoadd_rusty_x_cha_cha_20_poly_1305(
+      SseDeserializer deserializer);
+
+  @protected
+  Compression sse_decode_compression(SseDeserializer deserializer);
+
+  @protected
   int sse_decode_i_32(SseDeserializer deserializer);
 
   @protected
@@ -58,7 +95,19 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   Uint8List sse_decode_list_prim_u_8_strict(SseDeserializer deserializer);
 
   @protected
+  Compression? sse_decode_opt_box_autoadd_compression(
+      SseDeserializer deserializer);
+
+  @protected
   Uint8List? sse_decode_opt_list_prim_u_8_strict(SseDeserializer deserializer);
+
+  @protected
+  RustyChaCha20Poly1305 sse_decode_rusty_cha_cha_20_poly_1305(
+      SseDeserializer deserializer);
+
+  @protected
+  RustyXChaCha20Poly1305 sse_decode_rusty_x_cha_cha_20_poly_1305(
+      SseDeserializer deserializer);
 
   @protected
   int sse_decode_u_8(SseDeserializer deserializer);
@@ -83,6 +132,35 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   }
 
   @protected
+  ffi.Pointer<wire_cst_compression> cst_encode_box_autoadd_compression(
+      Compression raw) {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    final ptr = wire.cst_new_box_autoadd_compression();
+    cst_api_fill_to_wire_compression(raw, ptr.ref);
+    return ptr;
+  }
+
+  @protected
+  ffi.Pointer<wire_cst_rusty_cha_cha_20_poly_1305>
+      cst_encode_box_autoadd_rusty_cha_cha_20_poly_1305(
+          RustyChaCha20Poly1305 raw) {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    final ptr = wire.cst_new_box_autoadd_rusty_cha_cha_20_poly_1305();
+    cst_api_fill_to_wire_rusty_cha_cha_20_poly_1305(raw, ptr.ref);
+    return ptr;
+  }
+
+  @protected
+  ffi.Pointer<wire_cst_rusty_x_cha_cha_20_poly_1305>
+      cst_encode_box_autoadd_rusty_x_cha_cha_20_poly_1305(
+          RustyXChaCha20Poly1305 raw) {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    final ptr = wire.cst_new_box_autoadd_rusty_x_cha_cha_20_poly_1305();
+    cst_api_fill_to_wire_rusty_x_cha_cha_20_poly_1305(raw, ptr.ref);
+    return ptr;
+  }
+
+  @protected
   ffi.Pointer<wire_cst_list_prim_u_8_loose> cst_encode_list_prim_u_8_loose(
       List<int> raw) {
     // Codec=Cst (C-struct based), see doc to use other codecs
@@ -101,10 +179,68 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   }
 
   @protected
+  ffi.Pointer<wire_cst_compression> cst_encode_opt_box_autoadd_compression(
+      Compression? raw) {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    return raw == null ? ffi.nullptr : cst_encode_box_autoadd_compression(raw);
+  }
+
+  @protected
   ffi.Pointer<wire_cst_list_prim_u_8_strict>
       cst_encode_opt_list_prim_u_8_strict(Uint8List? raw) {
     // Codec=Cst (C-struct based), see doc to use other codecs
     return raw == null ? ffi.nullptr : cst_encode_list_prim_u_8_strict(raw);
+  }
+
+  @protected
+  void cst_api_fill_to_wire_box_autoadd_compression(
+      Compression apiObj, ffi.Pointer<wire_cst_compression> wireObj) {
+    cst_api_fill_to_wire_compression(apiObj, wireObj.ref);
+  }
+
+  @protected
+  void cst_api_fill_to_wire_box_autoadd_rusty_cha_cha_20_poly_1305(
+      RustyChaCha20Poly1305 apiObj,
+      ffi.Pointer<wire_cst_rusty_cha_cha_20_poly_1305> wireObj) {
+    cst_api_fill_to_wire_rusty_cha_cha_20_poly_1305(apiObj, wireObj.ref);
+  }
+
+  @protected
+  void cst_api_fill_to_wire_box_autoadd_rusty_x_cha_cha_20_poly_1305(
+      RustyXChaCha20Poly1305 apiObj,
+      ffi.Pointer<wire_cst_rusty_x_cha_cha_20_poly_1305> wireObj) {
+    cst_api_fill_to_wire_rusty_x_cha_cha_20_poly_1305(apiObj, wireObj.ref);
+  }
+
+  @protected
+  void cst_api_fill_to_wire_compression(
+      Compression apiObj, wire_cst_compression wireObj) {
+    if (apiObj is Compression_Uncompressed) {
+      wireObj.tag = 0;
+      return;
+    }
+    if (apiObj is Compression_Zstd) {
+      var pre_compression_level = cst_encode_i_32(apiObj.compressionLevel);
+      wireObj.tag = 1;
+      wireObj.kind.Zstd.compression_level = pre_compression_level;
+      return;
+    }
+  }
+
+  @protected
+  void cst_api_fill_to_wire_rusty_cha_cha_20_poly_1305(
+      RustyChaCha20Poly1305 apiObj,
+      wire_cst_rusty_cha_cha_20_poly_1305 wireObj) {
+    wireObj.key = cst_encode_list_prim_u_8_strict(apiObj.key);
+    cst_api_fill_to_wire_compression(apiObj.compression, wireObj.compression);
+  }
+
+  @protected
+  void cst_api_fill_to_wire_rusty_x_cha_cha_20_poly_1305(
+      RustyXChaCha20Poly1305 apiObj,
+      wire_cst_rusty_x_cha_cha_20_poly_1305 wireObj) {
+    wireObj.key = cst_encode_list_prim_u_8_strict(apiObj.key);
+    cst_api_fill_to_wire_compression(apiObj.compression, wireObj.compression);
   }
 
   @protected
@@ -124,6 +260,21 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void sse_encode_String(String self, SseSerializer serializer);
 
   @protected
+  void sse_encode_box_autoadd_compression(
+      Compression self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_box_autoadd_rusty_cha_cha_20_poly_1305(
+      RustyChaCha20Poly1305 self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_box_autoadd_rusty_x_cha_cha_20_poly_1305(
+      RustyXChaCha20Poly1305 self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_compression(Compression self, SseSerializer serializer);
+
+  @protected
   void sse_encode_i_32(int self, SseSerializer serializer);
 
   @protected
@@ -134,8 +285,20 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
       Uint8List self, SseSerializer serializer);
 
   @protected
+  void sse_encode_opt_box_autoadd_compression(
+      Compression? self, SseSerializer serializer);
+
+  @protected
   void sse_encode_opt_list_prim_u_8_strict(
       Uint8List? self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_rusty_cha_cha_20_poly_1305(
+      RustyChaCha20Poly1305 self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_rusty_x_cha_cha_20_poly_1305(
+      RustyXChaCha20Poly1305 self, SseSerializer serializer);
 
   @protected
   void sse_encode_u_8(int self, SseSerializer serializer);
@@ -227,283 +390,414 @@ class RustLibWire implements BaseWire {
   late final _wire_decompress = _wire_decompressPtr.asFunction<
       void Function(int, ffi.Pointer<wire_cst_list_prim_u_8_loose>)>();
 
-  void wire_decrypt(
+  void wire_rusty_cha_cha_20_poly_1305_create_internal(
     int port_,
-    ffi.Pointer<wire_cst_list_prim_u_8_loose> key,
+    ffi.Pointer<wire_cst_list_prim_u_8_strict> key,
+    ffi.Pointer<wire_cst_compression> compression,
+  ) {
+    return _wire_rusty_cha_cha_20_poly_1305_create_internal(
+      port_,
+      key,
+      compression,
+    );
+  }
+
+  late final _wire_rusty_cha_cha_20_poly_1305_create_internalPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Int64,
+                  ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+                  ffi.Pointer<wire_cst_compression>)>>(
+      'frbgen_rusty_chacha_wire_rusty_cha_cha_20_poly_1305_create_internal');
+  late final _wire_rusty_cha_cha_20_poly_1305_create_internal =
+      _wire_rusty_cha_cha_20_poly_1305_create_internalPtr.asFunction<
+          void Function(int, ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+              ffi.Pointer<wire_cst_compression>)>();
+
+  void wire_rusty_cha_cha_20_poly_1305_decrypt(
+    int port_,
+    ffi.Pointer<wire_cst_rusty_cha_cha_20_poly_1305> that,
     ffi.Pointer<wire_cst_list_prim_u_8_loose> ciphertext,
     ffi.Pointer<wire_cst_list_prim_u_8_strict> aad,
   ) {
-    return _wire_decrypt(
+    return _wire_rusty_cha_cha_20_poly_1305_decrypt(
       port_,
-      key,
+      that,
       ciphertext,
       aad,
     );
   }
 
-  late final _wire_decryptPtr = _lookup<
+  late final _wire_rusty_cha_cha_20_poly_1305_decryptPtr = _lookup<
           ffi.NativeFunction<
               ffi.Void Function(
                   ffi.Int64,
-                  ffi.Pointer<wire_cst_list_prim_u_8_loose>,
+                  ffi.Pointer<wire_cst_rusty_cha_cha_20_poly_1305>,
                   ffi.Pointer<wire_cst_list_prim_u_8_loose>,
                   ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
-      'frbgen_rusty_chacha_wire_decrypt');
-  late final _wire_decrypt = _wire_decryptPtr.asFunction<
-      void Function(
-          int,
-          ffi.Pointer<wire_cst_list_prim_u_8_loose>,
-          ffi.Pointer<wire_cst_list_prim_u_8_loose>,
-          ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
+      'frbgen_rusty_chacha_wire_rusty_cha_cha_20_poly_1305_decrypt');
+  late final _wire_rusty_cha_cha_20_poly_1305_decrypt =
+      _wire_rusty_cha_cha_20_poly_1305_decryptPtr.asFunction<
+          void Function(
+              int,
+              ffi.Pointer<wire_cst_rusty_cha_cha_20_poly_1305>,
+              ffi.Pointer<wire_cst_list_prim_u_8_loose>,
+              ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
 
-  void wire_decrypt_compressed(
+  void wire_rusty_cha_cha_20_poly_1305_decrypt_from_file(
     int port_,
-    ffi.Pointer<wire_cst_list_prim_u_8_loose> key,
+    ffi.Pointer<wire_cst_rusty_cha_cha_20_poly_1305> that,
+    ffi.Pointer<wire_cst_list_prim_u_8_strict> file_path,
+    ffi.Pointer<wire_cst_list_prim_u_8_strict> aad,
+  ) {
+    return _wire_rusty_cha_cha_20_poly_1305_decrypt_from_file(
+      port_,
+      that,
+      file_path,
+      aad,
+    );
+  }
+
+  late final _wire_rusty_cha_cha_20_poly_1305_decrypt_from_filePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Int64,
+                  ffi.Pointer<wire_cst_rusty_cha_cha_20_poly_1305>,
+                  ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+                  ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
+      'frbgen_rusty_chacha_wire_rusty_cha_cha_20_poly_1305_decrypt_from_file');
+  late final _wire_rusty_cha_cha_20_poly_1305_decrypt_from_file =
+      _wire_rusty_cha_cha_20_poly_1305_decrypt_from_filePtr.asFunction<
+          void Function(
+              int,
+              ffi.Pointer<wire_cst_rusty_cha_cha_20_poly_1305>,
+              ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+              ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
+
+  void wire_rusty_cha_cha_20_poly_1305_encrypt(
+    int port_,
+    ffi.Pointer<wire_cst_rusty_cha_cha_20_poly_1305> that,
+    ffi.Pointer<wire_cst_list_prim_u_8_loose> cleartext,
+    ffi.Pointer<wire_cst_list_prim_u_8_strict> nonce,
+    ffi.Pointer<wire_cst_list_prim_u_8_strict> aad,
+  ) {
+    return _wire_rusty_cha_cha_20_poly_1305_encrypt(
+      port_,
+      that,
+      cleartext,
+      nonce,
+      aad,
+    );
+  }
+
+  late final _wire_rusty_cha_cha_20_poly_1305_encryptPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Int64,
+                  ffi.Pointer<wire_cst_rusty_cha_cha_20_poly_1305>,
+                  ffi.Pointer<wire_cst_list_prim_u_8_loose>,
+                  ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+                  ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
+      'frbgen_rusty_chacha_wire_rusty_cha_cha_20_poly_1305_encrypt');
+  late final _wire_rusty_cha_cha_20_poly_1305_encrypt =
+      _wire_rusty_cha_cha_20_poly_1305_encryptPtr.asFunction<
+          void Function(
+              int,
+              ffi.Pointer<wire_cst_rusty_cha_cha_20_poly_1305>,
+              ffi.Pointer<wire_cst_list_prim_u_8_loose>,
+              ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+              ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
+
+  void wire_rusty_cha_cha_20_poly_1305_encrypt_to_file(
+    int port_,
+    ffi.Pointer<wire_cst_rusty_cha_cha_20_poly_1305> that,
+    ffi.Pointer<wire_cst_list_prim_u_8_loose> cleartext,
+    ffi.Pointer<wire_cst_list_prim_u_8_strict> file_path,
+    ffi.Pointer<wire_cst_list_prim_u_8_strict> nonce,
+    ffi.Pointer<wire_cst_list_prim_u_8_strict> aad,
+  ) {
+    return _wire_rusty_cha_cha_20_poly_1305_encrypt_to_file(
+      port_,
+      that,
+      cleartext,
+      file_path,
+      nonce,
+      aad,
+    );
+  }
+
+  late final _wire_rusty_cha_cha_20_poly_1305_encrypt_to_filePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Int64,
+                  ffi.Pointer<wire_cst_rusty_cha_cha_20_poly_1305>,
+                  ffi.Pointer<wire_cst_list_prim_u_8_loose>,
+                  ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+                  ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+                  ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
+      'frbgen_rusty_chacha_wire_rusty_cha_cha_20_poly_1305_encrypt_to_file');
+  late final _wire_rusty_cha_cha_20_poly_1305_encrypt_to_file =
+      _wire_rusty_cha_cha_20_poly_1305_encrypt_to_filePtr.asFunction<
+          void Function(
+              int,
+              ffi.Pointer<wire_cst_rusty_cha_cha_20_poly_1305>,
+              ffi.Pointer<wire_cst_list_prim_u_8_loose>,
+              ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+              ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+              ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
+
+  void wire_rusty_cha_cha_20_poly_1305_generate_key(
+    int port_,
+  ) {
+    return _wire_rusty_cha_cha_20_poly_1305_generate_key(
+      port_,
+    );
+  }
+
+  late final _wire_rusty_cha_cha_20_poly_1305_generate_keyPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64)>>(
+          'frbgen_rusty_chacha_wire_rusty_cha_cha_20_poly_1305_generate_key');
+  late final _wire_rusty_cha_cha_20_poly_1305_generate_key =
+      _wire_rusty_cha_cha_20_poly_1305_generate_keyPtr
+          .asFunction<void Function(int)>();
+
+  void wire_rusty_cha_cha_20_poly_1305_generate_nonce(
+    int port_,
+  ) {
+    return _wire_rusty_cha_cha_20_poly_1305_generate_nonce(
+      port_,
+    );
+  }
+
+  late final _wire_rusty_cha_cha_20_poly_1305_generate_noncePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64)>>(
+          'frbgen_rusty_chacha_wire_rusty_cha_cha_20_poly_1305_generate_nonce');
+  late final _wire_rusty_cha_cha_20_poly_1305_generate_nonce =
+      _wire_rusty_cha_cha_20_poly_1305_generate_noncePtr
+          .asFunction<void Function(int)>();
+
+  void wire_rusty_x_cha_cha_20_poly_1305_create_internal(
+    int port_,
+    ffi.Pointer<wire_cst_list_prim_u_8_strict> key,
+    ffi.Pointer<wire_cst_compression> compression,
+  ) {
+    return _wire_rusty_x_cha_cha_20_poly_1305_create_internal(
+      port_,
+      key,
+      compression,
+    );
+  }
+
+  late final _wire_rusty_x_cha_cha_20_poly_1305_create_internalPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Int64,
+                  ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+                  ffi.Pointer<wire_cst_compression>)>>(
+      'frbgen_rusty_chacha_wire_rusty_x_cha_cha_20_poly_1305_create_internal');
+  late final _wire_rusty_x_cha_cha_20_poly_1305_create_internal =
+      _wire_rusty_x_cha_cha_20_poly_1305_create_internalPtr.asFunction<
+          void Function(int, ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+              ffi.Pointer<wire_cst_compression>)>();
+
+  void wire_rusty_x_cha_cha_20_poly_1305_decrypt(
+    int port_,
+    ffi.Pointer<wire_cst_rusty_x_cha_cha_20_poly_1305> that,
     ffi.Pointer<wire_cst_list_prim_u_8_loose> ciphertext,
     ffi.Pointer<wire_cst_list_prim_u_8_strict> aad,
   ) {
-    return _wire_decrypt_compressed(
+    return _wire_rusty_x_cha_cha_20_poly_1305_decrypt(
       port_,
-      key,
+      that,
       ciphertext,
       aad,
     );
   }
 
-  late final _wire_decrypt_compressedPtr = _lookup<
+  late final _wire_rusty_x_cha_cha_20_poly_1305_decryptPtr = _lookup<
           ffi.NativeFunction<
               ffi.Void Function(
                   ffi.Int64,
-                  ffi.Pointer<wire_cst_list_prim_u_8_loose>,
+                  ffi.Pointer<wire_cst_rusty_x_cha_cha_20_poly_1305>,
                   ffi.Pointer<wire_cst_list_prim_u_8_loose>,
                   ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
-      'frbgen_rusty_chacha_wire_decrypt_compressed');
-  late final _wire_decrypt_compressed = _wire_decrypt_compressedPtr.asFunction<
-      void Function(
-          int,
-          ffi.Pointer<wire_cst_list_prim_u_8_loose>,
-          ffi.Pointer<wire_cst_list_prim_u_8_loose>,
-          ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
-
-  void wire_decrypt_from_file(
-    int port_,
-    ffi.Pointer<wire_cst_list_prim_u_8_loose> key,
-    ffi.Pointer<wire_cst_list_prim_u_8_strict> file_path,
-    ffi.Pointer<wire_cst_list_prim_u_8_strict> aad,
-  ) {
-    return _wire_decrypt_from_file(
-      port_,
-      key,
-      file_path,
-      aad,
-    );
-  }
-
-  late final _wire_decrypt_from_filePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(
-                  ffi.Int64,
-                  ffi.Pointer<wire_cst_list_prim_u_8_loose>,
-                  ffi.Pointer<wire_cst_list_prim_u_8_strict>,
-                  ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
-      'frbgen_rusty_chacha_wire_decrypt_from_file');
-  late final _wire_decrypt_from_file = _wire_decrypt_from_filePtr.asFunction<
-      void Function(
-          int,
-          ffi.Pointer<wire_cst_list_prim_u_8_loose>,
-          ffi.Pointer<wire_cst_list_prim_u_8_strict>,
-          ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
-
-  void wire_decrypt_from_file_compressed(
-    int port_,
-    ffi.Pointer<wire_cst_list_prim_u_8_loose> key,
-    ffi.Pointer<wire_cst_list_prim_u_8_strict> file_path,
-    ffi.Pointer<wire_cst_list_prim_u_8_strict> aad,
-  ) {
-    return _wire_decrypt_from_file_compressed(
-      port_,
-      key,
-      file_path,
-      aad,
-    );
-  }
-
-  late final _wire_decrypt_from_file_compressedPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(
-                  ffi.Int64,
-                  ffi.Pointer<wire_cst_list_prim_u_8_loose>,
-                  ffi.Pointer<wire_cst_list_prim_u_8_strict>,
-                  ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
-      'frbgen_rusty_chacha_wire_decrypt_from_file_compressed');
-  late final _wire_decrypt_from_file_compressed =
-      _wire_decrypt_from_file_compressedPtr.asFunction<
+      'frbgen_rusty_chacha_wire_rusty_x_cha_cha_20_poly_1305_decrypt');
+  late final _wire_rusty_x_cha_cha_20_poly_1305_decrypt =
+      _wire_rusty_x_cha_cha_20_poly_1305_decryptPtr.asFunction<
           void Function(
               int,
+              ffi.Pointer<wire_cst_rusty_x_cha_cha_20_poly_1305>,
+              ffi.Pointer<wire_cst_list_prim_u_8_loose>,
+              ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
+
+  void wire_rusty_x_cha_cha_20_poly_1305_decrypt_from_file(
+    int port_,
+    ffi.Pointer<wire_cst_rusty_x_cha_cha_20_poly_1305> that,
+    ffi.Pointer<wire_cst_list_prim_u_8_strict> file_path,
+    ffi.Pointer<wire_cst_list_prim_u_8_strict> aad,
+  ) {
+    return _wire_rusty_x_cha_cha_20_poly_1305_decrypt_from_file(
+      port_,
+      that,
+      file_path,
+      aad,
+    );
+  }
+
+  late final _wire_rusty_x_cha_cha_20_poly_1305_decrypt_from_filePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Int64,
+                  ffi.Pointer<wire_cst_rusty_x_cha_cha_20_poly_1305>,
+                  ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+                  ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
+      'frbgen_rusty_chacha_wire_rusty_x_cha_cha_20_poly_1305_decrypt_from_file');
+  late final _wire_rusty_x_cha_cha_20_poly_1305_decrypt_from_file =
+      _wire_rusty_x_cha_cha_20_poly_1305_decrypt_from_filePtr.asFunction<
+          void Function(
+              int,
+              ffi.Pointer<wire_cst_rusty_x_cha_cha_20_poly_1305>,
+              ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+              ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
+
+  void wire_rusty_x_cha_cha_20_poly_1305_encrypt(
+    int port_,
+    ffi.Pointer<wire_cst_rusty_x_cha_cha_20_poly_1305> that,
+    ffi.Pointer<wire_cst_list_prim_u_8_loose> cleartext,
+    ffi.Pointer<wire_cst_list_prim_u_8_strict> nonce,
+    ffi.Pointer<wire_cst_list_prim_u_8_strict> aad,
+  ) {
+    return _wire_rusty_x_cha_cha_20_poly_1305_encrypt(
+      port_,
+      that,
+      cleartext,
+      nonce,
+      aad,
+    );
+  }
+
+  late final _wire_rusty_x_cha_cha_20_poly_1305_encryptPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Int64,
+                  ffi.Pointer<wire_cst_rusty_x_cha_cha_20_poly_1305>,
+                  ffi.Pointer<wire_cst_list_prim_u_8_loose>,
+                  ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+                  ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
+      'frbgen_rusty_chacha_wire_rusty_x_cha_cha_20_poly_1305_encrypt');
+  late final _wire_rusty_x_cha_cha_20_poly_1305_encrypt =
+      _wire_rusty_x_cha_cha_20_poly_1305_encryptPtr.asFunction<
+          void Function(
+              int,
+              ffi.Pointer<wire_cst_rusty_x_cha_cha_20_poly_1305>,
               ffi.Pointer<wire_cst_list_prim_u_8_loose>,
               ffi.Pointer<wire_cst_list_prim_u_8_strict>,
               ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
 
-  void wire_encrypt(
+  void wire_rusty_x_cha_cha_20_poly_1305_encrypt_to_file(
     int port_,
-    ffi.Pointer<wire_cst_list_prim_u_8_loose> key,
-    ffi.Pointer<wire_cst_list_prim_u_8_loose> cleartext,
-    ffi.Pointer<wire_cst_list_prim_u_8_strict> aad,
-  ) {
-    return _wire_encrypt(
-      port_,
-      key,
-      cleartext,
-      aad,
-    );
-  }
-
-  late final _wire_encryptPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(
-                  ffi.Int64,
-                  ffi.Pointer<wire_cst_list_prim_u_8_loose>,
-                  ffi.Pointer<wire_cst_list_prim_u_8_loose>,
-                  ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
-      'frbgen_rusty_chacha_wire_encrypt');
-  late final _wire_encrypt = _wire_encryptPtr.asFunction<
-      void Function(
-          int,
-          ffi.Pointer<wire_cst_list_prim_u_8_loose>,
-          ffi.Pointer<wire_cst_list_prim_u_8_loose>,
-          ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
-
-  void wire_encrypt_compressed(
-    int port_,
-    ffi.Pointer<wire_cst_list_prim_u_8_loose> key,
-    ffi.Pointer<wire_cst_list_prim_u_8_loose> cleartext,
-    int zstd_compression_level,
-    ffi.Pointer<wire_cst_list_prim_u_8_strict> aad,
-  ) {
-    return _wire_encrypt_compressed(
-      port_,
-      key,
-      cleartext,
-      zstd_compression_level,
-      aad,
-    );
-  }
-
-  late final _wire_encrypt_compressedPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(
-                  ffi.Int64,
-                  ffi.Pointer<wire_cst_list_prim_u_8_loose>,
-                  ffi.Pointer<wire_cst_list_prim_u_8_loose>,
-                  ffi.Int32,
-                  ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
-      'frbgen_rusty_chacha_wire_encrypt_compressed');
-  late final _wire_encrypt_compressed = _wire_encrypt_compressedPtr.asFunction<
-      void Function(
-          int,
-          ffi.Pointer<wire_cst_list_prim_u_8_loose>,
-          ffi.Pointer<wire_cst_list_prim_u_8_loose>,
-          int,
-          ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
-
-  void wire_encrypt_to_file(
-    int port_,
-    ffi.Pointer<wire_cst_list_prim_u_8_loose> key,
+    ffi.Pointer<wire_cst_rusty_x_cha_cha_20_poly_1305> that,
     ffi.Pointer<wire_cst_list_prim_u_8_loose> cleartext,
     ffi.Pointer<wire_cst_list_prim_u_8_strict> file_path,
+    ffi.Pointer<wire_cst_list_prim_u_8_strict> nonce,
     ffi.Pointer<wire_cst_list_prim_u_8_strict> aad,
   ) {
-    return _wire_encrypt_to_file(
+    return _wire_rusty_x_cha_cha_20_poly_1305_encrypt_to_file(
       port_,
-      key,
+      that,
       cleartext,
       file_path,
+      nonce,
       aad,
     );
   }
 
-  late final _wire_encrypt_to_filePtr = _lookup<
+  late final _wire_rusty_x_cha_cha_20_poly_1305_encrypt_to_filePtr = _lookup<
           ffi.NativeFunction<
               ffi.Void Function(
                   ffi.Int64,
-                  ffi.Pointer<wire_cst_list_prim_u_8_loose>,
-                  ffi.Pointer<wire_cst_list_prim_u_8_loose>,
-                  ffi.Pointer<wire_cst_list_prim_u_8_strict>,
-                  ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
-      'frbgen_rusty_chacha_wire_encrypt_to_file');
-  late final _wire_encrypt_to_file = _wire_encrypt_to_filePtr.asFunction<
-      void Function(
-          int,
-          ffi.Pointer<wire_cst_list_prim_u_8_loose>,
-          ffi.Pointer<wire_cst_list_prim_u_8_loose>,
-          ffi.Pointer<wire_cst_list_prim_u_8_strict>,
-          ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
-
-  void wire_encrypt_to_file_compressed(
-    int port_,
-    ffi.Pointer<wire_cst_list_prim_u_8_loose> key,
-    ffi.Pointer<wire_cst_list_prim_u_8_loose> cleartext,
-    ffi.Pointer<wire_cst_list_prim_u_8_strict> file_path,
-    int zstd_compression_level,
-    ffi.Pointer<wire_cst_list_prim_u_8_strict> aad,
-  ) {
-    return _wire_encrypt_to_file_compressed(
-      port_,
-      key,
-      cleartext,
-      file_path,
-      zstd_compression_level,
-      aad,
-    );
-  }
-
-  late final _wire_encrypt_to_file_compressedPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(
-                  ffi.Int64,
-                  ffi.Pointer<wire_cst_list_prim_u_8_loose>,
+                  ffi.Pointer<wire_cst_rusty_x_cha_cha_20_poly_1305>,
                   ffi.Pointer<wire_cst_list_prim_u_8_loose>,
                   ffi.Pointer<wire_cst_list_prim_u_8_strict>,
-                  ffi.Int32,
+                  ffi.Pointer<wire_cst_list_prim_u_8_strict>,
                   ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
-      'frbgen_rusty_chacha_wire_encrypt_to_file_compressed');
-  late final _wire_encrypt_to_file_compressed =
-      _wire_encrypt_to_file_compressedPtr.asFunction<
+      'frbgen_rusty_chacha_wire_rusty_x_cha_cha_20_poly_1305_encrypt_to_file');
+  late final _wire_rusty_x_cha_cha_20_poly_1305_encrypt_to_file =
+      _wire_rusty_x_cha_cha_20_poly_1305_encrypt_to_filePtr.asFunction<
           void Function(
               int,
-              ffi.Pointer<wire_cst_list_prim_u_8_loose>,
+              ffi.Pointer<wire_cst_rusty_x_cha_cha_20_poly_1305>,
               ffi.Pointer<wire_cst_list_prim_u_8_loose>,
               ffi.Pointer<wire_cst_list_prim_u_8_strict>,
-              int,
+              ffi.Pointer<wire_cst_list_prim_u_8_strict>,
               ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
 
-  void wire_generate_cha_cha_20_key(
+  void wire_rusty_x_cha_cha_20_poly_1305_generate_key(
     int port_,
   ) {
-    return _wire_generate_cha_cha_20_key(
+    return _wire_rusty_x_cha_cha_20_poly_1305_generate_key(
       port_,
     );
   }
 
-  late final _wire_generate_cha_cha_20_keyPtr =
+  late final _wire_rusty_x_cha_cha_20_poly_1305_generate_keyPtr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64)>>(
-          'frbgen_rusty_chacha_wire_generate_cha_cha_20_key');
-  late final _wire_generate_cha_cha_20_key =
-      _wire_generate_cha_cha_20_keyPtr.asFunction<void Function(int)>();
+          'frbgen_rusty_chacha_wire_rusty_x_cha_cha_20_poly_1305_generate_key');
+  late final _wire_rusty_x_cha_cha_20_poly_1305_generate_key =
+      _wire_rusty_x_cha_cha_20_poly_1305_generate_keyPtr
+          .asFunction<void Function(int)>();
 
-  void wire_generate_cha_cha_20_nonce(
+  void wire_rusty_x_cha_cha_20_poly_1305_generate_nonce(
     int port_,
   ) {
-    return _wire_generate_cha_cha_20_nonce(
+    return _wire_rusty_x_cha_cha_20_poly_1305_generate_nonce(
       port_,
     );
   }
 
-  late final _wire_generate_cha_cha_20_noncePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64)>>(
-          'frbgen_rusty_chacha_wire_generate_cha_cha_20_nonce');
-  late final _wire_generate_cha_cha_20_nonce =
-      _wire_generate_cha_cha_20_noncePtr.asFunction<void Function(int)>();
+  late final _wire_rusty_x_cha_cha_20_poly_1305_generate_noncePtr = _lookup<
+          ffi.NativeFunction<ffi.Void Function(ffi.Int64)>>(
+      'frbgen_rusty_chacha_wire_rusty_x_cha_cha_20_poly_1305_generate_nonce');
+  late final _wire_rusty_x_cha_cha_20_poly_1305_generate_nonce =
+      _wire_rusty_x_cha_cha_20_poly_1305_generate_noncePtr
+          .asFunction<void Function(int)>();
+
+  ffi.Pointer<wire_cst_compression> cst_new_box_autoadd_compression() {
+    return _cst_new_box_autoadd_compression();
+  }
+
+  late final _cst_new_box_autoadd_compressionPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<wire_cst_compression> Function()>>(
+          'frbgen_rusty_chacha_cst_new_box_autoadd_compression');
+  late final _cst_new_box_autoadd_compression =
+      _cst_new_box_autoadd_compressionPtr
+          .asFunction<ffi.Pointer<wire_cst_compression> Function()>();
+
+  ffi.Pointer<wire_cst_rusty_cha_cha_20_poly_1305>
+      cst_new_box_autoadd_rusty_cha_cha_20_poly_1305() {
+    return _cst_new_box_autoadd_rusty_cha_cha_20_poly_1305();
+  }
+
+  late final _cst_new_box_autoadd_rusty_cha_cha_20_poly_1305Ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<wire_cst_rusty_cha_cha_20_poly_1305> Function()>>(
+      'frbgen_rusty_chacha_cst_new_box_autoadd_rusty_cha_cha_20_poly_1305');
+  late final _cst_new_box_autoadd_rusty_cha_cha_20_poly_1305 =
+      _cst_new_box_autoadd_rusty_cha_cha_20_poly_1305Ptr.asFunction<
+          ffi.Pointer<wire_cst_rusty_cha_cha_20_poly_1305> Function()>();
+
+  ffi.Pointer<wire_cst_rusty_x_cha_cha_20_poly_1305>
+      cst_new_box_autoadd_rusty_x_cha_cha_20_poly_1305() {
+    return _cst_new_box_autoadd_rusty_x_cha_cha_20_poly_1305();
+  }
+
+  late final _cst_new_box_autoadd_rusty_x_cha_cha_20_poly_1305Ptr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<wire_cst_rusty_x_cha_cha_20_poly_1305> Function()>>(
+      'frbgen_rusty_chacha_cst_new_box_autoadd_rusty_x_cha_cha_20_poly_1305');
+  late final _cst_new_box_autoadd_rusty_x_cha_cha_20_poly_1305 =
+      _cst_new_box_autoadd_rusty_x_cha_cha_20_poly_1305Ptr.asFunction<
+          ffi.Pointer<wire_cst_rusty_x_cha_cha_20_poly_1305> Function()>();
 
   ffi.Pointer<wire_cst_list_prim_u_8_loose> cst_new_list_prim_u_8_loose(
     int len,
@@ -567,4 +861,32 @@ final class wire_cst_list_prim_u_8_strict extends ffi.Struct {
 
   @ffi.Int32()
   external int len;
+}
+
+final class wire_cst_Compression_Zstd extends ffi.Struct {
+  @ffi.Int32()
+  external int compression_level;
+}
+
+final class CompressionKind extends ffi.Union {
+  external wire_cst_Compression_Zstd Zstd;
+}
+
+final class wire_cst_compression extends ffi.Struct {
+  @ffi.Int32()
+  external int tag;
+
+  external CompressionKind kind;
+}
+
+final class wire_cst_rusty_cha_cha_20_poly_1305 extends ffi.Struct {
+  external ffi.Pointer<wire_cst_list_prim_u_8_strict> key;
+
+  external wire_cst_compression compression;
+}
+
+final class wire_cst_rusty_x_cha_cha_20_poly_1305 extends ffi.Struct {
+  external ffi.Pointer<wire_cst_list_prim_u_8_strict> key;
+
+  external wire_cst_compression compression;
 }
