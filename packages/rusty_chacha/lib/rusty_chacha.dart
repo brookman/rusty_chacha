@@ -11,7 +11,7 @@ class RustyChaCha {
   static bool _initialized = false;
 
   static Future<RustyChaCha20Poly1305> createChaCha20Poly1305({
-    required Uint8List key,
+    Uint8List? key,
     Compression? compression,
   }) async {
     await _ensureInitialized();
@@ -19,7 +19,7 @@ class RustyChaCha {
   }
 
   static Future<RustyXChaCha20Poly1305> createXChaCha20Poly1305({
-    required Uint8List key,
+    Uint8List? key,
     Compression? compression,
   }) async {
     await _ensureInitialized();
