@@ -12,7 +12,7 @@ class RustyChaCha {
 
   static Future<RustyChaCha20Poly1305> createChaCha20Poly1305({
     required Uint8List key,
-    required Compression compression,
+    Compression? compression,
   }) async {
     await _ensureInitialized();
     return RustyChaCha20Poly1305.createInternal(key: key, compression: compression);
@@ -20,7 +20,7 @@ class RustyChaCha {
 
   static Future<RustyXChaCha20Poly1305> createXChaCha20Poly1305({
     required Uint8List key,
-    required Compression compression,
+    Compression? compression,
   }) async {
     await _ensureInitialized();
     return RustyXChaCha20Poly1305.createInternal(key: key, compression: compression);
