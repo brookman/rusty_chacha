@@ -44,7 +44,7 @@ main() async {
 
 
   // Create and use a ChaCha20Poly1305 cipher with a random key:
-  RustyChaCha20Poly1305 cipher = await RustyChaCha.createChaCha20Poly1305();
+  RustyChaCha20Poly1305 cipher = await RustyChaCha.create();
   Uint8List myEncryptedData = await cipher.encrypt(cleartext: data);
   Uint8List decrypted1 = await cipher.decrypt(ciphertext: myEncryptedData);
 
@@ -53,13 +53,13 @@ main() async {
 
   // Or with explicit key:
   Uint8List key = await RustyChaCha20Poly1305.generateKey();
-  cipher = await RustyChaCha.createChaCha20Poly1305(key: key);
+  cipher = await RustyChaCha.create(key: key);
 
 
   // Compression example:
   // If compression is used during encryption, it also has to be set for decryption!
   // However compressionLevel does not matter.
-  cipher = await RustyChaCha.createChaCha20Poly1305(
+  cipher = await RustyChaCha.create(
     key: key,
     compression: const Compression.zstd(compressionLevel: 3), // moderate compression
   );
@@ -70,7 +70,7 @@ main() async {
 
 
   // AAD example:
-  cipher = await RustyChaCha.createChaCha20Poly1305();
+  cipher = await RustyChaCha.create();
   Uint8List additionalData = Uint8List.fromList([1, 2, 3]); // some additional (non-secret) data
   Uint8List myEncryptedDataWithAad = await cipher.encrypt(
     cleartext: data,
@@ -83,8 +83,13 @@ main() async {
 
   assert(const ListEquality().equals(data, decrypted3));
 
-  // Create and use a XChaCha20Poly1305 (24 byte nonce instead of 12) cipher with a random key:
-  RustyXChaCha20Poly1305 cipherX = await RustyChaCha.createXChaCha20Poly1305();
+
+  // Create and use a XChaCha20Poly1305 with an extended 192-bit (24-byte) nonce instead of 96-bit (12-byte):
+  RustyXChaCha20Poly1305 cipherX = await RustyChaCha.createX();
+  Uint8List myEncryptedData2 = await cipher.encrypt(cleartext: data);
+  Uint8List decrypted4 = await cipher.decrypt(ciphertext: myEncryptedData2);
+
+  assert(const ListEquality().equals(data, decrypted4));
 }
 ```
 
@@ -93,3 +98,8 @@ main() async {
 - iOS
 - MacOS
 - Windows
+
+## Thanks to
+- RustCrypto for creating the [chacha20poly1305 crate](https://crates.io/crates/chacha20poly1305)
+- @fzyzcjy for the amazing [flutter_rust_bridge](https://github.com/fzyzcjy/flutter_rust_bridge)
+- [Mimir](https://github.com/GregoryConrad/mimir) for providing a project template.
