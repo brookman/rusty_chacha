@@ -1,3 +1,7 @@
+## 0.2.0+1
+
+ - **FIX**: repeated initialization. ([dd60b9d5](https://github.com/brookman/rusty_chacha/commit/dd60b9d5e4559f24bf5286f93cb24f9a292c3b85))
+
 ## 0.2.0
 
  - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
