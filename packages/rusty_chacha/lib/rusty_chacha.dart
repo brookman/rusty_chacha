@@ -86,6 +86,7 @@ class RustyChaCha {
     if (_initialized) {
       return;
     }
+
     if (io.Platform.isIOS || io.Platform.isMacOS) {
       // TODO(brookman): Use dynamic linking for iOS and MacOS?
       final lib = ExternalLibrary.process(iKnowHowToUseIt: true);
@@ -93,8 +94,7 @@ class RustyChaCha {
     } else {
       await RustLib.init();
     }
-
-    await RustLib.init();
+    
     _initialized = true;
   }
 }
