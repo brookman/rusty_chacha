@@ -1,3 +1,7 @@
+## 0.2.1
+
+ - **FEAT**: try to enable "neon" on aarch64 (ARM) CPUs. ([e314ed31](https://github.com/brookman/rusty_chacha/commit/e314ed31e876c42db9fec2ee73cf60217013b078))
+
 ## 0.2.0+1
 
  - **FIX**: repeated initialization. ([dd60b9d5](https://github.com/brookman/rusty_chacha/commit/dd60b9d5e4559f24bf5286f93cb24f9a292c3b85))
