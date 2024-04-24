@@ -15,6 +15,27 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`rusty_chacha` - `v0.2.1+1`](#rusty_chacha---v0211)
+
+---
+
+#### `rusty_chacha` - `v0.2.1+1`
+
+ - **FIX**: remove target.aarch64-linux-android. ([7759f614](https://github.com/brookman/rusty_chacha/commit/7759f6149f96c0456d1fe404359426d04f31e9cc))
+
+
+## 2024-04-24
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`rusty_chacha` - `v0.2.1`](#rusty_chacha---v021)
 
 ---
