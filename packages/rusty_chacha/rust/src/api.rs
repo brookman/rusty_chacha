@@ -30,8 +30,8 @@ impl RustyChaCha20Poly1305 {
         ChaCha20Poly1305::generate_key(&mut OsRng).to_vec()
     }
 
-    /// Important: A nonce must only be used once!
-    /// Do not encrypt multiple pieces of data with the same nonce.
+    /// Important: A nonce must only be used once.
+    /// Do not encrypt multiple pieces of data with the same nonce or the key is compromised.
     pub fn generate_nonce() -> Vec<u8> {
         ChaCha20Poly1305::generate_nonce(&mut OsRng).to_vec()
     }
