@@ -167,7 +167,7 @@ class RustyXChaCha20Poly1305 {
   static Future<Uint8List> generateKey({dynamic hint}) =>
       RustLib.instance.api.rustyXChaCha20Poly1305GenerateKey(hint: hint);
 
-  /// Important: A nonce must only be used once!
+  /// Important: A nonce must only be used once.
   /// Do not encrypt multiple pieces of data with the same nonce.
   static Future<Uint8List> generateNonce({dynamic hint}) =>
       RustLib.instance.api.rustyXChaCha20Poly1305GenerateNonce(hint: hint);
