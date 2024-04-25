@@ -23,9 +23,9 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-      - uses: nttld/setup-ndk@v1
-        with:
-          ndk-version: r25b
+      # - uses: nttld/setup-ndk@v1
+      #   with:
+      #     ndk-version: r25b
 
       - name: Build all library binaries
         run: melos run build
