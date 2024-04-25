@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-04-25
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`rusty_chacha` - `v0.2.2`](#rusty_chacha---v022)
+
+---
+
+#### `rusty_chacha` - `v0.2.2`
+
+ - **FEAT**: update docs. ([18a88a17](https://github.com/brookman/rusty_chacha/commit/18a88a1788e99828df8e88aa8248bcf5dfffb6ff))
+ - **FEAT**: update docs. ([863f3c2e](https://github.com/brookman/rusty_chacha/commit/863f3c2e22f37cf9448061a1fdd9e7e595fc8863))
+
+
 ## 2024-04-24
 
 ### Changes

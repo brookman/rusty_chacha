@@ -1,3 +1,8 @@
+## 0.2.2
+
+ - **FEAT**: update docs. ([18a88a17](https://github.com/brookman/rusty_chacha/commit/18a88a1788e99828df8e88aa8248bcf5dfffb6ff))
+ - **FEAT**: update docs. ([863f3c2e](https://github.com/brookman/rusty_chacha/commit/863f3c2e22f37cf9448061a1fdd9e7e595fc8863))
+
 ## 0.2.1+1
 
  - **FIX**: remove target.aarch64-linux-android. ([7759f614](https://github.com/brookman/rusty_chacha/commit/7759f6149f96c0456d1fe404359426d04f31e9cc))
