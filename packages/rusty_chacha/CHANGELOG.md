@@ -1,3 +1,10 @@
+## 0.2.3
+
+ - **FEAT**: update docs. ([3d6c974d](https://github.com/brookman/rusty_chacha/commit/3d6c974d3ae9c7b217db16810776b4c01a6e8128))
+ - **FEAT**: update docs. ([c3e38859](https://github.com/brookman/rusty_chacha/commit/c3e38859b09b9edc13465706dd50100f73fb464c))
+ - **FEAT**: log features in benchmark. ([70fad00f](https://github.com/brookman/rusty_chacha/commit/70fad00fd37a5511b2683d7d2d57facb83019978))
+ - **FEAT**: fix Rust benchmarks. ([f370bfab](https://github.com/brookman/rusty_chacha/commit/f370bfabc4109e2139220583b2828472c4789c8a))
+
 ## 0.2.2
 
  - **FEAT**: update docs. ([18a88a17](https://github.com/brookman/rusty_chacha/commit/18a88a1788e99828df8e88aa8248bcf5dfffb6ff))

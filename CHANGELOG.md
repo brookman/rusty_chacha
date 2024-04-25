@@ -15,6 +15,30 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`rusty_chacha` - `v0.2.3`](#rusty_chacha---v023)
+
+---
+
+#### `rusty_chacha` - `v0.2.3`
+
+ - **FEAT**: update docs. ([3d6c974d](https://github.com/brookman/rusty_chacha/commit/3d6c974d3ae9c7b217db16810776b4c01a6e8128))
+ - **FEAT**: update docs. ([c3e38859](https://github.com/brookman/rusty_chacha/commit/c3e38859b09b9edc13465706dd50100f73fb464c))
+ - **FEAT**: log features in benchmark. ([70fad00f](https://github.com/brookman/rusty_chacha/commit/70fad00fd37a5511b2683d7d2d57facb83019978))
+ - **FEAT**: fix Rust benchmarks. ([f370bfab](https://github.com/brookman/rusty_chacha/commit/f370bfabc4109e2139220583b2828472c4789c8a))
+
+
+## 2024-04-25
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`rusty_chacha` - `v0.2.2`](#rusty_chacha---v022)
 
 ---
