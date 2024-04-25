@@ -13,7 +13,7 @@ do
     rustup target add $TARGET
     # Apple's App Sandbox disallows SysV semaphores; use POSIX semaphores instead
     # cargo build -r --target=$TARGET --features posix-sem
-    cargo build -r --target=$TARGET
+    RUSTFLAGS='--cfg chacha20_force_neon' cargo build -r --target=$TARGET
 done
 
 # List all files from target/aarch64-apple-darwin
