@@ -28,6 +28,22 @@ fn main() {
     for cpu in sys.cpus() {
         println!("                       {}", cpu.brand());
     }
+    
+    if cfg!(chacha20_force_neon) {
+        println!("chacha20_force_neon : yes");
+    } else {
+        println!("chacha20_force_neon : no");
+    }
+    if cfg!(target_arch = "aarch64") {
+        println!("aarch64             : yes");
+    } else {
+        println!("aarch64             : no");
+    }
+    if cfg!(target_feature = "neon") {
+        println!("target_feature neon : yes");
+    } else {
+        println!("target_feature neon : no");
+    }
 
     divan::main();
 }
@@ -126,9 +142,7 @@ fn bench_compress_encrypt(bencher: Bencher, args: (f64, i32)) {
             (cipher, generate_test_data(size, data_randomness))
         })
         .bench_values(|(cipher, cleartext)| {
-            let _ = cipher
-                .encrypt(cleartext, None, None)
-                .unwrap();
+            let _ = cipher.encrypt(cleartext, None, None).unwrap();
         });
 }
 
