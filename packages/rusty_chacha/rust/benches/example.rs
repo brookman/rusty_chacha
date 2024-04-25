@@ -1,8 +1,5 @@
 use divan::{counter::BytesCount, Bencher};
-use embedded_rusty_chacha::api::{
-    decrypt, decrypt_compressed, decrypt_from_file, encrypt, encrypt_compressed, encrypt_to_file,
-    generate_cha_cha_20_key,
-};
+use embedded_rusty_chacha::api::{Compression, RustyChaCha20Poly1305};
 use rand::{thread_rng, Rng};
 use sysinfo::System;
 
@@ -42,9 +39,13 @@ fn bench_encrypt(bencher: Bencher, size: usize) {
 
     bencher
         .counter(BytesCount::new(size))
-        .with_inputs(|| (generate_cha_cha_20_key(), vec![0; size]))
-        .bench_values(|(key, cleartext)| {
-            let _ = encrypt(key, cleartext, None).unwrap();
+        .with_inputs(|| {
+            let cipher = RustyChaCha20Poly1305::create_internal(None, None).unwrap();
+            let cleartext = vec![0; size];
+            (cipher, cleartext)
+        })
+        .bench_values(|(cipher, cleartext)| {
+            let _ = cipher.encrypt(cleartext, None, None).unwrap();
         });
 }
 
@@ -52,18 +53,15 @@ fn bench_encrypt(bencher: Bencher, size: usize) {
 #[divan::bench(args = [1, 10, 100, 180], max_time = 2)]
 fn bench_decrypt(bencher: divan::Bencher, size: usize) {
     let size = size * 1024 * 1024; // MB  to bytes
-    let key = generate_cha_cha_20_key();
-
     bencher
         .counter(BytesCount::new(size))
         .with_inputs(|| {
-            (
-                key.clone(),
-                encrypt(key.clone(), vec![0; size], None).unwrap(),
-            )
+            let cipher = RustyChaCha20Poly1305::create_internal(None, None).unwrap();
+            let ciphertext = cipher.encrypt(vec![0; size], None, None).unwrap();
+            (cipher, ciphertext)
         })
-        .bench_values(|(key, ciphertext)| {
-            let _ = decrypt(key, ciphertext, None).unwrap();
+        .bench_values(|(cipher, ciphertext)| {
+            let _ = cipher.decrypt(ciphertext, None).unwrap();
         });
 }
 
@@ -74,9 +72,15 @@ fn bench_encrypt_to_file(bencher: Bencher, size: usize) {
 
     bencher
         .counter(BytesCount::new(size))
-        .with_inputs(|| (generate_cha_cha_20_key(), vec![0; size]))
-        .bench_values(|(key, cleartext)| {
-            let _ = encrypt_to_file(key, cleartext, "test_file.bin".to_string(), None).unwrap();
+        .with_inputs(|| {
+            let cipher = RustyChaCha20Poly1305::create_internal(None, None).unwrap();
+            let cleartext = vec![0; size];
+            (cipher, cleartext)
+        })
+        .bench_values(|(cipher, cleartext)| {
+            let _ = cipher
+                .encrypt_to_file(cleartext, "test_file.bin".to_string(), None, None)
+                .unwrap();
         });
 }
 
@@ -84,24 +88,20 @@ fn bench_encrypt_to_file(bencher: Bencher, size: usize) {
 #[divan::bench(args = [1, 10, 100, 180], max_time = 2)]
 fn bench_decrypt_from_file(bencher: Bencher, size: usize) {
     let size = size * 1024 * 1024; // MB to bytes
-    let key = generate_cha_cha_20_key();
 
     bencher
         .counter(BytesCount::new(size))
         .with_inputs(|| {
-            (
-                key.clone(),
-                encrypt_to_file(
-                    key.clone(),
-                    vec![0; size],
-                    "test_file.bin".to_string(),
-                    None,
-                )
-                .unwrap(),
-            )
+            let cipher = RustyChaCha20Poly1305::create_internal(None, None).unwrap();
+            cipher
+                .encrypt_to_file(vec![0; size], "test_file.bin".to_string(), None, None)
+                .unwrap();
+            cipher
         })
-        .bench_values(|(key, _)| {
-            let _ = decrypt_from_file(key, "test_file.bin".to_string(), None).unwrap();
+        .bench_values(|cipher| {
+            let _ = cipher
+                .decrypt_from_file("test_file.bin".to_string(), None)
+                .unwrap();
         });
 }
 
@@ -113,19 +113,22 @@ fn bench_decrypt_from_file(bencher: Bencher, size: usize) {
 max_time = 3)]
 fn bench_compress_encrypt(bencher: Bencher, args: (f64, i32)) {
     let size = 180 * 1024 * 1024; // 800 MB
-
     let (data_randomness, compression_level) = args;
 
     bencher
         .counter(BytesCount::new(size))
         .with_inputs(|| {
-            (
-                generate_cha_cha_20_key(),
-                generate_test_data(size, data_randomness),
+            let cipher = RustyChaCha20Poly1305::create_internal(
+                None,
+                Some(Compression::Zstd { compression_level }),
             )
+            .unwrap();
+            (cipher, generate_test_data(size, data_randomness))
         })
-        .bench_values(|(key, cleartext)| {
-            let _ = encrypt_compressed(key, cleartext, compression_level, None).unwrap();
+        .bench_values(|(cipher, cleartext)| {
+            let _ = cipher
+                .encrypt(cleartext, None, None)
+                .unwrap();
         });
 }
 
@@ -137,20 +140,22 @@ fn bench_compress_encrypt(bencher: Bencher, args: (f64, i32)) {
 max_time = 3)]
 fn bench_decrypt_decompress(bencher: Bencher, args: (f64, i32)) {
     let size = 180 * 1024 * 1024; // 180 MB
-
-    let key = generate_cha_cha_20_key();
     let (data_randomness, compression_level) = args;
 
     bencher
         .counter(BytesCount::new(size))
         .with_inputs(|| {
-            (key.clone(), {
-                let cleartext = generate_test_data(size, data_randomness);
-                encrypt_compressed(key.clone(), cleartext, compression_level, None).unwrap()
-            })
+            let cipher = RustyChaCha20Poly1305::create_internal(
+                None,
+                Some(Compression::Zstd { compression_level }),
+            )
+            .unwrap();
+            let cleartext = generate_test_data(size, data_randomness);
+            let ciphertext = cipher.encrypt(cleartext, None, None).unwrap();
+            (cipher, ciphertext)
         })
-        .bench_values(|(key, ciphertext)| {
-            let _ = decrypt_compressed(key, ciphertext, None).unwrap();
+        .bench_values(|(cipher, ciphertext)| {
+            let _ = cipher.decrypt(ciphertext, None).unwrap();
         });
 }
 
