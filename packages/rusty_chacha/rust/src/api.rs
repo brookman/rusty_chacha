@@ -20,7 +20,7 @@ pub struct RustyXChaCha20Poly1305 {
 
 pub enum Compression {
     Uncompressed,
-    Zstd { compression_level: i32 },
+    Zstd { compression_level: Option<i32> },
 }
 
 impl RustyChaCha20Poly1305 {
@@ -64,7 +64,9 @@ impl RustyChaCha20Poly1305 {
 
         let cleartext = match self.compression {
             Compression::Uncompressed => cleartext,
-            Compression::Zstd { compression_level } => compress(cleartext, compression_level)?,
+            Compression::Zstd { compression_level } => {
+                compress(cleartext, compression_level.unwrap_or(0))?
+            }
         };
 
         let key = Key::from_slice(&self.key);
@@ -169,7 +171,9 @@ impl RustyXChaCha20Poly1305 {
 
         let cleartext = match self.compression {
             Compression::Uncompressed => cleartext,
-            Compression::Zstd { compression_level } => compress(cleartext, compression_level)?,
+            Compression::Zstd { compression_level } => {
+                compress(cleartext, compression_level.unwrap_or(0))?
+            }
         };
 
         let key = Key::from_slice(&self.key);
@@ -394,7 +398,7 @@ mod tests1 {
             let cipher = RustyChaCha20Poly1305::create_internal(
                 None,
                 Some(Compression::Zstd {
-                    compression_level: i,
+                    compression_level: Some(i),
                 }),
             )
             .unwrap();
@@ -422,7 +426,7 @@ mod tests1 {
             let cipher = RustyChaCha20Poly1305::create_internal(
                 None,
                 Some(Compression::Zstd {
-                    compression_level: i,
+                    compression_level: Some(i),
                 }),
             )
             .unwrap();
@@ -554,7 +558,7 @@ mod tests2 {
             let cipher = RustyXChaCha20Poly1305::create_internal(
                 None,
                 Some(Compression::Zstd {
-                    compression_level: i,
+                    compression_level: Some(i),
                 }),
             )
             .unwrap();
@@ -582,7 +586,7 @@ mod tests2 {
             let cipher = RustyXChaCha20Poly1305::create_internal(
                 None,
                 Some(Compression::Zstd {
-                    compression_level: i,
+                    compression_level: Some(i),
                 }),
             )
             .unwrap();

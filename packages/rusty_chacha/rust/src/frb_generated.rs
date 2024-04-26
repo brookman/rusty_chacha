@@ -466,7 +466,7 @@ impl SseDecode for crate::api::Compression {
                 return crate::api::Compression::Uncompressed;
             }
             1 => {
-                let mut var_compressionLevel = <i32>::sse_decode(deserializer);
+                let mut var_compressionLevel = <Option<i32>>::sse_decode(deserializer);
                 return crate::api::Compression::Zstd {
                     compression_level: var_compressionLevel,
                 };
@@ -502,6 +502,17 @@ impl SseDecode for Option<crate::api::Compression> {
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
         if (<bool>::sse_decode(deserializer)) {
             return Some(<crate::api::Compression>::sse_decode(deserializer));
+        } else {
+            return None;
+        }
+    }
+}
+
+impl SseDecode for Option<i32> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        if (<bool>::sse_decode(deserializer)) {
+            return Some(<i32>::sse_decode(deserializer));
         } else {
             return None;
         }
@@ -674,7 +685,7 @@ impl SseEncode for crate::api::Compression {
             }
             crate::api::Compression::Zstd { compression_level } => {
                 <i32>::sse_encode(1, serializer);
-                <i32>::sse_encode(compression_level, serializer);
+                <Option<i32>>::sse_encode(compression_level, serializer);
             }
         }
     }
@@ -703,6 +714,16 @@ impl SseEncode for Option<crate::api::Compression> {
         <bool>::sse_encode(self.is_some(), serializer);
         if let Some(value) = self {
             <crate::api::Compression>::sse_encode(value, serializer);
+        }
+    }
+}
+
+impl SseEncode for Option<i32> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <bool>::sse_encode(self.is_some(), serializer);
+        if let Some(value) = self {
+            <i32>::sse_encode(value, serializer);
         }
     }
 }

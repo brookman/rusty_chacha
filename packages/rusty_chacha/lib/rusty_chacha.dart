@@ -56,10 +56,10 @@ class RustyChaCha {
   ///   as the key for the encryption algorithm. If null, a random key will be generated.
   /// - `compression`: An optional `Compression` enum value specifying the compression method to
   ///   use before encryption. If null or Compression.uncompressed(), no compression is applied.
-  ///   Compression.zstd(compressionLevel: 0) will apply a default amount of compression (before encryption).
+  ///   Compression.zstd() will apply a default amount of compression before encryption.
   ///   Compression.zstd(compressionLevel: 19) will apply a high amount of compression (slower).
   ///   Important: Data encrypted with Compression.zstd can only be decrypted correctly if the cipher instance used
-  ///   during decryption also has Compression.zstd enabled (the level does not mappter)
+  ///   during decryption also has Compression.zstd enabled.
   ///
   ///   See zstd manual for more info regarding compressionLevel: https://facebook.github.io/zstd/zstd_manual.html
   ///

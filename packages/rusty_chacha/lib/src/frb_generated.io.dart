@@ -28,6 +28,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   Compression dco_decode_box_autoadd_compression(dynamic raw);
 
   @protected
+  int dco_decode_box_autoadd_i_32(dynamic raw);
+
+  @protected
   RustyChaCha20Poly1305 dco_decode_box_autoadd_rusty_cha_cha_20_poly_1305(
       dynamic raw);
 
@@ -49,6 +52,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   Compression? dco_decode_opt_box_autoadd_compression(dynamic raw);
+
+  @protected
+  int? dco_decode_opt_box_autoadd_i_32(dynamic raw);
 
   @protected
   Uint8List? dco_decode_opt_list_prim_u_8_strict(dynamic raw);
@@ -75,6 +81,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   Compression sse_decode_box_autoadd_compression(SseDeserializer deserializer);
 
   @protected
+  int sse_decode_box_autoadd_i_32(SseDeserializer deserializer);
+
+  @protected
   RustyChaCha20Poly1305 sse_decode_box_autoadd_rusty_cha_cha_20_poly_1305(
       SseDeserializer deserializer);
 
@@ -97,6 +106,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   Compression? sse_decode_opt_box_autoadd_compression(
       SseDeserializer deserializer);
+
+  @protected
+  int? sse_decode_opt_box_autoadd_i_32(SseDeserializer deserializer);
 
   @protected
   Uint8List? sse_decode_opt_list_prim_u_8_strict(SseDeserializer deserializer);
@@ -138,6 +150,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
     final ptr = wire.cst_new_box_autoadd_compression();
     cst_api_fill_to_wire_compression(raw, ptr.ref);
     return ptr;
+  }
+
+  @protected
+  ffi.Pointer<ffi.Int32> cst_encode_box_autoadd_i_32(int raw) {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    return wire.cst_new_box_autoadd_i_32(cst_encode_i_32(raw));
   }
 
   @protected
@@ -186,6 +204,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   }
 
   @protected
+  ffi.Pointer<ffi.Int32> cst_encode_opt_box_autoadd_i_32(int? raw) {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    return raw == null ? ffi.nullptr : cst_encode_box_autoadd_i_32(raw);
+  }
+
+  @protected
   ffi.Pointer<wire_cst_list_prim_u_8_strict>
       cst_encode_opt_list_prim_u_8_strict(Uint8List? raw) {
     // Codec=Cst (C-struct based), see doc to use other codecs
@@ -220,7 +244,8 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
       return;
     }
     if (apiObj is Compression_Zstd) {
-      var pre_compression_level = cst_encode_i_32(apiObj.compressionLevel);
+      var pre_compression_level =
+          cst_encode_opt_box_autoadd_i_32(apiObj.compressionLevel);
       wireObj.tag = 1;
       wireObj.kind.Zstd.compression_level = pre_compression_level;
       return;
@@ -264,6 +289,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
       Compression self, SseSerializer serializer);
 
   @protected
+  void sse_encode_box_autoadd_i_32(int self, SseSerializer serializer);
+
+  @protected
   void sse_encode_box_autoadd_rusty_cha_cha_20_poly_1305(
       RustyChaCha20Poly1305 self, SseSerializer serializer);
 
@@ -287,6 +315,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   void sse_encode_opt_box_autoadd_compression(
       Compression? self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_opt_box_autoadd_i_32(int? self, SseSerializer serializer);
 
   @protected
   void sse_encode_opt_list_prim_u_8_strict(
@@ -773,6 +804,20 @@ class RustLibWire implements BaseWire {
       _cst_new_box_autoadd_compressionPtr
           .asFunction<ffi.Pointer<wire_cst_compression> Function()>();
 
+  ffi.Pointer<ffi.Int32> cst_new_box_autoadd_i_32(
+    int value,
+  ) {
+    return _cst_new_box_autoadd_i_32(
+      value,
+    );
+  }
+
+  late final _cst_new_box_autoadd_i_32Ptr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int32> Function(ffi.Int32)>>(
+          'frbgen_rusty_chacha_cst_new_box_autoadd_i_32');
+  late final _cst_new_box_autoadd_i_32 = _cst_new_box_autoadd_i_32Ptr
+      .asFunction<ffi.Pointer<ffi.Int32> Function(int)>();
+
   ffi.Pointer<wire_cst_rusty_cha_cha_20_poly_1305>
       cst_new_box_autoadd_rusty_cha_cha_20_poly_1305() {
     return _cst_new_box_autoadd_rusty_cha_cha_20_poly_1305();
@@ -864,8 +909,7 @@ final class wire_cst_list_prim_u_8_strict extends ffi.Struct {
 }
 
 final class wire_cst_Compression_Zstd extends ffi.Struct {
-  @ffi.Int32()
-  external int compression_level;
+  external ffi.Pointer<ffi.Int32> compression_level;
 }
 
 final class CompressionKind extends ffi.Union {

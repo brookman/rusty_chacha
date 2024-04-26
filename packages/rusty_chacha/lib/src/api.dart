@@ -26,7 +26,7 @@ sealed class Compression with _$Compression {
 
   const factory Compression.uncompressed() = Compression_Uncompressed;
   const factory Compression.zstd({
-    required int compressionLevel,
+    int? compressionLevel,
   }) = Compression_Zstd;
 }
 

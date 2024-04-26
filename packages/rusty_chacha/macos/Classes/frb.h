@@ -25,7 +25,7 @@ typedef struct wire_cst_list_prim_u_8_strict {
 } wire_cst_list_prim_u_8_strict;
 
 typedef struct wire_cst_Compression_Zstd {
-  int32_t compression_level;
+  int32_t *compression_level;
 } wire_cst_Compression_Zstd;
 
 typedef union CompressionKind {
@@ -117,6 +117,8 @@ void frbgen_rusty_chacha_wire_rusty_x_cha_cha_20_poly_1305_generate_nonce(int64_
 
 struct wire_cst_compression *frbgen_rusty_chacha_cst_new_box_autoadd_compression(void);
 
+int32_t *frbgen_rusty_chacha_cst_new_box_autoadd_i_32(int32_t value);
+
 struct wire_cst_rusty_cha_cha_20_poly_1305 *frbgen_rusty_chacha_cst_new_box_autoadd_rusty_cha_cha_20_poly_1305(void);
 
 struct wire_cst_rusty_x_cha_cha_20_poly_1305 *frbgen_rusty_chacha_cst_new_box_autoadd_rusty_x_cha_cha_20_poly_1305(void);
@@ -127,6 +129,7 @@ struct wire_cst_list_prim_u_8_strict *frbgen_rusty_chacha_cst_new_list_prim_u_8_
 static int64_t dummy_method_to_enforce_bundling(void) {
     int64_t dummy_var = 0;
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_cst_new_box_autoadd_compression);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_cst_new_box_autoadd_i_32);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_cst_new_box_autoadd_rusty_cha_cha_20_poly_1305);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_cst_new_box_autoadd_rusty_x_cha_cha_20_poly_1305);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_cst_new_list_prim_u_8_loose);

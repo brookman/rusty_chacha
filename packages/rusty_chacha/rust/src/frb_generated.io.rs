@@ -36,6 +36,12 @@ impl CstDecode<crate::api::Compression> for *mut wire_cst_compression {
         CstDecode::<crate::api::Compression>::cst_decode(*wrap).into()
     }
 }
+impl CstDecode<i32> for *mut i32 {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    fn cst_decode(self) -> i32 {
+        unsafe { *flutter_rust_bridge::for_generated::box_from_leak_ptr(self) }
+    }
+}
 impl CstDecode<crate::api::RustyChaCha20Poly1305> for *mut wire_cst_rusty_cha_cha_20_poly_1305 {
     // Codec=Cst (C-struct based), see doc to use other codecs
     fn cst_decode(self) -> crate::api::RustyChaCha20Poly1305 {
@@ -293,6 +299,11 @@ pub extern "C" fn frbgen_rusty_chacha_cst_new_box_autoadd_compression() -> *mut 
 }
 
 #[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_cst_new_box_autoadd_i_32(value: i32) -> *mut i32 {
+    flutter_rust_bridge::for_generated::new_leak_box_ptr(value)
+}
+
+#[no_mangle]
 pub extern "C" fn frbgen_rusty_chacha_cst_new_box_autoadd_rusty_cha_cha_20_poly_1305(
 ) -> *mut wire_cst_rusty_cha_cha_20_poly_1305 {
     flutter_rust_bridge::for_generated::new_leak_box_ptr(
@@ -345,7 +356,7 @@ pub union CompressionKind {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct wire_cst_Compression_Zstd {
-    compression_level: i32,
+    compression_level: *mut i32,
 }
 #[repr(C)]
 #[derive(Clone, Copy)]

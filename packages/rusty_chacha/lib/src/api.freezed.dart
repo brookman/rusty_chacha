@@ -19,19 +19,19 @@ mixin _$Compression {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() uncompressed,
-    required TResult Function(int compressionLevel) zstd,
+    required TResult Function(int? compressionLevel) zstd,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? uncompressed,
-    TResult? Function(int compressionLevel)? zstd,
+    TResult? Function(int? compressionLevel)? zstd,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? uncompressed,
-    TResult Function(int compressionLevel)? zstd,
+    TResult Function(int? compressionLevel)? zstd,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -116,7 +116,7 @@ class _$Compression_UncompressedImpl extends Compression_Uncompressed {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() uncompressed,
-    required TResult Function(int compressionLevel) zstd,
+    required TResult Function(int? compressionLevel) zstd,
   }) {
     return uncompressed();
   }
@@ -125,7 +125,7 @@ class _$Compression_UncompressedImpl extends Compression_Uncompressed {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? uncompressed,
-    TResult? Function(int compressionLevel)? zstd,
+    TResult? Function(int? compressionLevel)? zstd,
   }) {
     return uncompressed?.call();
   }
@@ -134,7 +134,7 @@ class _$Compression_UncompressedImpl extends Compression_Uncompressed {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? uncompressed,
-    TResult Function(int compressionLevel)? zstd,
+    TResult Function(int? compressionLevel)? zstd,
     required TResult orElse(),
   }) {
     if (uncompressed != null) {
@@ -186,7 +186,7 @@ abstract class _$$Compression_ZstdImplCopyWith<$Res> {
           $Res Function(_$Compression_ZstdImpl) then) =
       __$$Compression_ZstdImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({int compressionLevel});
+  $Res call({int? compressionLevel});
 }
 
 /// @nodoc
@@ -200,13 +200,13 @@ class __$$Compression_ZstdImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? compressionLevel = null,
+    Object? compressionLevel = freezed,
   }) {
     return _then(_$Compression_ZstdImpl(
-      compressionLevel: null == compressionLevel
+      compressionLevel: freezed == compressionLevel
           ? _value.compressionLevel
           : compressionLevel // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ));
   }
 }
@@ -214,10 +214,10 @@ class __$$Compression_ZstdImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Compression_ZstdImpl extends Compression_Zstd {
-  const _$Compression_ZstdImpl({required this.compressionLevel}) : super._();
+  const _$Compression_ZstdImpl({this.compressionLevel}) : super._();
 
   @override
-  final int compressionLevel;
+  final int? compressionLevel;
 
   @override
   String toString() {
@@ -247,7 +247,7 @@ class _$Compression_ZstdImpl extends Compression_Zstd {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() uncompressed,
-    required TResult Function(int compressionLevel) zstd,
+    required TResult Function(int? compressionLevel) zstd,
   }) {
     return zstd(compressionLevel);
   }
@@ -256,7 +256,7 @@ class _$Compression_ZstdImpl extends Compression_Zstd {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? uncompressed,
-    TResult? Function(int compressionLevel)? zstd,
+    TResult? Function(int? compressionLevel)? zstd,
   }) {
     return zstd?.call(compressionLevel);
   }
@@ -265,7 +265,7 @@ class _$Compression_ZstdImpl extends Compression_Zstd {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? uncompressed,
-    TResult Function(int compressionLevel)? zstd,
+    TResult Function(int? compressionLevel)? zstd,
     required TResult orElse(),
   }) {
     if (zstd != null) {
@@ -307,11 +307,11 @@ class _$Compression_ZstdImpl extends Compression_Zstd {
 }
 
 abstract class Compression_Zstd extends Compression {
-  const factory Compression_Zstd({required final int compressionLevel}) =
+  const factory Compression_Zstd({final int? compressionLevel}) =
       _$Compression_ZstdImpl;
   const Compression_Zstd._() : super._();
 
-  int get compressionLevel;
+  int? get compressionLevel;
   @JsonKey(ignore: true)
   _$$Compression_ZstdImplCopyWith<_$Compression_ZstdImpl> get copyWith =>
       throw _privateConstructorUsedError;

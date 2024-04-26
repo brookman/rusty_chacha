@@ -28,7 +28,7 @@ fn main() {
     for cpu in sys.cpus() {
         println!("                       {}", cpu.brand());
     }
-    
+
     if cfg!(chacha20_force_neon) {
         println!("chacha20_force_neon : yes");
     } else {
@@ -130,6 +130,7 @@ max_time = 3)]
 fn bench_compress_encrypt(bencher: Bencher, args: (f64, i32)) {
     let size = 180 * 1024 * 1024; // 800 MB
     let (data_randomness, compression_level) = args;
+    let compression_level = Some(compression_level);
 
     bencher
         .counter(BytesCount::new(size))
@@ -155,6 +156,7 @@ max_time = 3)]
 fn bench_decrypt_decompress(bencher: Bencher, args: (f64, i32)) {
     let size = 180 * 1024 * 1024; // 180 MB
     let (data_randomness, compression_level) = args;
+    let compression_level = Some(compression_level);
 
     bencher
         .counter(BytesCount::new(size))
