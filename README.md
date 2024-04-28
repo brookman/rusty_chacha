@@ -35,6 +35,7 @@ This is up to **50x** faster than packages like [cryptography_flutter](https://p
 ## Usage
 
 ```dart
+import 'dart:typed_data';
 import 'package:collection/collection.dart';
 import 'package:rusty_chacha/rusty_chacha.dart';
 
@@ -98,6 +99,7 @@ main() async {
 - iOS
 - MacOS
 - Windows
+- Linux
 
 ## Thanks to
 - RustCrypto for creating the [chacha20poly1305 crate](https://crates.io/crates/chacha20poly1305)
