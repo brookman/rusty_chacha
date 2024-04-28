@@ -1,3 +1,7 @@
+## 0.2.4
+
+ - **FEAT**: make compressionLevel optional. ([2ee0f02b](https://github.com/brookman/rusty_chacha/commit/2ee0f02b2b13151dd71b4d83f7277711e23eff01))
+
 ## 0.2.3
 
  - **FEAT**: update docs. ([3d6c974d](https://github.com/brookman/rusty_chacha/commit/3d6c974d3ae9c7b217db16810776b4c01a6e8128))
