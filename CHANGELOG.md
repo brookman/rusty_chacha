@@ -15,6 +15,27 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`rusty_chacha` - `v0.2.5`](#rusty_chacha---v025)
+
+---
+
+#### `rusty_chacha` - `v0.2.5`
+
+ - **FEAT**: add Flutter example. ([3053d761](https://github.com/brookman/rusty_chacha/commit/3053d761280be1a50fa30453427e54da7ece5880))
+
+
+## 2024-04-28
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`rusty_chacha` - `v0.2.4`](#rusty_chacha---v024)
 
 ---
