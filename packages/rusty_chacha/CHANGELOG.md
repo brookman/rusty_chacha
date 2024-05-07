@@ -1,3 +1,7 @@
+## 0.2.5+1
+
+ - **FIX**: remove unused dependency. ([d2429a8e](https://github.com/brookman/rusty_chacha/commit/d2429a8eb5d7a9dcdc7a5c8aecf4fd9a11fafb25))
+
 ## 0.2.5
 
  - **FEAT**: add Flutter example. ([3053d761](https://github.com/brookman/rusty_chacha/commit/3053d761280be1a50fa30453427e54da7ece5880))

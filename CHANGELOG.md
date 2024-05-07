@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-05-07
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`rusty_chacha` - `v0.2.5+1`](#rusty_chacha---v0251)
+
+---
+
+#### `rusty_chacha` - `v0.2.5+1`
+
+ - **FIX**: remove unused dependency. ([d2429a8e](https://github.com/brookman/rusty_chacha/commit/d2429a8eb5d7a9dcdc7a5c8aecf4fd9a11fafb25))
+
+
 ## 2024-04-28
 
 ### Changes
