@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-04-28
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`rusty_chacha` - `v0.2.5`](#rusty_chacha---v025)
+
+---
+
+#### `rusty_chacha` - `v0.2.5`
+
+ - **FEAT**: add Flutter example. ([3053d761](https://github.com/brookman/rusty_chacha/commit/3053d761280be1a50fa30453427e54da7ece5880))
+
+
+## 2024-04-28
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`rusty_chacha` - `v0.2.4`](#rusty_chacha---v024)
+
+---
+
+#### `rusty_chacha` - `v0.2.4`
+
+ - **FEAT**: make compressionLevel optional. ([2ee0f02b](https://github.com/brookman/rusty_chacha/commit/2ee0f02b2b13151dd71b4d83f7277711e23eff01))
+
+
 ## 2024-04-25
 
 ### Changes
