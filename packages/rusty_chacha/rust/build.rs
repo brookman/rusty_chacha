@@ -4,10 +4,11 @@ use lib_flutter_rust_bridge_codegen::codegen;
 use lib_flutter_rust_bridge_codegen::codegen::Config;
 
 fn main() {
-    if env::var("DISABLE_BUILD_RS")
-        .map(|v| v == "1")
-        .unwrap_or(false)
+    if env::var("RUN_BUILD_RS")
+        .map(|v| v != "1")
+        .unwrap_or(true)
     {
+        println!("cargo:warning=build.rs is being skipped. Set env var RUN_BUILD_RS=1 to run it.");
         return;
     }
 

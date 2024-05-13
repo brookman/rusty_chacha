@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Setup
+RUN_BUILD_RS=1
 BUILD_DIR=platform-build
 mkdir $BUILD_DIR
 cd $BUILD_DIR
