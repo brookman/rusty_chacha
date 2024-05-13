@@ -1,7 +1,10 @@
 use zstd::{decode_all, encode_all};
 
-use anyhow::{bail, Ok, Result};
-use std::fs;
+use anyhow::{bail, Context, Ok, Result};
+use std::{
+    fs::{self, OpenOptions},
+    io::{Read, Seek, SeekFrom, Write},
+};
 
 use chacha20poly1305::{
     aead::{Aead, OsRng, Payload},
@@ -117,15 +120,41 @@ impl RustyChaCha20Poly1305 {
         file_path: String,
         nonce: Option<Vec<u8>>,
         aad: Option<Vec<u8>>,
+        append: Option<bool>,
     ) -> Result<()> {
         let ciphertext = self.encrypt(cleartext, nonce, aad)?;
-        fs::write(file_path, ciphertext).map_err(anyhow::Error::msg)
+        let append = append.unwrap_or(false);
+
+        if append {
+            let mut file = OpenOptions::new().append(true).open(file_path)?;
+            file.write_all(&ciphertext)
+        } else {
+            fs::write(file_path, ciphertext)
+        }
+        .map_err(anyhow::Error::msg)
     }
 
     /// Reads `file_path` decrypts the contents and returns the cleartext.
     /// The first NONCE_LEN bytes of the `ciphertext` must contain the nonce.
-    pub fn decrypt_from_file(&self, file_path: String, aad: Option<Vec<u8>>) -> Result<Vec<u8>> {
-        let ciphertext = fs::read(file_path)?;
+    pub fn decrypt_from_file(
+        &self,
+        file_path: String,
+        aad: Option<Vec<u8>>,
+        offset: Option<u64>,
+    ) -> Result<Vec<u8>> {
+        let mut file = OpenOptions::new().read(true).open(file_path)?;
+
+        let size = file.metadata()?.len();
+
+        let offset = offset.unwrap_or(0);
+        let bytes_to_read = size
+            .checked_sub(offset)
+            .context(format!("Invalid offset {offset} for file of size {size}"))?;
+
+        file.seek(SeekFrom::Start(offset))?;
+
+        let mut ciphertext = Vec::with_capacity(bytes_to_read as usize);
+        file.read_to_end(&mut ciphertext)?;
         self.decrypt(ciphertext, aad)
     }
 }
@@ -224,15 +253,41 @@ impl RustyXChaCha20Poly1305 {
         file_path: String,
         nonce: Option<Vec<u8>>,
         aad: Option<Vec<u8>>,
+        append: Option<bool>,
     ) -> Result<()> {
         let ciphertext = self.encrypt(cleartext, nonce, aad)?;
-        fs::write(file_path, ciphertext).map_err(anyhow::Error::msg)
+        let append = append.unwrap_or(false);
+
+        if append {
+            let mut file = OpenOptions::new().append(true).open(file_path)?;
+            file.write_all(&ciphertext)
+        } else {
+            fs::write(file_path, ciphertext)
+        }
+        .map_err(anyhow::Error::msg)
     }
 
     /// Reads `file_path` decrypts the contents and returns the cleartext.
     /// The first NONCE_LEN bytes of the `ciphertext` must contain the nonce.
-    pub fn decrypt_from_file(&self, file_path: String, aad: Option<Vec<u8>>) -> Result<Vec<u8>> {
-        let ciphertext = fs::read(file_path)?;
+    pub fn decrypt_from_file(
+        &self,
+        file_path: String,
+        aad: Option<Vec<u8>>,
+        offset: Option<u64>,
+    ) -> Result<Vec<u8>> {
+        let mut file = OpenOptions::new().read(true).open(file_path)?;
+
+        let size = file.metadata()?.len();
+
+        let offset = offset.unwrap_or(0);
+        let bytes_to_read = size
+            .checked_sub(offset)
+            .context(format!("Invalid offset {offset} for file of size {size}"))?;
+
+        file.seek(SeekFrom::Start(offset))?;
+
+        let mut ciphertext = Vec::with_capacity(bytes_to_read as usize);
+        file.read_to_end(&mut ciphertext)?;
         self.decrypt(ciphertext, aad)
     }
 }
@@ -283,6 +338,8 @@ pub fn decompress(data: Vec<u8>) -> Result<Vec<u8>> {
 
 #[cfg(test)]
 mod tests1 {
+    use std::fs;
+
     use crate::api::{Compression, RustyChaCha20Poly1305};
 
     const CLEARTEXT: &[u8] = &[
@@ -340,9 +397,33 @@ mod tests1 {
         let file_path = "test_file_1.bin".to_string();
 
         cipher
-            .encrypt_to_file(CLEARTEXT.to_vec(), file_path.clone(), None, None)
+            .encrypt_to_file(CLEARTEXT.to_vec(), file_path.clone(), None, None, None)
             .unwrap();
-        let cleartext = cipher.decrypt_from_file(file_path, None).unwrap();
+        let cleartext = cipher.decrypt_from_file(file_path, None, None).unwrap();
+        assert_eq!(cleartext, CLEARTEXT.to_vec());
+    }
+
+    #[test]
+    fn encrypt_and_decrypt_with_file_and_append_offset_works() {
+        let cipher = RustyChaCha20Poly1305::create_internal(None, None).unwrap();
+        let file_path = "test_file_2.bin".to_string();
+
+        // create a file with some initial content:
+        fs::write(file_path.clone(), vec![1, 2, 3, 4, 5]).unwrap();
+
+        // append the ciphertext:
+        cipher
+            .encrypt_to_file(
+                CLEARTEXT.to_vec(),
+                file_path.clone(),
+                None,
+                None,
+                Some(true),
+            )
+            .unwrap();
+
+        // read with offset of size 5 (the initial size):
+        let cleartext = cipher.decrypt_from_file(file_path, None, Some(5)).unwrap();
         assert_eq!(cleartext, CLEARTEXT.to_vec());
     }
 
@@ -419,7 +500,7 @@ mod tests1 {
         original_cleartext[5000] = 22;
         original_cleartext[7004] = 54;
 
-        let file_path = "test_file_2.bin".to_string();
+        let file_path = "test_file_3.bin".to_string();
 
         // test different compression levels
         for i in -10..21 {
@@ -431,9 +512,17 @@ mod tests1 {
             )
             .unwrap();
             cipher
-                .encrypt_to_file(original_cleartext.clone(), file_path.clone(), None, None)
+                .encrypt_to_file(
+                    original_cleartext.clone(),
+                    file_path.clone(),
+                    None,
+                    None,
+                    None,
+                )
                 .unwrap();
-            let cleartext = cipher.decrypt_from_file(file_path.clone(), None).unwrap();
+            let cleartext = cipher
+                .decrypt_from_file(file_path.clone(), None, None)
+                .unwrap();
             assert_eq!(cleartext, original_cleartext);
         }
     }
@@ -441,6 +530,8 @@ mod tests1 {
 
 #[cfg(test)]
 mod tests2 {
+    use std::fs;
+
     use crate::api::{Compression, RustyXChaCha20Poly1305};
 
     const CLEARTEXT: &[u8] = &[
@@ -497,12 +588,36 @@ mod tests2 {
     #[test]
     fn encrypt_and_decrypt_with_file_works() {
         let cipher = RustyXChaCha20Poly1305::create_internal(None, None).unwrap();
-        let file_path = "test_file_3.bin".to_string();
+        let file_path = "test_file_4.bin".to_string();
 
         cipher
-            .encrypt_to_file(CLEARTEXT.to_vec(), file_path.clone(), None, None)
+            .encrypt_to_file(CLEARTEXT.to_vec(), file_path.clone(), None, None, None)
             .unwrap();
-        let cleartext = cipher.decrypt_from_file(file_path, None).unwrap();
+        let cleartext = cipher.decrypt_from_file(file_path, None, None).unwrap();
+        assert_eq!(cleartext, CLEARTEXT.to_vec());
+    }
+
+    #[test]
+    fn encrypt_and_decrypt_with_file_and_append_offset_works() {
+        let cipher = RustyXChaCha20Poly1305::create_internal(None, None).unwrap();
+        let file_path = "test_file_2.bin".to_string();
+
+        // create a file with some initial content:
+        fs::write(file_path.clone(), vec![1, 2, 3, 4, 5]).unwrap();
+
+        // append the ciphertext:
+        cipher
+            .encrypt_to_file(
+                CLEARTEXT.to_vec(),
+                file_path.clone(),
+                None,
+                None,
+                Some(true),
+            )
+            .unwrap();
+
+        // read with offset of size 5 (the initial size):
+        let cleartext = cipher.decrypt_from_file(file_path, None, Some(5)).unwrap();
         assert_eq!(cleartext, CLEARTEXT.to_vec());
     }
 
@@ -579,7 +694,7 @@ mod tests2 {
         original_cleartext[5000] = 22;
         original_cleartext[7004] = 54;
 
-        let file_path = "test_file_4.bin".to_string();
+        let file_path = "test_file_5.bin".to_string();
 
         // test different compression levels
         for i in -10..21 {
@@ -591,9 +706,17 @@ mod tests2 {
             )
             .unwrap();
             cipher
-                .encrypt_to_file(original_cleartext.clone(), file_path.clone(), None, None)
+                .encrypt_to_file(
+                    original_cleartext.clone(),
+                    file_path.clone(),
+                    None,
+                    None,
+                    None,
+                )
                 .unwrap();
-            let cleartext = cipher.decrypt_from_file(file_path.clone(), None).unwrap();
+            let cleartext = cipher
+                .decrypt_from_file(file_path.clone(), None, None)
+                .unwrap();
             assert_eq!(cleartext, original_cleartext);
         }
     }

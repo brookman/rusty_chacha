@@ -29,6 +29,12 @@ impl CstDecode<String> for *mut wire_cst_list_prim_u_8_strict {
         String::from_utf8(vec).unwrap()
     }
 }
+impl CstDecode<bool> for *mut bool {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    fn cst_decode(self) -> bool {
+        unsafe { *flutter_rust_bridge::for_generated::box_from_leak_ptr(self) }
+    }
+}
 impl CstDecode<crate::api::Compression> for *mut wire_cst_compression {
     // Codec=Cst (C-struct based), see doc to use other codecs
     fn cst_decode(self) -> crate::api::Compression {
@@ -54,6 +60,12 @@ impl CstDecode<crate::api::RustyXChaCha20Poly1305> for *mut wire_cst_rusty_x_cha
     fn cst_decode(self) -> crate::api::RustyXChaCha20Poly1305 {
         let wrap = unsafe { flutter_rust_bridge::for_generated::box_from_leak_ptr(self) };
         CstDecode::<crate::api::RustyXChaCha20Poly1305>::cst_decode(*wrap).into()
+    }
+}
+impl CstDecode<u64> for *mut u64 {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    fn cst_decode(self) -> u64 {
+        unsafe { *flutter_rust_bridge::for_generated::box_from_leak_ptr(self) }
     }
 }
 impl CstDecode<crate::api::Compression> for wire_cst_compression {
@@ -189,8 +201,9 @@ pub extern "C" fn frbgen_rusty_chacha_wire_rusty_cha_cha_20_poly_1305_decrypt_fr
     that: *mut wire_cst_rusty_cha_cha_20_poly_1305,
     file_path: *mut wire_cst_list_prim_u_8_strict,
     aad: *mut wire_cst_list_prim_u_8_strict,
+    offset: *mut u64,
 ) {
-    wire_rusty_cha_cha_20_poly_1305_decrypt_from_file_impl(port_, that, file_path, aad)
+    wire_rusty_cha_cha_20_poly_1305_decrypt_from_file_impl(port_, that, file_path, aad, offset)
 }
 
 #[no_mangle]
@@ -212,9 +225,10 @@ pub extern "C" fn frbgen_rusty_chacha_wire_rusty_cha_cha_20_poly_1305_encrypt_to
     file_path: *mut wire_cst_list_prim_u_8_strict,
     nonce: *mut wire_cst_list_prim_u_8_strict,
     aad: *mut wire_cst_list_prim_u_8_strict,
+    append: *mut bool,
 ) {
     wire_rusty_cha_cha_20_poly_1305_encrypt_to_file_impl(
-        port_, that, cleartext, file_path, nonce, aad,
+        port_, that, cleartext, file_path, nonce, aad, append,
     )
 }
 
@@ -253,8 +267,9 @@ pub extern "C" fn frbgen_rusty_chacha_wire_rusty_x_cha_cha_20_poly_1305_decrypt_
     that: *mut wire_cst_rusty_x_cha_cha_20_poly_1305,
     file_path: *mut wire_cst_list_prim_u_8_strict,
     aad: *mut wire_cst_list_prim_u_8_strict,
+    offset: *mut u64,
 ) {
-    wire_rusty_x_cha_cha_20_poly_1305_decrypt_from_file_impl(port_, that, file_path, aad)
+    wire_rusty_x_cha_cha_20_poly_1305_decrypt_from_file_impl(port_, that, file_path, aad, offset)
 }
 
 #[no_mangle]
@@ -276,9 +291,10 @@ pub extern "C" fn frbgen_rusty_chacha_wire_rusty_x_cha_cha_20_poly_1305_encrypt_
     file_path: *mut wire_cst_list_prim_u_8_strict,
     nonce: *mut wire_cst_list_prim_u_8_strict,
     aad: *mut wire_cst_list_prim_u_8_strict,
+    append: *mut bool,
 ) {
     wire_rusty_x_cha_cha_20_poly_1305_encrypt_to_file_impl(
-        port_, that, cleartext, file_path, nonce, aad,
+        port_, that, cleartext, file_path, nonce, aad, append,
     )
 }
 
@@ -290,6 +306,11 @@ pub extern "C" fn frbgen_rusty_chacha_wire_rusty_x_cha_cha_20_poly_1305_generate
 #[no_mangle]
 pub extern "C" fn frbgen_rusty_chacha_wire_rusty_x_cha_cha_20_poly_1305_generate_nonce(port_: i64) {
     wire_rusty_x_cha_cha_20_poly_1305_generate_nonce_impl(port_)
+}
+
+#[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_cst_new_box_autoadd_bool(value: bool) -> *mut bool {
+    flutter_rust_bridge::for_generated::new_leak_box_ptr(value)
 }
 
 #[no_mangle]
@@ -317,6 +338,11 @@ pub extern "C" fn frbgen_rusty_chacha_cst_new_box_autoadd_rusty_x_cha_cha_20_pol
     flutter_rust_bridge::for_generated::new_leak_box_ptr(
         wire_cst_rusty_x_cha_cha_20_poly_1305::new_with_null_ptr(),
     )
+}
+
+#[no_mangle]
+pub extern "C" fn frbgen_rusty_chacha_cst_new_box_autoadd_u_64(value: u64) -> *mut u64 {
+    flutter_rust_bridge::for_generated::new_leak_box_ptr(value)
 }
 
 #[no_mangle]

@@ -25,6 +25,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   String dco_decode_String(dynamic raw);
 
   @protected
+  bool dco_decode_bool(dynamic raw);
+
+  @protected
+  bool dco_decode_box_autoadd_bool(dynamic raw);
+
+  @protected
   Compression dco_decode_box_autoadd_compression(dynamic raw);
 
   @protected
@@ -39,6 +45,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
       dynamic raw);
 
   @protected
+  int dco_decode_box_autoadd_u_64(dynamic raw);
+
+  @protected
   Compression dco_decode_compression(dynamic raw);
 
   @protected
@@ -51,10 +60,16 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   Uint8List dco_decode_list_prim_u_8_strict(dynamic raw);
 
   @protected
+  bool? dco_decode_opt_box_autoadd_bool(dynamic raw);
+
+  @protected
   Compression? dco_decode_opt_box_autoadd_compression(dynamic raw);
 
   @protected
   int? dco_decode_opt_box_autoadd_i_32(dynamic raw);
+
+  @protected
+  int? dco_decode_opt_box_autoadd_u_64(dynamic raw);
 
   @protected
   Uint8List? dco_decode_opt_list_prim_u_8_strict(dynamic raw);
@@ -64,6 +79,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   RustyXChaCha20Poly1305 dco_decode_rusty_x_cha_cha_20_poly_1305(dynamic raw);
+
+  @protected
+  int dco_decode_u_64(dynamic raw);
 
   @protected
   int dco_decode_u_8(dynamic raw);
@@ -76,6 +94,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   String sse_decode_String(SseDeserializer deserializer);
+
+  @protected
+  bool sse_decode_bool(SseDeserializer deserializer);
+
+  @protected
+  bool sse_decode_box_autoadd_bool(SseDeserializer deserializer);
 
   @protected
   Compression sse_decode_box_autoadd_compression(SseDeserializer deserializer);
@@ -92,6 +116,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
       SseDeserializer deserializer);
 
   @protected
+  int sse_decode_box_autoadd_u_64(SseDeserializer deserializer);
+
+  @protected
   Compression sse_decode_compression(SseDeserializer deserializer);
 
   @protected
@@ -104,11 +131,17 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   Uint8List sse_decode_list_prim_u_8_strict(SseDeserializer deserializer);
 
   @protected
+  bool? sse_decode_opt_box_autoadd_bool(SseDeserializer deserializer);
+
+  @protected
   Compression? sse_decode_opt_box_autoadd_compression(
       SseDeserializer deserializer);
 
   @protected
   int? sse_decode_opt_box_autoadd_i_32(SseDeserializer deserializer);
+
+  @protected
+  int? sse_decode_opt_box_autoadd_u_64(SseDeserializer deserializer);
 
   @protected
   Uint8List? sse_decode_opt_list_prim_u_8_strict(SseDeserializer deserializer);
@@ -122,13 +155,13 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
       SseDeserializer deserializer);
 
   @protected
+  int sse_decode_u_64(SseDeserializer deserializer);
+
+  @protected
   int sse_decode_u_8(SseDeserializer deserializer);
 
   @protected
   void sse_decode_unit(SseDeserializer deserializer);
-
-  @protected
-  bool sse_decode_bool(SseDeserializer deserializer);
 
   @protected
   ffi.Pointer<wire_cst_list_prim_u_8_strict> cst_encode_AnyhowException(
@@ -141,6 +174,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   ffi.Pointer<wire_cst_list_prim_u_8_strict> cst_encode_String(String raw) {
     // Codec=Cst (C-struct based), see doc to use other codecs
     return cst_encode_list_prim_u_8_strict(utf8.encoder.convert(raw));
+  }
+
+  @protected
+  ffi.Pointer<ffi.Bool> cst_encode_box_autoadd_bool(bool raw) {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    return wire.cst_new_box_autoadd_bool(cst_encode_bool(raw));
   }
 
   @protected
@@ -179,6 +218,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   }
 
   @protected
+  ffi.Pointer<ffi.Uint64> cst_encode_box_autoadd_u_64(int raw) {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    return wire.cst_new_box_autoadd_u_64(cst_encode_u_64(raw));
+  }
+
+  @protected
   ffi.Pointer<wire_cst_list_prim_u_8_loose> cst_encode_list_prim_u_8_loose(
       List<int> raw) {
     // Codec=Cst (C-struct based), see doc to use other codecs
@@ -197,6 +242,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   }
 
   @protected
+  ffi.Pointer<ffi.Bool> cst_encode_opt_box_autoadd_bool(bool? raw) {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    return raw == null ? ffi.nullptr : cst_encode_box_autoadd_bool(raw);
+  }
+
+  @protected
   ffi.Pointer<wire_cst_compression> cst_encode_opt_box_autoadd_compression(
       Compression? raw) {
     // Codec=Cst (C-struct based), see doc to use other codecs
@@ -210,10 +261,22 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   }
 
   @protected
+  ffi.Pointer<ffi.Uint64> cst_encode_opt_box_autoadd_u_64(int? raw) {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    return raw == null ? ffi.nullptr : cst_encode_box_autoadd_u_64(raw);
+  }
+
+  @protected
   ffi.Pointer<wire_cst_list_prim_u_8_strict>
       cst_encode_opt_list_prim_u_8_strict(Uint8List? raw) {
     // Codec=Cst (C-struct based), see doc to use other codecs
     return raw == null ? ffi.nullptr : cst_encode_list_prim_u_8_strict(raw);
+  }
+
+  @protected
+  int cst_encode_u_64(int raw) {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    return raw.toInt();
   }
 
   @protected
@@ -269,6 +332,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   }
 
   @protected
+  bool cst_encode_bool(bool raw);
+
+  @protected
   int cst_encode_i_32(int raw);
 
   @protected
@@ -283,6 +349,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   void sse_encode_String(String self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_bool(bool self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_box_autoadd_bool(bool self, SseSerializer serializer);
 
   @protected
   void sse_encode_box_autoadd_compression(
@@ -300,6 +372,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
       RustyXChaCha20Poly1305 self, SseSerializer serializer);
 
   @protected
+  void sse_encode_box_autoadd_u_64(int self, SseSerializer serializer);
+
+  @protected
   void sse_encode_compression(Compression self, SseSerializer serializer);
 
   @protected
@@ -313,11 +388,17 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
       Uint8List self, SseSerializer serializer);
 
   @protected
+  void sse_encode_opt_box_autoadd_bool(bool? self, SseSerializer serializer);
+
+  @protected
   void sse_encode_opt_box_autoadd_compression(
       Compression? self, SseSerializer serializer);
 
   @protected
   void sse_encode_opt_box_autoadd_i_32(int? self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_opt_box_autoadd_u_64(int? self, SseSerializer serializer);
 
   @protected
   void sse_encode_opt_list_prim_u_8_strict(
@@ -332,13 +413,13 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
       RustyXChaCha20Poly1305 self, SseSerializer serializer);
 
   @protected
+  void sse_encode_u_64(int self, SseSerializer serializer);
+
+  @protected
   void sse_encode_u_8(int self, SseSerializer serializer);
 
   @protected
   void sse_encode_unit(void self, SseSerializer serializer);
-
-  @protected
-  void sse_encode_bool(bool self, SseSerializer serializer);
 }
 
 // Section: wire_class
@@ -480,12 +561,14 @@ class RustLibWire implements BaseWire {
     ffi.Pointer<wire_cst_rusty_cha_cha_20_poly_1305> that,
     ffi.Pointer<wire_cst_list_prim_u_8_strict> file_path,
     ffi.Pointer<wire_cst_list_prim_u_8_strict> aad,
+    ffi.Pointer<ffi.Uint64> offset,
   ) {
     return _wire_rusty_cha_cha_20_poly_1305_decrypt_from_file(
       port_,
       that,
       file_path,
       aad,
+      offset,
     );
   }
 
@@ -495,7 +578,8 @@ class RustLibWire implements BaseWire {
                   ffi.Int64,
                   ffi.Pointer<wire_cst_rusty_cha_cha_20_poly_1305>,
                   ffi.Pointer<wire_cst_list_prim_u_8_strict>,
-                  ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
+                  ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+                  ffi.Pointer<ffi.Uint64>)>>(
       'frbgen_rusty_chacha_wire_rusty_cha_cha_20_poly_1305_decrypt_from_file');
   late final _wire_rusty_cha_cha_20_poly_1305_decrypt_from_file =
       _wire_rusty_cha_cha_20_poly_1305_decrypt_from_filePtr.asFunction<
@@ -503,7 +587,8 @@ class RustLibWire implements BaseWire {
               int,
               ffi.Pointer<wire_cst_rusty_cha_cha_20_poly_1305>,
               ffi.Pointer<wire_cst_list_prim_u_8_strict>,
-              ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
+              ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+              ffi.Pointer<ffi.Uint64>)>();
 
   void wire_rusty_cha_cha_20_poly_1305_encrypt(
     int port_,
@@ -546,6 +631,7 @@ class RustLibWire implements BaseWire {
     ffi.Pointer<wire_cst_list_prim_u_8_strict> file_path,
     ffi.Pointer<wire_cst_list_prim_u_8_strict> nonce,
     ffi.Pointer<wire_cst_list_prim_u_8_strict> aad,
+    ffi.Pointer<ffi.Bool> append,
   ) {
     return _wire_rusty_cha_cha_20_poly_1305_encrypt_to_file(
       port_,
@@ -554,6 +640,7 @@ class RustLibWire implements BaseWire {
       file_path,
       nonce,
       aad,
+      append,
     );
   }
 
@@ -565,7 +652,8 @@ class RustLibWire implements BaseWire {
                   ffi.Pointer<wire_cst_list_prim_u_8_loose>,
                   ffi.Pointer<wire_cst_list_prim_u_8_strict>,
                   ffi.Pointer<wire_cst_list_prim_u_8_strict>,
-                  ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
+                  ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+                  ffi.Pointer<ffi.Bool>)>>(
       'frbgen_rusty_chacha_wire_rusty_cha_cha_20_poly_1305_encrypt_to_file');
   late final _wire_rusty_cha_cha_20_poly_1305_encrypt_to_file =
       _wire_rusty_cha_cha_20_poly_1305_encrypt_to_filePtr.asFunction<
@@ -575,7 +663,8 @@ class RustLibWire implements BaseWire {
               ffi.Pointer<wire_cst_list_prim_u_8_loose>,
               ffi.Pointer<wire_cst_list_prim_u_8_strict>,
               ffi.Pointer<wire_cst_list_prim_u_8_strict>,
-              ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
+              ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+              ffi.Pointer<ffi.Bool>)>();
 
   void wire_rusty_cha_cha_20_poly_1305_generate_key(
     int port_,
@@ -666,12 +755,14 @@ class RustLibWire implements BaseWire {
     ffi.Pointer<wire_cst_rusty_x_cha_cha_20_poly_1305> that,
     ffi.Pointer<wire_cst_list_prim_u_8_strict> file_path,
     ffi.Pointer<wire_cst_list_prim_u_8_strict> aad,
+    ffi.Pointer<ffi.Uint64> offset,
   ) {
     return _wire_rusty_x_cha_cha_20_poly_1305_decrypt_from_file(
       port_,
       that,
       file_path,
       aad,
+      offset,
     );
   }
 
@@ -681,7 +772,8 @@ class RustLibWire implements BaseWire {
                   ffi.Int64,
                   ffi.Pointer<wire_cst_rusty_x_cha_cha_20_poly_1305>,
                   ffi.Pointer<wire_cst_list_prim_u_8_strict>,
-                  ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
+                  ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+                  ffi.Pointer<ffi.Uint64>)>>(
       'frbgen_rusty_chacha_wire_rusty_x_cha_cha_20_poly_1305_decrypt_from_file');
   late final _wire_rusty_x_cha_cha_20_poly_1305_decrypt_from_file =
       _wire_rusty_x_cha_cha_20_poly_1305_decrypt_from_filePtr.asFunction<
@@ -689,7 +781,8 @@ class RustLibWire implements BaseWire {
               int,
               ffi.Pointer<wire_cst_rusty_x_cha_cha_20_poly_1305>,
               ffi.Pointer<wire_cst_list_prim_u_8_strict>,
-              ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
+              ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+              ffi.Pointer<ffi.Uint64>)>();
 
   void wire_rusty_x_cha_cha_20_poly_1305_encrypt(
     int port_,
@@ -732,6 +825,7 @@ class RustLibWire implements BaseWire {
     ffi.Pointer<wire_cst_list_prim_u_8_strict> file_path,
     ffi.Pointer<wire_cst_list_prim_u_8_strict> nonce,
     ffi.Pointer<wire_cst_list_prim_u_8_strict> aad,
+    ffi.Pointer<ffi.Bool> append,
   ) {
     return _wire_rusty_x_cha_cha_20_poly_1305_encrypt_to_file(
       port_,
@@ -740,6 +834,7 @@ class RustLibWire implements BaseWire {
       file_path,
       nonce,
       aad,
+      append,
     );
   }
 
@@ -751,7 +846,8 @@ class RustLibWire implements BaseWire {
                   ffi.Pointer<wire_cst_list_prim_u_8_loose>,
                   ffi.Pointer<wire_cst_list_prim_u_8_strict>,
                   ffi.Pointer<wire_cst_list_prim_u_8_strict>,
-                  ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
+                  ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+                  ffi.Pointer<ffi.Bool>)>>(
       'frbgen_rusty_chacha_wire_rusty_x_cha_cha_20_poly_1305_encrypt_to_file');
   late final _wire_rusty_x_cha_cha_20_poly_1305_encrypt_to_file =
       _wire_rusty_x_cha_cha_20_poly_1305_encrypt_to_filePtr.asFunction<
@@ -761,7 +857,8 @@ class RustLibWire implements BaseWire {
               ffi.Pointer<wire_cst_list_prim_u_8_loose>,
               ffi.Pointer<wire_cst_list_prim_u_8_strict>,
               ffi.Pointer<wire_cst_list_prim_u_8_strict>,
-              ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
+              ffi.Pointer<wire_cst_list_prim_u_8_strict>,
+              ffi.Pointer<ffi.Bool>)>();
 
   void wire_rusty_x_cha_cha_20_poly_1305_generate_key(
     int port_,
@@ -792,6 +889,20 @@ class RustLibWire implements BaseWire {
   late final _wire_rusty_x_cha_cha_20_poly_1305_generate_nonce =
       _wire_rusty_x_cha_cha_20_poly_1305_generate_noncePtr
           .asFunction<void Function(int)>();
+
+  ffi.Pointer<ffi.Bool> cst_new_box_autoadd_bool(
+    bool value,
+  ) {
+    return _cst_new_box_autoadd_bool(
+      value,
+    );
+  }
+
+  late final _cst_new_box_autoadd_boolPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Bool> Function(ffi.Bool)>>(
+          'frbgen_rusty_chacha_cst_new_box_autoadd_bool');
+  late final _cst_new_box_autoadd_bool = _cst_new_box_autoadd_boolPtr
+      .asFunction<ffi.Pointer<ffi.Bool> Function(bool)>();
 
   ffi.Pointer<wire_cst_compression> cst_new_box_autoadd_compression() {
     return _cst_new_box_autoadd_compression();
@@ -843,6 +954,20 @@ class RustLibWire implements BaseWire {
   late final _cst_new_box_autoadd_rusty_x_cha_cha_20_poly_1305 =
       _cst_new_box_autoadd_rusty_x_cha_cha_20_poly_1305Ptr.asFunction<
           ffi.Pointer<wire_cst_rusty_x_cha_cha_20_poly_1305> Function()>();
+
+  ffi.Pointer<ffi.Uint64> cst_new_box_autoadd_u_64(
+    int value,
+  ) {
+    return _cst_new_box_autoadd_u_64(
+      value,
+    );
+  }
+
+  late final _cst_new_box_autoadd_u_64Ptr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Uint64> Function(ffi.Uint64)>>(
+          'frbgen_rusty_chacha_cst_new_box_autoadd_u_64');
+  late final _cst_new_box_autoadd_u_64 = _cst_new_box_autoadd_u_64Ptr
+      .asFunction<ffi.Pointer<ffi.Uint64> Function(int)>();
 
   ffi.Pointer<wire_cst_list_prim_u_8_loose> cst_new_list_prim_u_8_loose(
     int len,

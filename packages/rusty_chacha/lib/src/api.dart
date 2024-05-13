@@ -55,9 +55,12 @@ class RustyChaCha20Poly1305 {
   /// Reads `file_path` decrypts the contents and returns the cleartext.
   /// The first NONCE_LEN bytes of the `ciphertext` must contain the nonce.
   Future<Uint8List> decryptFromFile(
-          {required String filePath, Uint8List? aad, dynamic hint}) =>
+          {required String filePath,
+          Uint8List? aad,
+          int? offset,
+          dynamic hint}) =>
       RustLib.instance.api.rustyChaCha20Poly1305DecryptFromFile(
-          that: this, filePath: filePath, aad: aad, hint: hint);
+          that: this, filePath: filePath, aad: aad, offset: offset, hint: hint);
 
   /// Encrypts `cleartext` and returns the ciphertext.
   /// If no `nonce` is given, a random one will be generated.
@@ -78,6 +81,7 @@ class RustyChaCha20Poly1305 {
           required String filePath,
           Uint8List? nonce,
           Uint8List? aad,
+          bool? append,
           dynamic hint}) =>
       RustLib.instance.api.rustyChaCha20Poly1305EncryptToFile(
           that: this,
@@ -85,6 +89,7 @@ class RustyChaCha20Poly1305 {
           filePath: filePath,
           nonce: nonce,
           aad: aad,
+          append: append,
           hint: hint);
 
   static Future<Uint8List> generateKey({dynamic hint}) =>
@@ -132,9 +137,12 @@ class RustyXChaCha20Poly1305 {
   /// Reads `file_path` decrypts the contents and returns the cleartext.
   /// The first NONCE_LEN bytes of the `ciphertext` must contain the nonce.
   Future<Uint8List> decryptFromFile(
-          {required String filePath, Uint8List? aad, dynamic hint}) =>
+          {required String filePath,
+          Uint8List? aad,
+          int? offset,
+          dynamic hint}) =>
       RustLib.instance.api.rustyXChaCha20Poly1305DecryptFromFile(
-          that: this, filePath: filePath, aad: aad, hint: hint);
+          that: this, filePath: filePath, aad: aad, offset: offset, hint: hint);
 
   /// Encrypts `cleartext` and returns the ciphertext.
   /// If no `nonce` is given, a random one will be generated.
@@ -155,6 +163,7 @@ class RustyXChaCha20Poly1305 {
           required String filePath,
           Uint8List? nonce,
           Uint8List? aad,
+          bool? append,
           dynamic hint}) =>
       RustLib.instance.api.rustyXChaCha20Poly1305EncryptToFile(
           that: this,
@@ -162,6 +171,7 @@ class RustyXChaCha20Poly1305 {
           filePath: filePath,
           nonce: nonce,
           aad: aad,
+          append: append,
           hint: hint);
 
   static Future<Uint8List> generateKey({dynamic hint}) =>

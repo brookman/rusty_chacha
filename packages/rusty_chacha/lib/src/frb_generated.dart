@@ -85,6 +85,7 @@ abstract class RustLibApi extends BaseApi {
       {required RustyChaCha20Poly1305 that,
       required String filePath,
       Uint8List? aad,
+      int? offset,
       dynamic hint});
 
   Future<Uint8List> rustyChaCha20Poly1305Encrypt(
@@ -100,6 +101,7 @@ abstract class RustLibApi extends BaseApi {
       required String filePath,
       Uint8List? nonce,
       Uint8List? aad,
+      bool? append,
       dynamic hint});
 
   Future<Uint8List> rustyChaCha20Poly1305GenerateKey({dynamic hint});
@@ -119,6 +121,7 @@ abstract class RustLibApi extends BaseApi {
       {required RustyXChaCha20Poly1305 that,
       required String filePath,
       Uint8List? aad,
+      int? offset,
       dynamic hint});
 
   Future<Uint8List> rustyXChaCha20Poly1305Encrypt(
@@ -134,6 +137,7 @@ abstract class RustLibApi extends BaseApi {
       required String filePath,
       Uint8List? nonce,
       Uint8List? aad,
+      bool? append,
       dynamic hint});
 
   Future<Uint8List> rustyXChaCha20Poly1305GenerateKey({dynamic hint});
@@ -262,21 +266,23 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       {required RustyChaCha20Poly1305 that,
       required String filePath,
       Uint8List? aad,
+      int? offset,
       dynamic hint}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
         var arg0 = cst_encode_box_autoadd_rusty_cha_cha_20_poly_1305(that);
         var arg1 = cst_encode_String(filePath);
         var arg2 = cst_encode_opt_list_prim_u_8_strict(aad);
+        var arg3 = cst_encode_opt_box_autoadd_u_64(offset);
         return wire.wire_rusty_cha_cha_20_poly_1305_decrypt_from_file(
-            port_, arg0, arg1, arg2);
+            port_, arg0, arg1, arg2, arg3);
       },
       codec: DcoCodec(
         decodeSuccessData: dco_decode_list_prim_u_8_strict,
         decodeErrorData: dco_decode_AnyhowException,
       ),
       constMeta: kRustyChaCha20Poly1305DecryptFromFileConstMeta,
-      argValues: [that, filePath, aad],
+      argValues: [that, filePath, aad, offset],
       apiImpl: this,
       hint: hint,
     ));
@@ -285,7 +291,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   TaskConstMeta get kRustyChaCha20Poly1305DecryptFromFileConstMeta =>
       const TaskConstMeta(
         debugName: "rusty_cha_cha_20_poly_1305_decrypt_from_file",
-        argNames: ["that", "filePath", "aad"],
+        argNames: ["that", "filePath", "aad", "offset"],
       );
 
   @override
@@ -328,6 +334,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       required String filePath,
       Uint8List? nonce,
       Uint8List? aad,
+      bool? append,
       dynamic hint}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
@@ -336,15 +343,16 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         var arg2 = cst_encode_String(filePath);
         var arg3 = cst_encode_opt_list_prim_u_8_strict(nonce);
         var arg4 = cst_encode_opt_list_prim_u_8_strict(aad);
+        var arg5 = cst_encode_opt_box_autoadd_bool(append);
         return wire.wire_rusty_cha_cha_20_poly_1305_encrypt_to_file(
-            port_, arg0, arg1, arg2, arg3, arg4);
+            port_, arg0, arg1, arg2, arg3, arg4, arg5);
       },
       codec: DcoCodec(
         decodeSuccessData: dco_decode_unit,
         decodeErrorData: dco_decode_AnyhowException,
       ),
       constMeta: kRustyChaCha20Poly1305EncryptToFileConstMeta,
-      argValues: [that, cleartext, filePath, nonce, aad],
+      argValues: [that, cleartext, filePath, nonce, aad, append],
       apiImpl: this,
       hint: hint,
     ));
@@ -353,7 +361,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   TaskConstMeta get kRustyChaCha20Poly1305EncryptToFileConstMeta =>
       const TaskConstMeta(
         debugName: "rusty_cha_cha_20_poly_1305_encrypt_to_file",
-        argNames: ["that", "cleartext", "filePath", "nonce", "aad"],
+        argNames: ["that", "cleartext", "filePath", "nonce", "aad", "append"],
       );
 
   @override
@@ -465,21 +473,23 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       {required RustyXChaCha20Poly1305 that,
       required String filePath,
       Uint8List? aad,
+      int? offset,
       dynamic hint}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
         var arg0 = cst_encode_box_autoadd_rusty_x_cha_cha_20_poly_1305(that);
         var arg1 = cst_encode_String(filePath);
         var arg2 = cst_encode_opt_list_prim_u_8_strict(aad);
+        var arg3 = cst_encode_opt_box_autoadd_u_64(offset);
         return wire.wire_rusty_x_cha_cha_20_poly_1305_decrypt_from_file(
-            port_, arg0, arg1, arg2);
+            port_, arg0, arg1, arg2, arg3);
       },
       codec: DcoCodec(
         decodeSuccessData: dco_decode_list_prim_u_8_strict,
         decodeErrorData: dco_decode_AnyhowException,
       ),
       constMeta: kRustyXChaCha20Poly1305DecryptFromFileConstMeta,
-      argValues: [that, filePath, aad],
+      argValues: [that, filePath, aad, offset],
       apiImpl: this,
       hint: hint,
     ));
@@ -488,7 +498,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   TaskConstMeta get kRustyXChaCha20Poly1305DecryptFromFileConstMeta =>
       const TaskConstMeta(
         debugName: "rusty_x_cha_cha_20_poly_1305_decrypt_from_file",
-        argNames: ["that", "filePath", "aad"],
+        argNames: ["that", "filePath", "aad", "offset"],
       );
 
   @override
@@ -531,6 +541,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       required String filePath,
       Uint8List? nonce,
       Uint8List? aad,
+      bool? append,
       dynamic hint}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
@@ -539,15 +550,16 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         var arg2 = cst_encode_String(filePath);
         var arg3 = cst_encode_opt_list_prim_u_8_strict(nonce);
         var arg4 = cst_encode_opt_list_prim_u_8_strict(aad);
+        var arg5 = cst_encode_opt_box_autoadd_bool(append);
         return wire.wire_rusty_x_cha_cha_20_poly_1305_encrypt_to_file(
-            port_, arg0, arg1, arg2, arg3, arg4);
+            port_, arg0, arg1, arg2, arg3, arg4, arg5);
       },
       codec: DcoCodec(
         decodeSuccessData: dco_decode_unit,
         decodeErrorData: dco_decode_AnyhowException,
       ),
       constMeta: kRustyXChaCha20Poly1305EncryptToFileConstMeta,
-      argValues: [that, cleartext, filePath, nonce, aad],
+      argValues: [that, cleartext, filePath, nonce, aad, append],
       apiImpl: this,
       hint: hint,
     ));
@@ -556,7 +568,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   TaskConstMeta get kRustyXChaCha20Poly1305EncryptToFileConstMeta =>
       const TaskConstMeta(
         debugName: "rusty_x_cha_cha_20_poly_1305_encrypt_to_file",
-        argNames: ["that", "cleartext", "filePath", "nonce", "aad"],
+        argNames: ["that", "cleartext", "filePath", "nonce", "aad", "append"],
       );
 
   @override
@@ -618,6 +630,18 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  bool dco_decode_bool(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return raw as bool;
+  }
+
+  @protected
+  bool dco_decode_box_autoadd_bool(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return raw as bool;
+  }
+
+  @protected
   Compression dco_decode_box_autoadd_compression(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return dco_decode_compression(raw);
@@ -641,6 +665,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return dco_decode_rusty_x_cha_cha_20_poly_1305(raw);
+  }
+
+  @protected
+  int dco_decode_box_autoadd_u_64(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_u_64(raw);
   }
 
   @protected
@@ -677,6 +707,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  bool? dco_decode_opt_box_autoadd_bool(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return raw == null ? null : dco_decode_box_autoadd_bool(raw);
+  }
+
+  @protected
   Compression? dco_decode_opt_box_autoadd_compression(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw == null ? null : dco_decode_box_autoadd_compression(raw);
@@ -686,6 +722,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   int? dco_decode_opt_box_autoadd_i_32(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw == null ? null : dco_decode_box_autoadd_i_32(raw);
+  }
+
+  @protected
+  int? dco_decode_opt_box_autoadd_u_64(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return raw == null ? null : dco_decode_box_autoadd_u_64(raw);
   }
 
   @protected
@@ -719,6 +761,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  int dco_decode_u_64(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dcoDecodeI64OrU64(raw);
+  }
+
+  @protected
   int dco_decode_u_8(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw as int;
@@ -745,6 +793,18 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  bool sse_decode_bool(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return deserializer.buffer.getUint8() != 0;
+  }
+
+  @protected
+  bool sse_decode_box_autoadd_bool(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_bool(deserializer));
+  }
+
+  @protected
   Compression sse_decode_box_autoadd_compression(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return (sse_decode_compression(deserializer));
@@ -768,6 +828,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return (sse_decode_rusty_x_cha_cha_20_poly_1305(deserializer));
+  }
+
+  @protected
+  int sse_decode_box_autoadd_u_64(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_u_64(deserializer));
   }
 
   @protected
@@ -808,6 +874,17 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  bool? sse_decode_opt_box_autoadd_bool(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    if (sse_decode_bool(deserializer)) {
+      return (sse_decode_box_autoadd_bool(deserializer));
+    } else {
+      return null;
+    }
+  }
+
+  @protected
   Compression? sse_decode_opt_box_autoadd_compression(
       SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
@@ -825,6 +902,17 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
     if (sse_decode_bool(deserializer)) {
       return (sse_decode_box_autoadd_i_32(deserializer));
+    } else {
+      return null;
+    }
+  }
+
+  @protected
+  int? sse_decode_opt_box_autoadd_u_64(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    if (sse_decode_bool(deserializer)) {
+      return (sse_decode_box_autoadd_u_64(deserializer));
     } else {
       return null;
     }
@@ -860,6 +948,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  int sse_decode_u_64(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return deserializer.buffer.getUint64();
+  }
+
+  @protected
   int sse_decode_u_8(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return deserializer.buffer.getUint8();
@@ -871,9 +965,9 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  bool sse_decode_bool(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return deserializer.buffer.getUint8() != 0;
+  bool cst_encode_bool(bool raw) {
+    // Codec=Cst (C-struct based), see doc to use other codecs
+    return raw;
   }
 
   @protected
@@ -908,6 +1002,18 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_bool(bool self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    serializer.buffer.putUint8(self ? 1 : 0);
+  }
+
+  @protected
+  void sse_encode_box_autoadd_bool(bool self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_bool(self, serializer);
+  }
+
+  @protected
   void sse_encode_box_autoadd_compression(
       Compression self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
@@ -932,6 +1038,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       RustyXChaCha20Poly1305 self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_rusty_x_cha_cha_20_poly_1305(self, serializer);
+  }
+
+  @protected
+  void sse_encode_box_autoadd_u_64(int self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_u_64(self, serializer);
   }
 
   @protected
@@ -970,6 +1082,16 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_opt_box_autoadd_bool(bool? self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    sse_encode_bool(self != null, serializer);
+    if (self != null) {
+      sse_encode_box_autoadd_bool(self, serializer);
+    }
+  }
+
+  @protected
   void sse_encode_opt_box_autoadd_compression(
       Compression? self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
@@ -987,6 +1109,16 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     sse_encode_bool(self != null, serializer);
     if (self != null) {
       sse_encode_box_autoadd_i_32(self, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_opt_box_autoadd_u_64(int? self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    sse_encode_bool(self != null, serializer);
+    if (self != null) {
+      sse_encode_box_autoadd_u_64(self, serializer);
     }
   }
 
@@ -1018,6 +1150,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_u_64(int self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    serializer.buffer.putUint64(self);
+  }
+
+  @protected
   void sse_encode_u_8(int self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     serializer.buffer.putUint8(self);
@@ -1026,11 +1164,5 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   @protected
   void sse_encode_unit(void self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-  }
-
-  @protected
-  void sse_encode_bool(bool self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    serializer.buffer.putUint8(self ? 1 : 0);
   }
 }
