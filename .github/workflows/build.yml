@@ -36,7 +36,7 @@ jobs:
       - name: Run Rust tests
         run: cargo test
       - name: Build Rust code for Dart tests
-        run: cargo build -r
+        run: RUN_BUILD_RS=1 cargo build -r
 
       # Dart/Flutter
       - name: Check Dart format
