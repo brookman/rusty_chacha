@@ -1,7 +1,7 @@
 name: rusty_chacha
 description: >
   A Flutter library for fast ChaCha20-Poly1305 encryption, powered by Rust 
-version: 0.2.5+1
+version: 0.3.0
 homepage: https://github.com/brookman/rusty_chacha
 repository: https://github.com/brookman/rusty_chacha
 issue_tracker: https://github.com/brookman/rusty_chacha/issues

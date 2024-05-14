@@ -1,3 +1,11 @@
+## 0.3.0
+
+> Note: This release has breaking changes.
+
+ - **FIX**: try to skip build.rs when env var is not set. ([e54ccccb](https://github.com/brookman/rusty_chacha/commit/e54ccccb54251e02d1653c9360d08ce86c4b16ae))
+ - **FEAT**: relax dependency requirement. ([9a73951b](https://github.com/brookman/rusty_chacha/commit/9a73951b91bdbaeb86c95a3f9abfd094fbe6c018))
+ - **BREAKING** **FEAT**: add append/offset for file based encryption/decryption. ([aeca04d1](https://github.com/brookman/rusty_chacha/commit/aeca04d1a816ed32012e55367047773ce67e5c05))
+
 ## 0.2.5+1
 
  - **FIX**: remove unused dependency. ([d2429a8e](https://github.com/brookman/rusty_chacha/commit/d2429a8eb5d7a9dcdc7a5c8aecf4fd9a11fafb25))

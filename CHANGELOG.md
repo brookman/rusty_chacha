@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-05-14
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`rusty_chacha` - `v0.3.0`](#rusty_chacha---v030)
+
+Packages with other changes:
+
+ - There are no other changes in this release.
+
+---
+
+#### `rusty_chacha` - `v0.3.0`
+
+ - **FIX**: try to skip build.rs when env var is not set. ([e54ccccb](https://github.com/brookman/rusty_chacha/commit/e54ccccb54251e02d1653c9360d08ce86c4b16ae))
+ - **FEAT**: relax dependency requirement. ([9a73951b](https://github.com/brookman/rusty_chacha/commit/9a73951b91bdbaeb86c95a3f9abfd094fbe6c018))
+ - **BREAKING** **FEAT**: add append/offset for file based encryption/decryption. ([aeca04d1](https://github.com/brookman/rusty_chacha/commit/aeca04d1a816ed32012e55367047773ce67e5c05))
+
+
 ## 2024-05-07
 
 ### Changes
