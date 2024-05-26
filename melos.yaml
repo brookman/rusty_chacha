@@ -23,8 +23,7 @@ scripts:
     description: Format a specific package in this project.
 
   build:
-    # run: melos run build:apple && melos run build:android && melos run build:other
-    run: melos run build:apple && melos run build:other
+    run: melos run build:apple && melos run build:android && melos run build:other
     description: Build all native libraries for the project.
 
   build:apple:
