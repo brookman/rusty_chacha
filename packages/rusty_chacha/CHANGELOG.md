@@ -1,3 +1,7 @@
+## 0.3.0+1
+
+ - **FIX**: try to lower ffi dependecy. ([bca7cba9](https://github.com/brookman/rusty_chacha/commit/bca7cba9456736027533e358679e9fcfbbec2acd))
+
 ## 0.3.0
 
 > Note: This release has breaking changes.

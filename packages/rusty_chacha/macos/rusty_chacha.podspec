@@ -1,4 +1,4 @@
-release_tag_name = 'rusty_chacha-v0.3.0' # generated; do not edit
+release_tag_name = 'rusty_chacha-v0.3.0+1' # generated; do not edit
 
 # We cannot distribute the XCFramework alongside the library directly,
 # so we have to fetch the correct version here.

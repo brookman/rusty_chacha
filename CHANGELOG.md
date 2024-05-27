@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-05-27
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`rusty_chacha` - `v0.3.0+1`](#rusty_chacha---v0301)
+
+---
+
+#### `rusty_chacha` - `v0.3.0+1`
+
+ - **FIX**: try to lower ffi dependecy. ([bca7cba9](https://github.com/brookman/rusty_chacha/commit/bca7cba9456736027533e358679e9fcfbbec2acd))
+
+
 ## 2024-05-14
 
 ### Changes
