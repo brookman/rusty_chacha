@@ -1,3 +1,32 @@
+## 0.4.0-dev.1
+
+> Note: This release has breaking changes.
+
+ - **FIX**: imort. ([a5d0955e](https://github.com/brookman/rusty_chacha/commit/a5d0955e735c8be4be986ab1fa47b36588406e00))
+ - **FIX**: try to lower ffi dependecy. ([bca7cba9](https://github.com/brookman/rusty_chacha/commit/bca7cba9456736027533e358679e9fcfbbec2acd))
+ - **FIX**: try to skip build.rs when env var is not set. ([e54ccccb](https://github.com/brookman/rusty_chacha/commit/e54ccccb54251e02d1653c9360d08ce86c4b16ae))
+ - **FIX**: remove unused dependency. ([d2429a8e](https://github.com/brookman/rusty_chacha/commit/d2429a8eb5d7a9dcdc7a5c8aecf4fd9a11fafb25))
+ - **FIX**: remove target.aarch64-linux-android. ([7759f614](https://github.com/brookman/rusty_chacha/commit/7759f6149f96c0456d1fe404359426d04f31e9cc))
+ - **FIX**: repeated initialization. ([dd60b9d5](https://github.com/brookman/rusty_chacha/commit/dd60b9d5e4559f24bf5286f93cb24f9a292c3b85))
+ - **FIX**: formatting. ([be1638a0](https://github.com/brookman/rusty_chacha/commit/be1638a0efd16092829284b0020ec42949770da3))
+ - **FEAT**: try to split flutter and dart packages. ([6ec98378](https://github.com/brookman/rusty_chacha/commit/6ec98378f202ec0f9dffd56e2a19307acec309f1))
+ - **FEAT**: relax dependency requirement. ([9a73951b](https://github.com/brookman/rusty_chacha/commit/9a73951b91bdbaeb86c95a3f9abfd094fbe6c018))
+ - **FEAT**: add Flutter example. ([3053d761](https://github.com/brookman/rusty_chacha/commit/3053d761280be1a50fa30453427e54da7ece5880))
+ - **FEAT**: make compressionLevel optional. ([2ee0f02b](https://github.com/brookman/rusty_chacha/commit/2ee0f02b2b13151dd71b4d83f7277711e23eff01))
+ - **FEAT**: update docs. ([3d6c974d](https://github.com/brookman/rusty_chacha/commit/3d6c974d3ae9c7b217db16810776b4c01a6e8128))
+ - **FEAT**: update docs. ([c3e38859](https://github.com/brookman/rusty_chacha/commit/c3e38859b09b9edc13465706dd50100f73fb464c))
+ - **FEAT**: log features in benchmark. ([70fad00f](https://github.com/brookman/rusty_chacha/commit/70fad00fd37a5511b2683d7d2d57facb83019978))
+ - **FEAT**: fix Rust benchmarks. ([f370bfab](https://github.com/brookman/rusty_chacha/commit/f370bfabc4109e2139220583b2828472c4789c8a))
+ - **FEAT**: update docs. ([18a88a17](https://github.com/brookman/rusty_chacha/commit/18a88a1788e99828df8e88aa8248bcf5dfffb6ff))
+ - **FEAT**: update docs. ([863f3c2e](https://github.com/brookman/rusty_chacha/commit/863f3c2e22f37cf9448061a1fdd9e7e595fc8863))
+ - **FEAT**: try to enable "neon" on aarch64 (ARM) CPUs. ([e314ed31](https://github.com/brookman/rusty_chacha/commit/e314ed31e876c42db9fec2ee73cf60217013b078))
+ - **FEAT**: make encryption key param optional. ([15d4c927](https://github.com/brookman/rusty_chacha/commit/15d4c9278d63c01d5766ae6d7fd19d97869526a3))
+ - **FEAT**: make compression param optional. ([b43ca88c](https://github.com/brookman/rusty_chacha/commit/b43ca88ccf4c4e0cb2b6f268a9bf9ab2798e53f5))
+ - **BREAKING** **FIX**: file structure, import, formatting. ([9628637d](https://github.com/brookman/rusty_chacha/commit/9628637d9bdfc94e8e19e7cd8b324f2c71e12ba5))
+ - **BREAKING** **FIX**: imports. ([370f4a1a](https://github.com/brookman/rusty_chacha/commit/370f4a1aa5a487ffcf47a5316f15a3a20701f04e))
+ - **BREAKING** **FEAT**: add append/offset for file based encryption/decryption. ([aeca04d1](https://github.com/brookman/rusty_chacha/commit/aeca04d1a816ed32012e55367047773ce67e5c05))
+ - **BREAKING** **FEAT**: Refactor API to support ChaCha20 as well as XChaCha20 and revert dynamic linking for iOS/MacOS. ([fa50915f](https://github.com/brookman/rusty_chacha/commit/fa50915f81a60d3c8d506b60f2aee246518c1db0))
+
 ## 0.4.0-dev.0+1
 
  - **FIX**: imort. ([a5d0955e](https://github.com/brookman/rusty_chacha/commit/a5d0955e735c8be4be986ab1fa47b36588406e00))
