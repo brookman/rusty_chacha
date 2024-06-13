@@ -13,7 +13,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  rusty_chacha: ^0.4.0
+  rusty_chacha_dart: ^0.4.0
 
 dev_dependencies:
   flutter_test:
