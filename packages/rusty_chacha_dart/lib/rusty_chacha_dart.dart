@@ -1,6 +1,7 @@
 import 'dart:io' as io;
 
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
+import 'package:rusty_chacha_dart/rusty_chacha_dart.dart';
 
 export 'src/api.dart';
 export 'src/frb_generated.dart';
