@@ -1,4 +1,5 @@
-rust_input: rust/src/api.rs
+rust_root: rust/
+rust_input: crate::api
 dart_output: lib/src
 c_output: ios/Classes/frb.h
 duplicated_c_output:
