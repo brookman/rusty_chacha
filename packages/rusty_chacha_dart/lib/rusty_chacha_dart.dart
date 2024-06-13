@@ -1,7 +1,6 @@
 import 'dart:io' as io;
 
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
-import 'package:rusty_chacha/rusty_chacha.dart';
 
 export 'src/api.dart';
 export 'src/frb_generated.dart';
@@ -43,7 +42,8 @@ class RustyChaCha {
     Compression? compression,
   }) async {
     await _ensureInitialized();
-    return RustyChaCha20Poly1305.createInternal(key: key, compression: compression);
+    return RustyChaCha20Poly1305.createInternal(
+        key: key, compression: compression);
   }
 
   /// Creates a `XRustyChaCha20Poly1305` cipher asynchronously using the provided configuration.
@@ -79,7 +79,8 @@ class RustyChaCha {
     Compression? compression,
   }) async {
     await _ensureInitialized();
-    return RustyXChaCha20Poly1305.createInternal(key: key, compression: compression);
+    return RustyXChaCha20Poly1305.createInternal(
+        key: key, compression: compression);
   }
 
   static Future<void> _ensureInitialized() async {
@@ -94,7 +95,7 @@ class RustyChaCha {
     } else {
       await RustLib.init();
     }
-    
+
     _initialized = true;
   }
 }
