@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-06-13
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`rusty_chacha` - `v0.4.0`](#rusty_chacha---v040)
+ - [`rusty_chacha_dart` - `v0.4.0`](#rusty_chacha_dart---v040)
+
+Packages with other changes:
+
+ - There are no other changes in this release.
+
+---
+
+#### `rusty_chacha` - `v0.4.0`
+
+ - **FEAT**: try to split flutter and dart packages. ([6ec98378](https://github.com/brookman/rusty_chacha/commit/6ec98378f202ec0f9dffd56e2a19307acec309f1))
+ - **BREAKING** **FIX**: file structure, import, formatting. ([9628637d](https://github.com/brookman/rusty_chacha/commit/9628637d9bdfc94e8e19e7cd8b324f2c71e12ba5))
+
+#### `rusty_chacha_dart` - `v0.4.0`
+
+ - **FEAT**: try to split flutter and dart packages. ([6ec98378](https://github.com/brookman/rusty_chacha/commit/6ec98378f202ec0f9dffd56e2a19307acec309f1))
+ - **BREAKING** **FIX**: file structure, import, formatting. ([9628637d](https://github.com/brookman/rusty_chacha/commit/9628637d9bdfc94e8e19e7cd8b324f2c71e12ba5))
+
+
 ## 2024-05-27
 
 ### Changes

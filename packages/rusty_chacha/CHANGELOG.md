@@ -1,3 +1,10 @@
+## 0.4.0
+
+> Note: This release has breaking changes.
+
+ - **FEAT**: try to split flutter and dart packages. ([6ec98378](https://github.com/brookman/rusty_chacha/commit/6ec98378f202ec0f9dffd56e2a19307acec309f1))
+ - **BREAKING** **FIX**: file structure, import, formatting. ([9628637d](https://github.com/brookman/rusty_chacha/commit/9628637d9bdfc94e8e19e7cd8b324f2c71e12ba5))
+
 ## 0.3.0+1
 
  - **FIX**: try to lower ffi dependecy. ([bca7cba9](https://github.com/brookman/rusty_chacha/commit/bca7cba9456736027533e358679e9fcfbbec2acd))
