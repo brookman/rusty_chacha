@@ -1,8 +1,8 @@
 rust_root: rust/
 rust_input: crate::api
 dart_output: lib/src
-c_output: ios/Classes/frb.h
+c_output: ../rusty_chacha/ios/Classes/frb.h
 duplicated_c_output:
-  - macos/Classes/frb.h
+  - ../rusty_chacha/macos/Classes/frb.h
 full_dep: true
 web: false

@@ -160,7 +160,7 @@ impl Default for wire_cst_rusty_x_cha_cha_20_poly_1305 {
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__compress(
+pub extern "C" fn frbgen_rusty_chacha_dart_wire__crate__api__compress(
     port_: i64,
     data: *mut wire_cst_list_prim_u_8_loose,
     zstd_compression_level: i32,
@@ -169,7 +169,7 @@ pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__compress(
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__decompress(
+pub extern "C" fn frbgen_rusty_chacha_dart_wire__crate__api__decompress(
     port_: i64,
     data: *mut wire_cst_list_prim_u_8_loose,
 ) {
@@ -177,7 +177,7 @@ pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__decompress(
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_cha_cha_20_poly_1305_create_internal(
+pub extern "C" fn frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_create_internal(
     port_: i64,
     key: *mut wire_cst_list_prim_u_8_strict,
     compression: *mut wire_cst_compression,
@@ -186,7 +186,7 @@ pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_cha_cha_20_poly_13
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_cha_cha_20_poly_1305_decrypt(
+pub extern "C" fn frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_decrypt(
     port_: i64,
     that: *mut wire_cst_rusty_cha_cha_20_poly_1305,
     ciphertext: *mut wire_cst_list_prim_u_8_loose,
@@ -196,7 +196,7 @@ pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_cha_cha_20_poly_13
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_cha_cha_20_poly_1305_decrypt_from_file(
+pub extern "C" fn frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_decrypt_from_file(
     port_: i64,
     that: *mut wire_cst_rusty_cha_cha_20_poly_1305,
     file_path: *mut wire_cst_list_prim_u_8_strict,
@@ -209,7 +209,7 @@ pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_cha_cha_20_poly_13
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_cha_cha_20_poly_1305_encrypt(
+pub extern "C" fn frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_encrypt(
     port_: i64,
     that: *mut wire_cst_rusty_cha_cha_20_poly_1305,
     cleartext: *mut wire_cst_list_prim_u_8_loose,
@@ -220,7 +220,7 @@ pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_cha_cha_20_poly_13
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_cha_cha_20_poly_1305_encrypt_to_file(
+pub extern "C" fn frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_encrypt_to_file(
     port_: i64,
     that: *mut wire_cst_rusty_cha_cha_20_poly_1305,
     cleartext: *mut wire_cst_list_prim_u_8_loose,
@@ -235,21 +235,21 @@ pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_cha_cha_20_poly_13
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_cha_cha_20_poly_1305_generate_key(
+pub extern "C" fn frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_generate_key(
     port_: i64,
 ) {
     wire__crate__api__rusty_cha_cha_20_poly_1305_generate_key_impl(port_)
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_cha_cha_20_poly_1305_generate_nonce(
+pub extern "C" fn frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_generate_nonce(
     port_: i64,
 ) {
     wire__crate__api__rusty_cha_cha_20_poly_1305_generate_nonce_impl(port_)
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_x_cha_cha_20_poly_1305_create_internal(
+pub extern "C" fn frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_create_internal(
     port_: i64,
     key: *mut wire_cst_list_prim_u_8_strict,
     compression: *mut wire_cst_compression,
@@ -258,7 +258,7 @@ pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_x_cha_cha_20_poly_
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_x_cha_cha_20_poly_1305_decrypt(
+pub extern "C" fn frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_decrypt(
     port_: i64,
     that: *mut wire_cst_rusty_x_cha_cha_20_poly_1305,
     ciphertext: *mut wire_cst_list_prim_u_8_loose,
@@ -268,7 +268,7 @@ pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_x_cha_cha_20_poly_
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_x_cha_cha_20_poly_1305_decrypt_from_file(
+pub extern "C" fn frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_decrypt_from_file(
     port_: i64,
     that: *mut wire_cst_rusty_x_cha_cha_20_poly_1305,
     file_path: *mut wire_cst_list_prim_u_8_strict,
@@ -281,7 +281,7 @@ pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_x_cha_cha_20_poly_
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_x_cha_cha_20_poly_1305_encrypt(
+pub extern "C" fn frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_encrypt(
     port_: i64,
     that: *mut wire_cst_rusty_x_cha_cha_20_poly_1305,
     cleartext: *mut wire_cst_list_prim_u_8_loose,
@@ -292,7 +292,7 @@ pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_x_cha_cha_20_poly_
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_x_cha_cha_20_poly_1305_encrypt_to_file(
+pub extern "C" fn frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_encrypt_to_file(
     port_: i64,
     that: *mut wire_cst_rusty_x_cha_cha_20_poly_1305,
     cleartext: *mut wire_cst_list_prim_u_8_loose,
@@ -307,37 +307,37 @@ pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_x_cha_cha_20_poly_
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_x_cha_cha_20_poly_1305_generate_key(
+pub extern "C" fn frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_generate_key(
     port_: i64,
 ) {
     wire__crate__api__rusty_x_cha_cha_20_poly_1305_generate_key_impl(port_)
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_wire__crate__api__rusty_x_cha_cha_20_poly_1305_generate_nonce(
+pub extern "C" fn frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_generate_nonce(
     port_: i64,
 ) {
     wire__crate__api__rusty_x_cha_cha_20_poly_1305_generate_nonce_impl(port_)
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_cst_new_box_autoadd_bool(value: bool) -> *mut bool {
+pub extern "C" fn frbgen_rusty_chacha_dart_cst_new_box_autoadd_bool(value: bool) -> *mut bool {
     flutter_rust_bridge::for_generated::new_leak_box_ptr(value)
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_cst_new_box_autoadd_compression() -> *mut wire_cst_compression
-{
+pub extern "C" fn frbgen_rusty_chacha_dart_cst_new_box_autoadd_compression(
+) -> *mut wire_cst_compression {
     flutter_rust_bridge::for_generated::new_leak_box_ptr(wire_cst_compression::new_with_null_ptr())
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_cst_new_box_autoadd_i_32(value: i32) -> *mut i32 {
+pub extern "C" fn frbgen_rusty_chacha_dart_cst_new_box_autoadd_i_32(value: i32) -> *mut i32 {
     flutter_rust_bridge::for_generated::new_leak_box_ptr(value)
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_cst_new_box_autoadd_rusty_cha_cha_20_poly_1305(
+pub extern "C" fn frbgen_rusty_chacha_dart_cst_new_box_autoadd_rusty_cha_cha_20_poly_1305(
 ) -> *mut wire_cst_rusty_cha_cha_20_poly_1305 {
     flutter_rust_bridge::for_generated::new_leak_box_ptr(
         wire_cst_rusty_cha_cha_20_poly_1305::new_with_null_ptr(),
@@ -345,7 +345,7 @@ pub extern "C" fn frbgen_rusty_chacha_cst_new_box_autoadd_rusty_cha_cha_20_poly_
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_cst_new_box_autoadd_rusty_x_cha_cha_20_poly_1305(
+pub extern "C" fn frbgen_rusty_chacha_dart_cst_new_box_autoadd_rusty_x_cha_cha_20_poly_1305(
 ) -> *mut wire_cst_rusty_x_cha_cha_20_poly_1305 {
     flutter_rust_bridge::for_generated::new_leak_box_ptr(
         wire_cst_rusty_x_cha_cha_20_poly_1305::new_with_null_ptr(),
@@ -353,12 +353,12 @@ pub extern "C" fn frbgen_rusty_chacha_cst_new_box_autoadd_rusty_x_cha_cha_20_pol
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_cst_new_box_autoadd_u_64(value: u64) -> *mut u64 {
+pub extern "C" fn frbgen_rusty_chacha_dart_cst_new_box_autoadd_u_64(value: u64) -> *mut u64 {
     flutter_rust_bridge::for_generated::new_leak_box_ptr(value)
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_cst_new_list_prim_u_8_loose(
+pub extern "C" fn frbgen_rusty_chacha_dart_cst_new_list_prim_u_8_loose(
     len: i32,
 ) -> *mut wire_cst_list_prim_u_8_loose {
     let ans = wire_cst_list_prim_u_8_loose {
@@ -369,7 +369,7 @@ pub extern "C" fn frbgen_rusty_chacha_cst_new_list_prim_u_8_loose(
 }
 
 #[no_mangle]
-pub extern "C" fn frbgen_rusty_chacha_cst_new_list_prim_u_8_strict(
+pub extern "C" fn frbgen_rusty_chacha_dart_cst_new_list_prim_u_8_strict(
     len: i32,
 ) -> *mut wire_cst_list_prim_u_8_strict {
     let ans = wire_cst_list_prim_u_8_strict {

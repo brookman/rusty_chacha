@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CURR_VERSION=rusty_chacha-v`awk '/^version: /{print $2}' packages/rusty_chacha/pubspec.yaml`
+CURR_VERSION=rusty_chacha-v`awk '/^version: /{print $2}' packages/rusty_chacha_dart/pubspec.yaml`
 
 # iOS & macOS
 APPLE_HEADER="release_tag_name = '$CURR_VERSION' # generated; do not edit"
