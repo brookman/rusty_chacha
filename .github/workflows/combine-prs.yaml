@@ -98,7 +98,7 @@ jobs:
     needs: combine-prs
     if: needs.combine-prs.outputs.did-modify-pr == 'true'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: combine-prs-branch
       - uses: actions-rs/toolchain@v1
