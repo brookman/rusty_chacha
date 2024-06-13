@@ -30,7 +30,7 @@ jobs:
 
       # Rust
       - name: Check Rust format
-        run: rustfmt --edition 2021 --check packages/rusty_chacha/rust/src/lib.rs
+        run: rustfmt --edition 2021 --check packages/rusty_chacha_dart/rust/src/lib.rs
       - name: Rust code analysis
         run: cargo clippy -- -D warnings
       - name: Run Rust tests
@@ -63,7 +63,7 @@ jobs:
         run: melos run build:apple
       - name: Copy the XCFramework to the needed location
         run: |
-          CURR_VERSION=rusty_chacha-v`awk '/^version: /{print $2}' packages/rusty_chacha/pubspec.yaml`
+          CURR_VERSION=rusty_chacha-v`awk '/^version: /{print $2}' packages/rusty_chacha_dart/pubspec.yaml`
           cp platform-build/EmbeddedRustyChacha.xcframework.zip packages/rusty_chacha/macos/Frameworks/$CURR_VERSION.zip
           echo Copied file!
 
@@ -91,7 +91,7 @@ jobs:
       - name: Copy the binaries to the needed location
         shell: bash
         run: |
-          CURR_VERSION=rusty_chacha-v`awk '/^version: /{print $2}' packages/rusty_chacha/pubspec.yaml`
+          CURR_VERSION=rusty_chacha-v`awk '/^version: /{print $2}' packages/rusty_chacha_dart/pubspec.yaml`
           cp platform-build/EmbeddedRustyChacha.tar.gz packages/rusty_chacha/windows/$CURR_VERSION.tar.gz
           echo Copied file!
 
@@ -119,7 +119,7 @@ jobs:
         run: melos run build:other
       - name: Copy the binaries to the needed location
         run: |
-          CURR_VERSION=rusty_chacha-v`awk '/^version: /{print $2}' packages/rusty_chacha/pubspec.yaml`
+          CURR_VERSION=rusty_chacha-v`awk '/^version: /{print $2}' packages/rusty_chacha_dart/pubspec.yaml`
           cp platform-build/EmbeddedRustyChacha.tar.gz packages/rusty_chacha/linux/$CURR_VERSION.tar.gz
           echo Copied file!
 
@@ -149,7 +149,7 @@ jobs:
         run: melos run build:apple
       - name: Copy the XCFramework to the needed location
         run: |
-          CURR_VERSION=rusty_chacha-v`awk '/^version: /{print $2}' packages/rusty_chacha/pubspec.yaml`
+          CURR_VERSION=rusty_chacha-v`awk '/^version: /{print $2}' packages/rusty_chacha_dart/pubspec.yaml`
           cp platform-build/EmbeddedRustyChacha.xcframework.zip packages/rusty_chacha/ios/Frameworks/$CURR_VERSION.zip
           echo Copied file!
 
@@ -180,7 +180,7 @@ jobs:
         run: melos run build:android
       - name: Copy the binaries to the needed location
         run: |
-          CURR_VERSION=rusty_chacha-v`awk '/^version: /{print $2}' packages/rusty_chacha/pubspec.yaml`
+          CURR_VERSION=rusty_chacha-v`awk '/^version: /{print $2}' packages/rusty_chacha_dart/pubspec.yaml`
           cp platform-build/EmbeddedRustyChahaAndroid.tar.gz packages/rusty_chacha/android/$CURR_VERSION.tar.gz
           echo Copied file!
 
