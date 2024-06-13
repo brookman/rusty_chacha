@@ -11,6 +11,60 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 Packages with breaking changes:
 
+ - [`rusty_chacha_dart` - `v0.4.0-dev.1`](#rusty_chacha_dart---v040-dev1)
+
+Packages with other changes:
+
+ - [`rusty_chacha` - `v0.4.0-dev.0+1`](#rusty_chacha---v040-dev01)
+
+---
+
+#### `rusty_chacha_dart` - `v0.4.0-dev.1`
+
+ - **FIX**: remove obsolete test file. ([55140c83](https://github.com/brookman/rusty_chacha/commit/55140c83ea4efec3378374270653e98be3659c51))
+ - **FIX**: import. ([d9f266e7](https://github.com/brookman/rusty_chacha/commit/d9f266e75cca7953f667a9f04dfeb101bc53961a))
+ - **FEAT**: try to split flutter and dart packages. ([6ec98378](https://github.com/brookman/rusty_chacha/commit/6ec98378f202ec0f9dffd56e2a19307acec309f1))
+ - **BREAKING** **FIX**: file structure, import, formatting. ([9628637d](https://github.com/brookman/rusty_chacha/commit/9628637d9bdfc94e8e19e7cd8b324f2c71e12ba5))
+
+#### `rusty_chacha` - `v0.4.0-dev.0+1`
+
+ - **FIX**: imort. ([a5d0955e](https://github.com/brookman/rusty_chacha/commit/a5d0955e735c8be4be986ab1fa47b36588406e00))
+
+
+## 2024-06-13
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`rusty_chacha_dart` - `v0.4.0-dev.0+1`](#rusty_chacha_dart---v040-dev01)
+
+---
+
+#### `rusty_chacha_dart` - `v0.4.0-dev.0+1`
+
+ - **FIX**: remove obsolete test file. ([55140c83](https://github.com/brookman/rusty_chacha/commit/55140c83ea4efec3378374270653e98be3659c51))
+ - **FIX**: import. ([d9f266e7](https://github.com/brookman/rusty_chacha/commit/d9f266e75cca7953f667a9f04dfeb101bc53961a))
+
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 2024-06-13
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
  - [`rusty_chacha` - `v0.4.0`](#rusty_chacha---v040)
  - [`rusty_chacha_dart` - `v0.4.0`](#rusty_chacha_dart---v040)
 

@@ -1,3 +1,7 @@
+## 0.4.0-dev.0+1
+
+ - **FIX**: imort. ([a5d0955e](https://github.com/brookman/rusty_chacha/commit/a5d0955e735c8be4be986ab1fa47b36588406e00))
+
 ## 0.4.0
 
 > Note: This release has breaking changes.
