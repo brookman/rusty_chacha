@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-06-14
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`rusty_chacha` - `v0.4.0-dev.2`](#rusty_chacha---v040-dev2)
+ - [`rusty_chacha_dart` - `v0.4.0-dev.3`](#rusty_chacha_dart---v040-dev3)
+
+Packages with other changes:
+
+ - There are no other changes in this release.
+
+---
+
+#### `rusty_chacha` - `v0.4.0-dev.2`
+
+ - **FIX**: readme. ([cb6fa875](https://github.com/brookman/rusty_chacha/commit/cb6fa87509f54845c2b7a55c45ead55ba0d958a8))
+ - **BREAKING** **FIX**: add readme. ([f6d24336](https://github.com/brookman/rusty_chacha/commit/f6d2433662fb394b52779e9ce0a42090174525c6))
+
+#### `rusty_chacha_dart` - `v0.4.0-dev.3`
+
+ - **FIX**: readme. ([cb6fa875](https://github.com/brookman/rusty_chacha/commit/cb6fa87509f54845c2b7a55c45ead55ba0d958a8))
+ - **BREAKING** **FIX**: add readme. ([f6d24336](https://github.com/brookman/rusty_chacha/commit/f6d2433662fb394b52779e9ce0a42090174525c6))
+
+
 ## 2024-06-13
 
 ### Changes
