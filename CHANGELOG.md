@@ -11,6 +11,33 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 Packages with breaking changes:
 
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`rusty_chacha` - `v0.4.0`](#rusty_chacha---v040)
+ - [`rusty_chacha_dart` - `v0.4.0`](#rusty_chacha_dart---v040)
+
+Packages graduated to a stable release (see pre-releases prior to the stable version for changelog entries):
+
+ - `rusty_chacha` - `v0.4.0`
+ - `rusty_chacha_dart` - `v0.4.0`
+
+---
+
+#### `rusty_chacha` - `v0.4.0`
+
+#### `rusty_chacha_dart` - `v0.4.0`
+
+
+## 2024-06-14
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
  - [`rusty_chacha` - `v0.4.0-dev.2`](#rusty_chacha---v040-dev2)
  - [`rusty_chacha_dart` - `v0.4.0-dev.3`](#rusty_chacha_dart---v040-dev3)
 
