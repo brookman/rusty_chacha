@@ -11,6 +11,32 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 Packages with breaking changes:
 
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`rusty_chacha` - `v0.5.0+1`](#rusty_chacha---v0501)
+ - [`rusty_chacha_dart` - `v0.5.0+1`](#rusty_chacha_dart---v0501)
+
+---
+
+#### `rusty_chacha` - `v0.5.0+1`
+
+ - **FIX**: remove readme files because they are somehow still considered symlinks. ([9432ecc1](https://github.com/brookman/rusty_chacha/commit/9432ecc19933b63d18a2245c7f0f9c08cc8d0f61))
+
+#### `rusty_chacha_dart` - `v0.5.0+1`
+
+ - **FIX**: remove readme files because they are somehow still considered symlinks. ([9432ecc1](https://github.com/brookman/rusty_chacha/commit/9432ecc19933b63d18a2245c7f0f9c08cc8d0f61))
+
+
+## 2024-06-14
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
  - [`rusty_chacha` - `v0.5.0`](#rusty_chacha---v050)
  - [`rusty_chacha_dart` - `v0.5.0`](#rusty_chacha_dart---v050)
 

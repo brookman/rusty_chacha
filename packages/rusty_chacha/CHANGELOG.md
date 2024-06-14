@@ -1,3 +1,7 @@
+## 0.5.0+1
+
+ - **FIX**: remove readme files because they are somehow still considered symlinks. ([9432ecc1](https://github.com/brookman/rusty_chacha/commit/9432ecc19933b63d18a2245c7f0f9c08cc8d0f61))
+
 ## 0.5.0
 
 > Note: This release has breaking changes.
