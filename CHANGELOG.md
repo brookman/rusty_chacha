@@ -11,6 +11,37 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 Packages with breaking changes:
 
+ - [`rusty_chacha` - `v0.5.0`](#rusty_chacha---v050)
+ - [`rusty_chacha_dart` - `v0.5.0`](#rusty_chacha_dart---v050)
+
+Packages with other changes:
+
+ - There are no other changes in this release.
+
+---
+
+#### `rusty_chacha` - `v0.5.0`
+
+ - **FIX**: readme. ([cb6fa875](https://github.com/brookman/rusty_chacha/commit/cb6fa87509f54845c2b7a55c45ead55ba0d958a8))
+ - **FIX**: imort. ([a5d0955e](https://github.com/brookman/rusty_chacha/commit/a5d0955e735c8be4be986ab1fa47b36588406e00))
+ - **BREAKING** **FIX**: add readme. ([f6d24336](https://github.com/brookman/rusty_chacha/commit/f6d2433662fb394b52779e9ce0a42090174525c6))
+
+#### `rusty_chacha_dart` - `v0.5.0`
+
+ - **FIX**: readme. ([cb6fa875](https://github.com/brookman/rusty_chacha/commit/cb6fa87509f54845c2b7a55c45ead55ba0d958a8))
+ - **FIX**: remove obsolete test file. ([55140c83](https://github.com/brookman/rusty_chacha/commit/55140c83ea4efec3378374270653e98be3659c51))
+ - **FIX**: import. ([d9f266e7](https://github.com/brookman/rusty_chacha/commit/d9f266e75cca7953f667a9f04dfeb101bc53961a))
+ - **BREAKING** **FIX**: add readme. ([f6d24336](https://github.com/brookman/rusty_chacha/commit/f6d2433662fb394b52779e9ce0a42090174525c6))
+
+
+## 2024-06-14
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
  - There are no breaking changes in this release.
 
 Packages with other changes:

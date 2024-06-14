@@ -1,3 +1,11 @@
+## 0.5.0
+
+> Note: This release has breaking changes.
+
+ - **FIX**: readme. ([cb6fa875](https://github.com/brookman/rusty_chacha/commit/cb6fa87509f54845c2b7a55c45ead55ba0d958a8))
+ - **FIX**: imort. ([a5d0955e](https://github.com/brookman/rusty_chacha/commit/a5d0955e735c8be4be986ab1fa47b36588406e00))
+ - **BREAKING** **FIX**: add readme. ([f6d24336](https://github.com/brookman/rusty_chacha/commit/f6d2433662fb394b52779e9ce0a42090174525c6))
+
 ## 0.4.0
 
  - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
