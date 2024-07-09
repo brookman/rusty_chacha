@@ -34,6 +34,7 @@ build/
 # Melos
 pubspec_overrides.yaml
 !/pubspec.lock
+!/packages/rusty_chacha_dart/pubspec.lock
 
 # Rust related
 /target/
