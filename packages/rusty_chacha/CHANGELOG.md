@@ -1,3 +1,7 @@
+## 0.5.1
+
+ - **FEAT**: add dart example. ([36f07d94](https://github.com/brookman/rusty_chacha/commit/36f07d94486311ff7ebd9afdf41a3c0444dcc3f8))
+
 ## 0.5.0+1
 
  - **FIX**: remove readme files because they are somehow still considered symlinks. ([9432ecc1](https://github.com/brookman/rusty_chacha/commit/9432ecc19933b63d18a2245c7f0f9c08cc8d0f61))

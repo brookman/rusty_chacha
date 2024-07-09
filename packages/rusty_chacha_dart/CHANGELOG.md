@@ -1,3 +1,12 @@
+## 0.6.0
+
+> Note: This release has breaking changes.
+
+ - **FIX**: rename example project. ([5d4a4a88](https://github.com/brookman/rusty_chacha/commit/5d4a4a88139e0f77c483ccbcdc66252b3edbfe2e))
+ - **FIX**: add missing (?) lock file. ([27aff66d](https://github.com/brookman/rusty_chacha/commit/27aff66de2cf4887a8f0b2e109307596cc2bd5ce))
+ - **FEAT**: add dart example. ([36f07d94](https://github.com/brookman/rusty_chacha/commit/36f07d94486311ff7ebd9afdf41a3c0444dcc3f8))
+ - **BREAKING** **FEAT**: upgrade dependencies. ([e1191317](https://github.com/brookman/rusty_chacha/commit/e1191317225a34b84711ae8757cbc82a035c61ec))
+
 ## 0.5.0+1
 
  - **FIX**: remove readme files because they are somehow still considered symlinks. ([9432ecc1](https://github.com/brookman/rusty_chacha/commit/9432ecc19933b63d18a2245c7f0f9c08cc8d0f61))

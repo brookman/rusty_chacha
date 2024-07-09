@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-07-09
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`rusty_chacha_dart` - `v0.6.0`](#rusty_chacha_dart---v060)
+
+Packages with other changes:
+
+ - [`rusty_chacha` - `v0.5.1`](#rusty_chacha---v051)
+
+---
+
+#### `rusty_chacha_dart` - `v0.6.0`
+
+ - **FIX**: rename example project. ([5d4a4a88](https://github.com/brookman/rusty_chacha/commit/5d4a4a88139e0f77c483ccbcdc66252b3edbfe2e))
+ - **FIX**: add missing (?) lock file. ([27aff66d](https://github.com/brookman/rusty_chacha/commit/27aff66de2cf4887a8f0b2e109307596cc2bd5ce))
+ - **FEAT**: add dart example. ([36f07d94](https://github.com/brookman/rusty_chacha/commit/36f07d94486311ff7ebd9afdf41a3c0444dcc3f8))
+ - **BREAKING** **FEAT**: upgrade dependencies. ([e1191317](https://github.com/brookman/rusty_chacha/commit/e1191317225a34b84711ae8757cbc82a035c61ec))
+
+#### `rusty_chacha` - `v0.5.1`
+
+ - **FEAT**: add dart example. ([36f07d94](https://github.com/brookman/rusty_chacha/commit/36f07d94486311ff7ebd9afdf41a3c0444dcc3f8))
+
+
 ## 2024-06-14
 
 ### Changes
