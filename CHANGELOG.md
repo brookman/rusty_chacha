@@ -15,6 +15,32 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`rusty_chacha` - `v0.7.0`](#rusty_chacha---v070)
+ - [`rusty_chacha_dart` - `v0.7.0`](#rusty_chacha_dart---v070)
+
+---
+
+#### `rusty_chacha` - `v0.7.0`
+
+ - Bump "rusty_chacha" to `0.7.0`.
+
+#### `rusty_chacha_dart` - `v0.7.0`
+
+ - Bump "rusty_chacha_dart" to `0.7.0`.
+
+
+## 2024-10-01
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`rusty_chacha_dart` - `v0.6.2`](#rusty_chacha_dart---v062)
  - [`rusty_chacha` - `v0.5.1+3`](#rusty_chacha---v0513)
 

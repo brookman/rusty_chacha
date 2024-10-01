@@ -1,3 +1,7 @@
+## 0.7.0
+
+ - Bump "rusty_chacha_dart" to `0.7.0`.
+
 ## 0.6.2
 
  - **FIX**: benches. ([63d37552](https://github.com/brookman/rusty_chacha/commit/63d3755263db3b0cc23f0d02202258ec9a59ca64))

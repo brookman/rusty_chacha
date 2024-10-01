@@ -8,7 +8,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  rusty_chacha: ^0.5.1+3
+  rusty_chacha: ^0.7.0
 
 #  For local testing
 #dependency_overrides:

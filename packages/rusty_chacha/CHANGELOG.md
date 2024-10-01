@@ -1,3 +1,7 @@
+## 0.7.0
+
+ - Bump "rusty_chacha" to `0.7.0`.
+
 ## 0.5.1+3
 
  - Update a dependency to the latest release.

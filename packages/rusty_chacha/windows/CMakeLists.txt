@@ -1,4 +1,4 @@
-set(rustyChachaVersion "rusty_chacha-v0.6.2") # generated; do not edit
+set(rustyChachaVersion "rusty_chacha-v0.7.0") # generated; do not edit
 
 # TODO Remove this workaround once Flutter supports Windows ARM.
 # https://github.com/flutter/flutter/issues/116196
