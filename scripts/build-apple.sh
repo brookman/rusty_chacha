@@ -1,15 +1,32 @@
 #!/bin/bash
 
+# This script does the following:
+# Build the Rust code with cargo into 5 different dynamic libraries (.dylib) for iOS, macOS (x86 & arm) and Simulator (x86 & arm)
+# Use lipo to combine libraries with different architectures for the same platform
+# Create a .framework for each dynamic library
+# Combine the .frameworks into a single .xcframework
+
+
 # Setup
 RUN_BUILD_RS=1
 BUILD_DIR=platform-build
+rm -Rf $BUILD_DIR
 mkdir $BUILD_DIR
 cd $BUILD_DIR
 
-# Build static libs
+
+#FRAMEWORK="EmbeddedRustyChacha.xcframework"
+FRAMEWORK_NAME="EmbeddedRustyChacha"
+LIB_NAME="libembedded_rusty_chacha.dylib"
+
+
+# Build libs
 for TARGET in \
-        aarch64-apple-ios x86_64-apple-ios aarch64-apple-ios-sim \
-        x86_64-apple-darwin aarch64-apple-darwin
+        aarch64-apple-darwin \
+        aarch64-apple-ios \
+        aarch64-apple-ios-sim \
+        x86_64-apple-darwin \
+        x86_64-apple-ios
 do
     rustup target add $TARGET
     # Apple's App Sandbox disallows SysV semaphores; use POSIX semaphores instead
@@ -17,27 +34,97 @@ do
     RUSTFLAGS='--cfg chacha20_force_neon' cargo build -r --target=$TARGET
 done
 
-# List all files from target/aarch64-apple-darwin
-ls -Rh ../target/aarch64-apple-darwin
+# Combine libs
+LIPO_MACOS=macos-universal
+LIPO_SIMULATOR=simulator-universal
+rm -Rf ../target/$LIPO_MACOS
+rm -Rf ../target/$LIPO_SIMULATOR
+mkdir ../target/$LIPO_MACOS
+mkdir ../target/$LIPO_SIMULATOR
+lipo -create -output ../target/$LIPO_MACOS/$LIB_NAME \
+        ../target/aarch64-apple-ios-sim/release/$LIB_NAME \
+        ../target/x86_64-apple-ios/release/$LIB_NAME
+lipo -create -output ../target/$LIPO_SIMULATOR/$LIB_NAME \
+        ../target/aarch64-apple-darwin/release/$LIB_NAME \
+        ../target/x86_64-apple-darwin/release/$LIB_NAME
 
-# Create XCFramework zip
-FRAMEWORK="EmbeddedRustyChacha.xcframework"
-LIBNAME=libembedded_rusty_chacha.a
-mkdir mac-lipo ios-sim-lipo
-IOS_SIM_LIPO=ios-sim-lipo/$LIBNAME
-MAC_LIPO=mac-lipo/$LIBNAME
-lipo -create -output $IOS_SIM_LIPO \
-        ../target/aarch64-apple-ios-sim/release/$LIBNAME \
-        ../target/x86_64-apple-ios/release/$LIBNAME
-lipo -create -output $MAC_LIPO \
-        ../target/aarch64-apple-darwin/release/$LIBNAME \
-        ../target/x86_64-apple-darwin/release/$LIBNAME
+
+# Function to create framework bundle
+create_framework() {
+    TARGET_DIR=$1
+    PLATFORM=$2
+    ARCH=$3
+
+    OUTPUT_DIR="${PLATFORM}-${ARCH}"
+    mkdir -p "$OUTPUT_DIR"
+
+    FRAMEWORK_DIR="$OUTPUT_DIR/$FRAMEWORK_NAME.framework"
+    BINARY_NAME="$FRAMEWORK_NAME"
+
+    # Create the framework directory
+    mkdir -p "$FRAMEWORK_DIR/Modules"
+    mkdir -p "$FRAMEWORK_DIR/Headers"
+
+    # Copy and rename the dynamic library into the framework
+    cp "../target/$TARGET_DIR/$LIB_NAME" "$FRAMEWORK_DIR/$BINARY_NAME"
+
+    # Adjust the install_name of the dynamic library
+    install_name_tool -id "@rpath/$BINARY_NAME.framework/$BINARY_NAME" "$FRAMEWORK_DIR/$BINARY_NAME"
+
+    # Create Info.plist
+    cat > "$FRAMEWORK_DIR/Info.plist" <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" 
+    "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleName</key>
+    <string>$BINARY_NAME</string>
+    <key>CFBundleExecutable</key>
+    <string>$BINARY_NAME</string>
+    <key>CFBundleIdentifier</key>
+    <string>eu32k.$BINARY_NAME</string>
+    <key>CFBundleVersion</key>
+    <string>1.0</string>
+    <key>CFBundlePackageType</key>
+    <string>FMWK</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>CFBundleSupportedPlatforms</key>
+    <array>
+        <string>$PLATFORM</string>
+    </array>
+</dict>
+</plist>
+EOF
+
+    # Create module.modulemap
+    cat > "$FRAMEWORK_DIR/Modules/module.modulemap" <<EOF
+module $BINARY_NAME {
+    header "$BINARY_NAME.h"
+    export *
+}
+EOF
+
+    # Create an empty header file
+    touch "$FRAMEWORK_DIR/Headers/$BINARY_NAME.h"
+
+    # Code sign the framework
+    codesign --force --sign - "$FRAMEWORK_DIR"
+}
+
+
+create_framework "aarch64-apple-ios/release" "iPhoneOS" "arm64"
+create_framework "$LIPO_MACOS" "MacOSX" "universal"
+create_framework "$LIPO_SIMULATOR" "iPhoneSimulator" "universal"
+
+
+# Create XCFramework
 xcodebuild -create-xcframework \
-        -library $IOS_SIM_LIPO \
-        -library $MAC_LIPO \
-        -library ../target/aarch64-apple-ios/release/$LIBNAME \
-        -output $FRAMEWORK
-zip -r $FRAMEWORK.zip $FRAMEWORK
+    -framework "iPhoneOS-arm64/${FRAMEWORK_NAME}.framework" \
+    -framework "MacOSX-universal/${FRAMEWORK_NAME}.framework" \
+    -framework "iPhoneSimulator-universal/${FRAMEWORK_NAME}.framework" \
+    -output "${FRAMEWORK_NAME}.xcframework"
 
-# Cleanup
-rm -rf ios-sim-lipo mac-lipo $FRAMEWORK
+
+zip -r $FRAMEWORK_NAME.zip $FRAMEWORK_NAME.xcframework
