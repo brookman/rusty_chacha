@@ -15,6 +15,35 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`rusty_chacha_dart` - `v0.6.2`](#rusty_chacha_dart---v062)
+ - [`rusty_chacha` - `v0.5.1+3`](#rusty_chacha---v0513)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `rusty_chacha` - `v0.5.1+3`
+
+---
+
+#### `rusty_chacha_dart` - `v0.6.2`
+
+ - **FIX**: benches. ([63d37552](https://github.com/brookman/rusty_chacha/commit/63d3755263db3b0cc23f0d02202258ec9a59ca64))
+ - **FEAT**: try to link dynamically on apple platforms. ([960cfbcf](https://github.com/brookman/rusty_chacha/commit/960cfbcf66497aeaa9ba1da4ade0babe9cdab1f9))
+
+
+## 2024-10-01
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`rusty_chacha_dart` - `v0.6.1+1`](#rusty_chacha_dart---v0611)
  - [`rusty_chacha` - `v0.5.1+2`](#rusty_chacha---v0512)
 

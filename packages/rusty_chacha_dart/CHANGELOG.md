@@ -1,3 +1,8 @@
+## 0.6.2
+
+ - **FIX**: benches. ([63d37552](https://github.com/brookman/rusty_chacha/commit/63d3755263db3b0cc23f0d02202258ec9a59ca64))
+ - **FEAT**: try to link dynamically on apple platforms. ([960cfbcf](https://github.com/brookman/rusty_chacha/commit/960cfbcf66497aeaa9ba1da4ade0babe9cdab1f9))
+
 ## 0.6.1+1
 
  - **FIX**: dependency. ([942560cd](https://github.com/brookman/rusty_chacha/commit/942560cd7598672c0e9b1a0609891a883471fd71))
