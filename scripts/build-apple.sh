@@ -127,4 +127,4 @@ xcodebuild -create-xcframework \
     -output "${FRAMEWORK_NAME}.xcframework"
 
 
-zip -r $FRAMEWORK_NAME.zip $FRAMEWORK_NAME.xcframework
+zip -r $FRAMEWORK_NAME.xcframework.zip $FRAMEWORK_NAME.xcframework
