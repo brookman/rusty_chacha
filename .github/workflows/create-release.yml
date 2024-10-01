@@ -12,6 +12,11 @@ on:
           - '--'
           - '--prerelease'
           - '--graduate'
+      manual_version:
+        description: 'Manual version'
+        required: false
+        default: ''
+        type: string
 
 jobs:
   create_release:
@@ -30,7 +35,8 @@ jobs:
       - uses: bluefireteam/melos-action@v2
 
       - name: Create the new version(s)
-        run: melos version --yes ${{ inputs.version_parameters }}
+        #run: melos version --yes ${{ inputs.version_parameters }}
+        run: melos version --yes -V rusty_chacha:${{ inputs.manual_version }} -V rusty_chacha_dart:${{ inputs.manual_version }}
 
       - name: Push created version commit
         run: git push
