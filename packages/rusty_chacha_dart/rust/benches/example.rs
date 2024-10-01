@@ -95,7 +95,7 @@ fn bench_encrypt_to_file(bencher: Bencher, size: usize) {
         })
         .bench_values(|(cipher, cleartext)| {
             let _ = cipher
-                .encrypt_to_file(cleartext, "test_file.bin".to_string(), None, None)
+                .encrypt_to_file(cleartext, "test_file.bin".to_string(), None, None, None)
                 .unwrap();
         });
 }
@@ -110,13 +110,13 @@ fn bench_decrypt_from_file(bencher: Bencher, size: usize) {
         .with_inputs(|| {
             let cipher = RustyChaCha20Poly1305::create_internal(None, None).unwrap();
             cipher
-                .encrypt_to_file(vec![0; size], "test_file.bin".to_string(), None, None)
+                .encrypt_to_file(vec![0; size], "test_file.bin".to_string(), None, None, None)
                 .unwrap();
             cipher
         })
         .bench_values(|cipher| {
             let _ = cipher
-                .decrypt_from_file("test_file.bin".to_string(), None)
+                .decrypt_from_file("test_file.bin".to_string(), None, None)
                 .unwrap();
         });
 }
