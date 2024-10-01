@@ -1,3 +1,7 @@
+## 0.6.1
+
+ - **FEAT**: update depencency. ([b9302d75](https://github.com/brookman/rusty_chacha/commit/b9302d75fe627764a6e7c472d2f516e889a801f7))
+
 ## 0.6.0
 
 > Note: This release has breaking changes.

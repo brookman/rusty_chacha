@@ -1,3 +1,7 @@
+## 0.5.1+1
+
+ - Update a dependency to the latest release.
+
 ## 0.5.1
 
  - **FEAT**: add dart example. ([36f07d94](https://github.com/brookman/rusty_chacha/commit/36f07d94486311ff7ebd9afdf41a3c0444dcc3f8))
