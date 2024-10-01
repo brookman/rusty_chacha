@@ -7,12 +7,12 @@ edition = "2021"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
-flutter_rust_bridge_codegen = "2.1.0"
-anyhow = "1.0.86"
+flutter_rust_bridge_codegen = "2.4.0"
+anyhow = "1.0.89"
 
 [dev-dependencies]
 divan = "0.1.14"
-sysinfo = "0.30.12"
+sysinfo = "0.31.4"
 rand = "0.8.5"
 
 [[bench]]
@@ -20,7 +20,7 @@ name = "example"
 harness = false
 
 [dependencies]
-anyhow = "1.0.86"
-flutter_rust_bridge = "=2.1.0"
+anyhow = "1.0.89"
+flutter_rust_bridge = "=2.4.0"
 chacha20poly1305 = "0.10.1"
 zstd = "0.13.2"
