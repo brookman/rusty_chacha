@@ -1,3 +1,7 @@
+## 0.6.1+1
+
+ - **FIX**: dependency. ([942560cd](https://github.com/brookman/rusty_chacha/commit/942560cd7598672c0e9b1a0609891a883471fd71))
+
 ## 0.6.1
 
  - **FEAT**: update depencency. ([b9302d75](https://github.com/brookman/rusty_chacha/commit/b9302d75fe627764a6e7c472d2f516e889a801f7))

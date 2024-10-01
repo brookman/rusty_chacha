@@ -15,6 +15,34 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`rusty_chacha_dart` - `v0.6.1+1`](#rusty_chacha_dart---v0611)
+ - [`rusty_chacha` - `v0.5.1+2`](#rusty_chacha---v0512)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `rusty_chacha` - `v0.5.1+2`
+
+---
+
+#### `rusty_chacha_dart` - `v0.6.1+1`
+
+ - **FIX**: dependency. ([942560cd](https://github.com/brookman/rusty_chacha/commit/942560cd7598672c0e9b1a0609891a883471fd71))
+
+
+## 2024-10-01
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`rusty_chacha_dart` - `v0.6.1`](#rusty_chacha_dart---v061)
  - [`rusty_chacha` - `v0.5.1+1`](#rusty_chacha---v0511)
 
