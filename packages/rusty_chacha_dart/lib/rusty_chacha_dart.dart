@@ -44,7 +44,9 @@ class RustyChaCha {
   }) async {
     await _ensureInitialized();
     return RustyChaCha20Poly1305.createInternal(
-        key: key, compression: compression);
+      key: key,
+      compression: compression,
+    );
   }
 
   /// Creates a `XRustyChaCha20Poly1305` cipher asynchronously using the provided configuration.
@@ -81,14 +83,23 @@ class RustyChaCha {
   }) async {
     await _ensureInitialized();
     return RustyXChaCha20Poly1305.createInternal(
-        key: key, compression: compression);
+      key: key,
+      compression: compression,
+    );
   }
 
   static Future<void> _ensureInitialized() async {
     if (_initialized) {
       return;
     }
-    await RustLib.init();
+    if (io.Platform.isIOS || io.Platform.isMacOS) {
+      // TODO(brookman): Use dynamic linking for iOS and MacOS?
+      //final lib = ExternalLibrary.open('/Users/beba/code/rusty_chacha/packages/rusty_chacha/example/build/macos/Build/Products/Debug/XCFrameworkIntermediates/rusty_chacha/EmbeddedRustyChacha.framework/EmbeddedRustyChacha');
+      final lib = ExternalLibrary.open('EmbeddedRustyChacha.framework/EmbeddedRustyChacha');
+      await RustLib.init(externalLibrary: lib);
+    } else {
+      await RustLib.init();
+    }
     _initialized = true;
   }
 }
