@@ -2,7 +2,6 @@ use anyhow::{Context, Ok, Result};
 use lib_flutter_rust_bridge_codegen::codegen;
 use lib_flutter_rust_bridge_codegen::codegen::Config;
 use std::env;
-use std::path::PathBuf;
 extern crate cbindgen;
 
 fn main() -> Result<()> {
