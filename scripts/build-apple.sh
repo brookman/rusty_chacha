@@ -98,6 +98,9 @@ create_framework() {
 </plist>
 EOF
 
+    # Copy header file
+    cp "../target/$BINARY_NAME.h" "$FRAMEWORK_DIR/Headers/$BINARY_NAME.h"
+
     # Create module.modulemap
     cat > "$FRAMEWORK_DIR/Modules/module.modulemap" <<EOF
 module $BINARY_NAME {
@@ -106,8 +109,6 @@ module $BINARY_NAME {
 }
 EOF
 
-    # Create an empty header file
-    touch "$FRAMEWORK_DIR/Headers/$BINARY_NAME.h"
 
     # Code sign the framework
     codesign --force --sign - "$FRAMEWORK_DIR"

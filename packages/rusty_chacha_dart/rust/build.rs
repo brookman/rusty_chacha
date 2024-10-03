@@ -2,6 +2,8 @@ use anyhow::{Context, Ok, Result};
 use lib_flutter_rust_bridge_codegen::codegen;
 use lib_flutter_rust_bridge_codegen::codegen::Config;
 use std::env;
+use std::path::PathBuf;
+extern crate cbindgen;
 
 fn main() -> Result<()> {
     if env::var("RUN_BUILD_RS").map(|v| v != "1").unwrap_or(true) {
@@ -9,7 +11,15 @@ fn main() -> Result<()> {
         return Ok(());
     }
 
-    //env::set_var("CARGO_PROFILE_RELEASE_BUILD_OVERRIDE_DEBUG", "true");
+    let crate_dir = env::var("CARGO_MANIFEST_DIR").unwrap();
+    let config = cbindgen::Config {
+        language: cbindgen::Language::C,
+        include_guard: Some("EMBEDDED_RUSTY_CHACHA".into()),
+        ..Default::default()
+    };
+    cbindgen::generate_with_config(&crate_dir, config)
+      .unwrap()
+      .write_to_file("../../../target/EmbeddedRustyChacha.h");
 
     codegen::generate(
         Config::from_config_file("../flutter_rust_bridge.yaml")?
@@ -24,4 +34,16 @@ fn main() -> Result<()> {
         .spawn();
 
     Ok(())
+}
+
+
+/// Find the location of the `target/` directory. Note that this may be 
+/// overridden by `cmake`, so we also need to check the `CARGO_TARGET_DIR` 
+/// variable.
+fn target_dir() -> PathBuf {
+    if let std::result::Result::Ok(target) = env::var("CARGO_TARGET_DIR") {
+        PathBuf::from(target)
+    } else {
+        PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap()).join("target")
+    }
 }
