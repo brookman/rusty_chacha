@@ -1,3 +1,7 @@
+## 0.7.1
+
+ - **FIX**: re-generate code. ([c217840d](https://github.com/brookman/rusty_chacha/commit/c217840dc7d3bfa8c3186c1bb81521e6ed26ea9b))
+
 ## 0.7.0
 
  - Bump "rusty_chacha" to `0.7.0`.

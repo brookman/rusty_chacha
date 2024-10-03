@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-10-03
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`rusty_chacha` - `v0.7.1`](#rusty_chacha---v071)
+ - [`rusty_chacha_dart` - `v0.7.1`](#rusty_chacha_dart---v071)
+
+---
+
+#### `rusty_chacha` - `v0.7.1`
+
+ - **FIX**: re-generate code. ([c217840d](https://github.com/brookman/rusty_chacha/commit/c217840dc7d3bfa8c3186c1bb81521e6ed26ea9b))
+
+#### `rusty_chacha_dart` - `v0.7.1`
+
+ - **FIX**: remove unused code. ([e7154ca4](https://github.com/brookman/rusty_chacha/commit/e7154ca40fd867d29a7d60f622b861be681e2020))
+ - **FIX**: remove unused code. ([4c42506b](https://github.com/brookman/rusty_chacha/commit/4c42506b99e948a4d96d2e9bd1365def859ec18e))
+ - **FIX**: re-generate code. ([c217840d](https://github.com/brookman/rusty_chacha/commit/c217840dc7d3bfa8c3186c1bb81521e6ed26ea9b))
+ - **FIX**: generate a header file for the framework. ([1a3e75f9](https://github.com/brookman/rusty_chacha/commit/1a3e75f961a35403d425ae449ae70184eabf6956))
+
+
 ## 2024-10-01
 
 ### Changes
