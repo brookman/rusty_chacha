@@ -62,17 +62,16 @@ create_framework() {
     BINARY_NAME="$FRAMEWORK_NAME"
 
     # Create the framework directory
-    mkdir -p "$FRAMEWORK_DIR/Modules"
-    mkdir -p "$FRAMEWORK_DIR/Headers"
+    mkdir -p "$FRAMEWORK_DIR/Versions/A"
+    mkdir -p "$FRAMEWORK_DIR/Versions/A/Modules"
+    mkdir -p "$FRAMEWORK_DIR/Versions/A/Headers"
+    mkdir -p "$FRAMEWORK_DIR/Versions/A/Resources"
 
     # Copy and rename the dynamic library into the framework
-    cp "../target/$TARGET_DIR/$LIB_NAME" "$FRAMEWORK_DIR/$BINARY_NAME"
-
-    # Adjust the install_name of the dynamic library
-    install_name_tool -id "@rpath/$BINARY_NAME.framework/$BINARY_NAME" "$FRAMEWORK_DIR/$BINARY_NAME"
+    cp "../target/$TARGET_DIR/$LIB_NAME" "$FRAMEWORK_DIR/Versions/A/$BINARY_NAME"
 
     # Create Info.plist
-    cat > "$FRAMEWORK_DIR/Info.plist" <<EOF
+    cat > "$FRAMEWORK_DIR/Versions/A/Resources/Info.plist" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" 
     "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -99,16 +98,30 @@ create_framework() {
 EOF
 
     # Copy header file
-    cp "../target/$BINARY_NAME.h" "$FRAMEWORK_DIR/Headers/$BINARY_NAME.h"
+    cp "../target/$BINARY_NAME.h" "$FRAMEWORK_DIR/Versions/A/Headers/$BINARY_NAME.h"
 
     # Create module.modulemap
-    cat > "$FRAMEWORK_DIR/Modules/module.modulemap" <<EOF
+    cat > "$FRAMEWORK_DIR/Versions/A/Modules/module.modulemap" <<EOF
 module $BINARY_NAME {
     header "$BINARY_NAME.h"
     export *
 }
 EOF
 
+    # Create the symlinks
+    cd "$FRAMEWORK_DIR"
+    cd Versions
+    ln -s A Current
+    cd ..
+    #ln -l "$BINARY_NAME" "Versions/Current/$BINARY_NAME"
+    ln -s Versions/Current/Modules Modules
+    ln -s Versions/Current/Headers Headers
+    ln -s Versions/Current/Resources Resources
+    ln -s Versions/Current/$BINARY_NAME $BINARY_NAME
+    cd ../..
+
+    # Adjust the install_name of the dynamic library
+    install_name_tool -id "@rpath/$BINARY_NAME.framework/$BINARY_NAME" "$FRAMEWORK_DIR/$BINARY_NAME"
 
     # Code sign the framework
     codesign --force --sign - "$FRAMEWORK_DIR"
