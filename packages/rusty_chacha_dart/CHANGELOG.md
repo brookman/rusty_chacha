@@ -1,3 +1,7 @@
+## 0.7.2
+
+ - Bump "rusty_chacha_dart" to `0.7.2`.
+
 ## 0.7.1
 
  - **FIX**: remove unused code. ([e7154ca4](https://github.com/brookman/rusty_chacha/commit/e7154ca40fd867d29a7d60f622b861be681e2020))

@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-11-13
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`rusty_chacha` - `v0.7.2`](#rusty_chacha---v072)
+ - [`rusty_chacha_dart` - `v0.7.2`](#rusty_chacha_dart---v072)
+
+---
+
+#### `rusty_chacha` - `v0.7.2`
+
+ - Bump "rusty_chacha" to `0.7.2`.
+
+#### `rusty_chacha_dart` - `v0.7.2`
+
+ - Bump "rusty_chacha_dart" to `0.7.2`.
+
+
 ## 2024-10-03
 
 ### Changes
