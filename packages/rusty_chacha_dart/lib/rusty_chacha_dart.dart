@@ -95,7 +95,8 @@ class RustyChaCha {
     if (io.Platform.isIOS || io.Platform.isMacOS) {
       // TODO(brookman): Use dynamic linking for iOS and MacOS?
       //final lib = ExternalLibrary.open('/Users/beba/code/rusty_chacha/packages/rusty_chacha/example/build/macos/Build/Products/Debug/XCFrameworkIntermediates/rusty_chacha/EmbeddedRustyChacha.framework/EmbeddedRustyChacha');
-      final lib = ExternalLibrary.open('EmbeddedRustyChacha.framework/EmbeddedRustyChacha');
+      final lib = ExternalLibrary.open(
+          'EmbeddedRustyChacha.framework/EmbeddedRustyChacha');
       await RustLib.init(externalLibrary: lib);
     } else {
       await RustLib.init();

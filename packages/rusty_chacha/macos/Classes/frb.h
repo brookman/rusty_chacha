@@ -137,6 +137,30 @@ struct wire_cst_list_prim_u_8_loose *frbgen_rusty_chacha_dart_cst_new_list_prim_
 struct wire_cst_list_prim_u_8_strict *frbgen_rusty_chacha_dart_cst_new_list_prim_u_8_strict(int32_t len);
 static int64_t dummy_method_to_enforce_bundling(void) {
     int64_t dummy_var = 0;
-
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_cst_new_box_autoadd_bool);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_cst_new_box_autoadd_compression);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_cst_new_box_autoadd_i_32);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_cst_new_box_autoadd_rusty_cha_cha_20_poly_1305);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_cst_new_box_autoadd_rusty_x_cha_cha_20_poly_1305);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_cst_new_box_autoadd_u_64);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_cst_new_list_prim_u_8_loose);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_cst_new_list_prim_u_8_strict);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__compress);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__decompress);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_create_internal);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_decrypt);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_decrypt_from_file);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_encrypt);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_encrypt_to_file);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_generate_key);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_generate_nonce);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_create_internal);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_decrypt);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_decrypt_from_file);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_encrypt);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_encrypt_to_file);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_generate_key);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_generate_nonce);
+    dummy_var ^= ((int64_t) (void*) store_dart_post_cobject);
     return dummy_var;
 }

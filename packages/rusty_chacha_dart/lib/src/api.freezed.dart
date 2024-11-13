@@ -72,6 +72,9 @@ class _$CompressionCopyWithImpl<$Res, $Val extends Compression>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of Compression
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -90,6 +93,9 @@ class __$$Compression_UncompressedImplCopyWithImpl<$Res>
       _$Compression_UncompressedImpl _value,
       $Res Function(_$Compression_UncompressedImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of Compression
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -197,6 +203,8 @@ class __$$Compression_ZstdImplCopyWithImpl<$Res>
       $Res Function(_$Compression_ZstdImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Compression
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -236,7 +244,9 @@ class _$Compression_ZstdImpl extends Compression_Zstd {
   @override
   int get hashCode => Object.hash(runtimeType, compressionLevel);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Compression
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$Compression_ZstdImplCopyWith<_$Compression_ZstdImpl> get copyWith =>
@@ -312,7 +322,10 @@ abstract class Compression_Zstd extends Compression {
   const Compression_Zstd._() : super._();
 
   int? get compressionLevel;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Compression
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$Compression_ZstdImplCopyWith<_$Compression_ZstdImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
