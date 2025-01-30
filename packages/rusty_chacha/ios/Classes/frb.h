@@ -47,6 +47,9 @@ typedef struct wire_cst_rusty_x_cha_cha_20_poly_1305 {
   struct wire_cst_compression compression;
 } wire_cst_rusty_x_cha_cha_20_poly_1305;
 
+void frbgen_rusty_chacha_dart_wire__crate__api__NativeData_materialize(int64_t port_,
+                                                                       uintptr_t that);
+
 void frbgen_rusty_chacha_dart_wire__crate__api__compress(int64_t port_,
                                                          struct wire_cst_list_prim_u_8_loose *data,
                                                          int32_t zstd_compression_level);
@@ -68,6 +71,12 @@ void frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_decry
                                                                                              struct wire_cst_list_prim_u_8_strict *file_path,
                                                                                              struct wire_cst_list_prim_u_8_strict *aad,
                                                                                              uint64_t *offset);
+
+void frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_decrypt_from_file_to_native_data(int64_t port_,
+                                                                                                            struct wire_cst_rusty_cha_cha_20_poly_1305 *that,
+                                                                                                            struct wire_cst_list_prim_u_8_strict *file_path,
+                                                                                                            struct wire_cst_list_prim_u_8_strict *aad,
+                                                                                                            uint64_t *offset);
 
 void frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_encrypt(int64_t port_,
                                                                                    struct wire_cst_rusty_cha_cha_20_poly_1305 *that,
@@ -102,6 +111,12 @@ void frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_dec
                                                                                                struct wire_cst_list_prim_u_8_strict *aad,
                                                                                                uint64_t *offset);
 
+void frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_decrypt_from_file_to_native_data(int64_t port_,
+                                                                                                              struct wire_cst_rusty_x_cha_cha_20_poly_1305 *that,
+                                                                                                              struct wire_cst_list_prim_u_8_strict *file_path,
+                                                                                                              struct wire_cst_list_prim_u_8_strict *aad,
+                                                                                                              uint64_t *offset);
+
 void frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_encrypt(int64_t port_,
                                                                                      struct wire_cst_rusty_x_cha_cha_20_poly_1305 *that,
                                                                                      struct wire_cst_list_prim_u_8_loose *cleartext,
@@ -119,6 +134,10 @@ void frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_enc
 void frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_generate_key(int64_t port_);
 
 void frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_generate_nonce(int64_t port_);
+
+void frbgen_rusty_chacha_dart_rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerNativeData(const void *ptr);
+
+void frbgen_rusty_chacha_dart_rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerNativeData(const void *ptr);
 
 bool *frbgen_rusty_chacha_dart_cst_new_box_autoadd_bool(bool value);
 
@@ -145,11 +164,15 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_cst_new_box_autoadd_u_64);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_cst_new_list_prim_u_8_loose);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_cst_new_list_prim_u_8_strict);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerNativeData);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerNativeData);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__NativeData_materialize);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__compress);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__decompress);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_create_internal);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_decrypt);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_decrypt_from_file);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_decrypt_from_file_to_native_data);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_encrypt);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_encrypt_to_file);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_cha_cha_20_poly_1305_generate_key);
@@ -157,6 +180,7 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_create_internal);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_decrypt);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_decrypt_from_file);
+    dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_decrypt_from_file_to_native_data);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_encrypt);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_encrypt_to_file);
     dummy_var ^= ((int64_t) (void*) frbgen_rusty_chacha_dart_wire__crate__api__rusty_x_cha_cha_20_poly_1305_generate_key);

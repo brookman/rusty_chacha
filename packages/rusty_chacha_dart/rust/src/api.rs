@@ -1,3 +1,4 @@
+use flutter_rust_bridge::frb;
 use zstd::{decode_all, encode_all};
 
 use anyhow::{bail, Context, Ok, Result};
@@ -24,6 +25,17 @@ pub struct RustyXChaCha20Poly1305 {
 pub enum Compression {
     Uncompressed,
     Zstd { compression_level: Option<i32> },
+}
+
+#[frb(opaque)]
+pub struct NativeData {
+    data: Vec<u8>,
+}
+
+impl NativeData {
+    pub fn materialize(self) -> Vec<u8> {
+        self.data
+    }
 }
 
 impl RustyChaCha20Poly1305 {
@@ -157,6 +169,18 @@ impl RustyChaCha20Poly1305 {
         file.read_to_end(&mut ciphertext)?;
         self.decrypt(ciphertext, aad)
     }
+
+    /// Reads `file_path` decrypts the contents and returns the cleartext inside of a NativeData container which can be materialized later.
+    /// The first NONCE_LEN bytes of the `ciphertext` must contain the nonce.
+    pub fn decrypt_from_file_to_native_data(
+        &self,
+        file_path: String,
+        aad: Option<Vec<u8>>,
+        offset: Option<u64>,
+    ) -> Result<NativeData> {
+        let data = self.decrypt_from_file(file_path, aad, offset)?;
+        Ok(NativeData { data })
+    }
 }
 
 impl RustyXChaCha20Poly1305 {
@@ -289,6 +313,18 @@ impl RustyXChaCha20Poly1305 {
         let mut ciphertext = Vec::with_capacity(bytes_to_read as usize);
         file.read_to_end(&mut ciphertext)?;
         self.decrypt(ciphertext, aad)
+    }
+
+    /// Reads `file_path` decrypts the contents and returns the cleartext inside of a NativeData container which can be materialized later.
+    /// The first NONCE_LEN bytes of the `ciphertext` must contain the nonce.
+    pub fn decrypt_from_file_to_native_data(
+        &self,
+        file_path: String,
+        aad: Option<Vec<u8>>,
+        offset: Option<u64>,
+    ) -> Result<NativeData> {
+        let data = self.decrypt_from_file(file_path, aad, offset)?;
+        Ok(NativeData { data })
     }
 }
 
