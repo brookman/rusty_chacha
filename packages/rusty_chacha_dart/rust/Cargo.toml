@@ -25,3 +25,6 @@ anyhow = "1.0.89"
 flutter_rust_bridge = "=2.7.1"
 chacha20poly1305 = "0.10.1"
 zstd = "0.13.2"
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(frb_expand)'] }
